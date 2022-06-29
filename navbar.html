@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- <body> -->
+<nav class="navbar navbar-expand-lg " style="background-color: black">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+      aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <div class="col-md-4">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false" style="padding-top:0px;color:aliceblue">
+              <i class="fal fa-cube" style="margin-top:13px;color:aliceblue"></i>
+              <span id="selectedPlant" data-i18n="UI Elements">Select Plant</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark ab" aria-labelledby="navbarDropdown"
+              style="background-color: #192039">
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false" style="padding-top:0px;color:aliceblue">
+              <i class="fal fa-cube" style="margin-top:13px;color:aliceblue"></i>
+              <span id="selectedDivision" data-i18n="UI Elements">Select Division</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark" id="divisionDropdown" aria-labelledby="navbarDropdown"
+              style="background-color: #192039">
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false" style="padding-top:0px;color:aliceblue">
+              <i class="fal fa-cube" style="margin-top:13px;color:aliceblue"></i>
+              <span id="selectedLine" data-i18n="UI Elements">Select Line</span>
+
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown" id="lineDropdown"
+              style="background-color: #192039;">
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-4" style="text-align: center;">
+        <img src="auto_log.png" style="width: 30%;"></img>
+      </div>
+      <div class="col-md-4 nav navbar-nav navbar-right">
+        <div style="width: 40%;float: left;"></div>
+        <div style="float: left;width: 60%;">
+          <div style="float: left;width: 50%;text-align: right;">
+            <div class="dropdown" style="float: right;">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false" style="padding-top:0px;color:aliceblue">
+                <i class=" fal fa-map-marker-alt" style="margin-top:13px;color:aliceblue"></i>
+                <span id="selectedLocation" data-i18n="UI Elements">Select location</span>
+              </a>
+              <ul class=" dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown" id="locationDropdown"
+                style="background-color: #192039;">
+              </ul>
+            </div>
+          </div>
+          <div style="float: left;width: 50%;text-align: right;color:aliceblue">
+            <div class="dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="logout" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false" style="padding-top:0px;color:aliceblue">
+                <span
+                  style="float: left;text-align: right;width:70%;margin-top:0px;line-height:20px;padding-right: 8px;"><span
+                    id="user"></span>
+                  <br />
+                  <small>Available</small>
+                </span>
+                <span style="width:30%">
+                  <img src="avatar-s-11.jpg" style="width: 40px;border-radius: 20px;height: 40px;" id="userImg"></img>
+                </span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="locationDropdownn" id="logout"
+                style="background-color: #192039;">
+                <li data-menu="" class="active" onclick="logout()"><a class="dropdown-item"
+                    data-toggle="dropdown">Logout</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</nav>
+<!-- </body> -->
+<script src="analogClock.js"></script>
+
+<script>
+  var divisionData = [];
+  var linesData = [];
+  var locationData = [];
+  var plantId = "";
+  var divId = "";
+  var shiftsObject = {};
+  var lineId = "";
+  var plants = [];
+  var downtimeD = {};
+  var lineD = {};
+  var currentShift = "";
+  // 
+  var mID = "";
+  // var currentShift = "";
+  var currentDate = "";
+  var currentTime = {};
+  var operatorData = [];
+  var operators = [];
+  var selOperatorId = "none";
+  var dtOptions = {};
+  var selectedDowntime = "";
+  var optionTypeValue = "";
+  var initialPulseId = "";
+  var subOptionD = {};
+  var downtimeOptionId = "";
+  var subOptionObject = {};
+  var startTime = "";
+  var ghp = null;
+  var subOptionTypeValue = "";
+  var press = false;
+
+
+
+
+
+  $(document).ready(async function () {
+
+    setTimeout("preventBack()", 0);
+    window.onunload = function () { null };
+
+
+
+    $('.ab').empty();
+    $('#locationDropdown').empty();
+    $('#user').text(localStorage.getItem("fullname"));
+    var userImg = localStorage.getItem("userImg");
+
+    var btn = document.getElementById('flip_content');
+    var btn1 = document.getElementById('flip_content1');
+    var btn2 = document.getElementById('flip_content2');
+    var content = document.getElementById('f1_card');
+
+    btn1.onclick = function () {
+      content.classList.toggle('flip');
+    }
+    btn.onclick = function () {
+      content.classList.toggle('flip');
+    }
+    btn2.onclick = function () {
+      content.classList.toggle('flip');
+    }
+
+
+    if (userImg != undefined) {
+      userImg = userImg.replace("uploads/", "image/")
+      userImg = pelUrl + userImg
+      document.getElementById("userImg").src = userImg
+    }
+    var plantUrl = getPlants + '?clientId=' + clientId
+    plants = await getCallAPI(plantUrl, token, 'GET');
+    divisionData = [];
+    linesData = [];
+    locationData = [];
+    divisionData = await getCallAPI(pelUrl + 'client/location/plant/divisions?clientId=' + clientId, token, 'GET');
+    linesData = await getCallAPI(pelUrl + 'client/location/plant/division/lines?clientId=' + clientId, token, 'GET');
+    locationData = await getCallAPI(getLocations + '?clientId=' + clientId, token, 'GET');
+    for (let z = 0; z < locationData.length; z++) {
+      $('#locationDropdown').append(`<li data-menu="" class="active" rel='${locationData[z].id}'><a onclick="populateplants(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">${locationData[z].name}</a></li>`);
+      if (z == locationData.length - 1) {
+        await populateplants(`<li data-menu="" class="active" rel='${locationData[0].id}'><a onclick="populateplants(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">${locationData[0].name}</a></li>`)
+      }
+    }
+    // console.log("locationData", locationData);
+
+  });
+  function preventBack() {
+    window.history.forward();
+
+  }
+  const populateplants = async ths => {
+    $('#selectedLocation').html($(ths).text());
+    var plantsD = plants.filter(obj => obj.locationId == $(ths).closest('li').attr('rel'))
+    // console.log('plants', plants);
+    $('.ab').empty();
+    downtimeD = {};
+
+    for (let x = 0; x < plantsD.length; x++) {
+      $('.ab').append(`<li data-menu="" class="active" rel='${plantsD[x].id}'><a onclick="populateDivision(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">${plantsD[x].name}</a></li>`);
+      downtimeD[plantsD[x].id] = {};
+      downtimeD[plantsD[x].id] = { "downtimeDeductions": plantsD[x].downtimeDeductions }
+      if (x == plantsD.length - 1) {
+        plantId = plantsD[0].id;
+        localStorage.setItem("downtimeD", JSON.stringify(downtimeD));
+        await populateDivision(`<li data-menu="" class="active" rel='${plantsD[0].id}'><a onclick="populateDivision(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">${plantsD[0].name}</a></li>`);
+      }
+
+    }
+  }
+  const populateDivision = async ths => {
+    $('#selectedPlant').html($(ths).text());
+    $(ths).closest('ul').find('li').removeClass('active')
+    $(ths).closest('li').addClass('active')
+    // console.log('$(ths).text()', $(ths).text(), $(ths).closest('li').attr('rel'));
+    plantId = $(ths).closest('li').attr('rel');
+    localStorage.setItem('opPlantId', plantId);
+    var divisions = divisionData.filter(obj => obj.plantId == $(ths).closest('li').attr('rel'));
+    $('#divisionDropdown').empty();
+    $('#divisionDropdown').append(`<li data-menu="" class="active" rel='all'><a onclick="populateLines(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">All</a></li>`);
+    for (let j = 0; j < divisions.length; j++) {
+      $('#divisionDropdown').append(`<li data-menu="" class="active" rel='${divisions[j].id}'><a onclick="populateLines(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">${divisions[j].name}</a></li>`);
+      if (j == divisions.length - 1) {
+        await populateLines(`<li data-menu="" class="active" rel='${divisions[0].id}'><a onclick="populateLines(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">${divisions[0].name}</a></li>`);
+      }
+    }
+  }
+  const populateLines = async ths => {
+    $('#selectedDivision').html($(ths).text());
+    divId = $(ths).closest('li').attr('rel');
+    localStorage.setItem('opDivisionId', plantId);
+    $(ths).closest('ul').find('li').removeClass('active')
+    $(ths).closest('li').addClass('active')
+    // console.log('$(ths).text()1', $(ths).text(), $(ths).closest('li').attr('rel'));
+    var lines = [];
+    lineD = {};
+    if ($(ths).text() == 'All') {
+      lines = linesData.filter(obj => obj.plantId == plantId);
+    } else {
+      lines = linesData.filter(obj => obj.divisionId == $(ths).closest('li').attr('rel'));
+    }
+    $('#lineDropdown').empty();
+    $('#lineDropdown').append(`<li data-menu="" class="active" rel='all'><a onclick="populateMachine(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">All</a></li>`);
+    for (let j = 0; j < lines.length; j++) {
+      $('#lineDropdown').append(`<li data-menu="" class="active" rel='${lines[j].id}'><a onclick="populateMachine(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">${lines[j].name}</a></li>`);
+      lineD[lines[j].id] = {};
+      lineD[lines[j].id] = { 'name': lines[j]['name'] }
+      if (j == lines.length - 1) {
+        localStorage.setItem('LineD', JSON.stringify(lineD));
+        await populateMachine(`<li data-menu="" class="active" rel='${lines[0].id}'><a onclick="populateMachine(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">${lines[0].name}</a></li>`);
+      }
+    }
+  }
+  const populateMachine = async ths => {
+    $('#selectedLine').html($(ths).text());
+    lineId = $(ths).closest('li').attr('rel');
+    $(ths).closest('ul').find('li').removeClass('active');
+    $(ths).closest('li').addClass('active');
+    var dateData = await ist();
+    var currentDate = dateData.date;
+    var mUrl = getMachines + '?plantId=' + plantId;
+    var statsUrl = downtimeStats + '?clientId=' + clientId + '&plantId=' + plantId;
+    var shiftUrl = getIntervalsNew + '?clientId=' + clientId + '&plantId=' + plantId + '&type=Daily' + '&date=' + dateData.date;
+    var shiftUrl1 = getIntervalsNew + '?clientId=' + clientId + '&plantId=' + plantId + '&type=Daily';
+    if (divId != 'all') {
+      mUrl += '&divisionId=' + divId;
+      statsUrl += '&divisionId=' + divId;
+      shiftUrl += '&divisionId=' + divId;
+      shiftUrl1 += '&divisionId=' + divId;
+    }
+    if (lineId != 'all') {
+      mUrl += '&lineId=' + lineId;
+      statsUrl += '&lineId=' + lineId;
+    }
+    var opUrl = getOperators + '?clientId=' + clientId + '&plantId=' + plantId;
+    // console.log('opUrl', opUrl);
+
+    var opData = await getCallAPI(opUrl, token, 'GET');
+
+    localStorage.setItem("opData", JSON.stringify(opData));
+    var mData = await getCallAPI(mUrl, token, 'GET');
+    var shiftsData = await getCallAPI(shiftUrl, token, 'GET');
+    if (dateData.time >= "00:00:00" && dateData.time < shiftsData[0]['startDateTime'].substring(11, 19)) {
+      currentDate = moment(currentDate).add(1, "days").format("YYYY-MM-DD");
+    }
+    localStorage.setItem("currentDate", currentDate);
+    var intervalsUrl = shiftUrl1 + "&date=" + currentDate;
+    var intervalsData = await getCallAPI(intervalsUrl, token, 'GET');
+    shiftsObject = {};
+    for (let c = 0; c < intervalsData.length; c++) {
+      shiftsObject[intervalsData[c]['name'] + '-startDateTime'] = intervalsData[c]['startDateTime'].substring(11, 19);
+      shiftsObject[intervalsData[c]['name'] + '-startDate'] = intervalsData[c]['startDateTime'].substring(0, 10);
+      shiftsObject[intervalsData[c]['name'] + '-endDateTime'] = intervalsData[c]['endDateTime'].substring(11, 19);
+      shiftsObject[intervalsData[c]['name'] + '-endDate'] = intervalsData[c]['endDateTime'].substring(0, 10);
+      if (dateData.date + 'T' + dateData.time + '.000Z' >= intervalsData[c]['startDateTime'] && intervalsData[c]['endDateTime'] > dateData.date + 'T' + dateData.time + '.000Z') {
+        currentShift = intervalsData[c]['name']
+        localStorage.setItem("shiftsObject", JSON.stringify(shiftsObject));
+        localStorage.setItem("CurrentShift", currentShift);
+
+      }
+    }
+    statsUrl += "&date=" + currentDate;
+    localStorage.setItem("statsUrl", statsUrl);
+    var statsData = await getCallAPI(statsUrl, token, 'GET');
+    $('#data').empty();
+    await mData.map((data, i) => {
+      $('#data').append(`<div class="col-md-3" style="float: left; " id='${data.id}'>
+        <a onClick="nextPage('${data.id}')">
+        <div class="blackbox" style="min-height:259px;height:100%;background-color: #42454A;float: left;border-radius: 10px;margin: 15px;">
+          <div style="padding:20px 7px 20px 15px">
+            <p style="color: white;width: 100%;float: left;">
+              <span style="float: left;width: 100%;font-weight:500;font-size: 19px;">
+                <span style="float: left;width: 75%;font-weight:600;font-size: 19px;" >${data.name}</span>
+                  <span style="float: left;text-align:right;width:25%;font-weight: 500;font-size: 20px;color: #0ed00e;" id="mu-${data.id}">72.12 %<span>
+                    </span>
+            </p>
+            <div style="margin-top: 20px;">
+              <p style="color: white;float: left;width: 100%;"><span
+                  style="padding-right: 20px; width: auto;float: left;">STATION 1</span>
+                <span style="padding-right: 10px;float: left;">: <i class="fal fa-clock"
+                    style="padding-right: 10px;padding-left: 10px;"></i><span id="ct-1-${data.id}">0</span>
+                  </span><span style="float: left;padding-left: 10px;"><i class="fas fa-cube"
+                    style="padding-right: 10px;"></i>
+                  <span id="st-1-${data.id}">0</span></span>
+              </p>
+              <p style="color: white;float: left;width: 100%;"><span
+                  style="padding-right: 20px; width: auto;float: left;">STATION 2</span>
+                <span style="padding-right: 10px;float: left;">: <i class="fal fa-clock"
+                    style="padding-right: 10px;padding-left: 10px;"></i><span id="ct-2-${data.id}">0</span>
+                  </span><span style="float: left;padding-left: 10px;"><i class="fas fa-cube"
+                    style="padding-right: 10px;"></i>
+                    <span id="st-2-${data.id}">0</span></span>
+              </p>
+              <p style="color: white;float: left;width: 100%;"><span
+                  style="padding-right: 20px; width: auto;float: left;">STATION 3</span>
+                <span style="padding-right: 10px;float: left;">: <i class="fal fa-clock"
+                    style="padding-right: 10px;padding-left: 10px;"></i><span id="ct-3-${data.id}">0</span>
+                 </span><span style="float: left;padding-left: 10px;"><i class="fas fa-cube"
+                    style="padding-right: 10px;"></i>
+                  <span id="st-3-${data.id}">0</span></span>
+              </p>
+              <p style="color: white;float: left;width: 100%;"><span
+                  style="padding-right: 20px; width: auto;float: left;">STATION 4</span>
+                <span style="padding-right: 10px;float: left;">: <i class="fal fa-clock"
+                    style="padding-right: 10px;padding-left: 10px;"></i><span id="ct-4-${data.id}">0</span>
+                  </span><span style="float: left;padding-left: 10px;"><i class="fas fa-cube"
+                    style="padding-right: 10px;"></i>
+                    <span id="st-4-${data.id}">0</span></span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </a>
+      </div>`);
+    })
+    await machineUt(statsData);
+    await socket.on(plantId, function (data) {
+      // console.log("SwamiData", data, plantId)
+      if ('count' in data) {
+        if ('stationNo' in data && 'cycleTime' in data) {
+          $(`#ct-${data['stationNo']}-${data['machineId']}`).text(data['cycleTime']);
+        }
+      }
+      if ('stationCount' in data) {
+        for (let b = 0; b < data['stationCount'].length; b++) {
+          $(`#st-${data['stationCount'][b]['number']}-${data['machineId']}`).text(data['stationCount'][b]['value']);
+        }
+      }
+    });
+    // console.log('mIk', statsData, downtimeD);
+  }
+  function machineUt(statsD) {
+    for (let s = 0; s < statsD.length; s++) {
+      if (statsD[s].stats && Object.values(statsD[s].stats).length != 0) {
+        var shiftobj = statsD[s].stats[currentShift];
+        // console.log('shiftobj', shiftobj, currentShift);
+        var cal1 = shiftobj.runtime + shiftobj.loading + shiftobj.unloading;
+        var totaldeduction = 0;
+
+        Object.keys(shiftobj.activity).map((data) => {
+          if (downtimeD[plantId]["downtimeDeductions"].includes(data)) {
+            totaldeduction += shiftobj.activity[data];
+          } else {
+            // machine_Downtimes += machine_activity[data];
+          }
+        });
+        var cal2 = (shiftobj.total - shiftobj.breaks) - totaldeduction;
+        var mu = (cal1 / cal2) * 100
+        $(`#mu-${statsD[s].machineId}`).text(isFinite(mu) && mu ? mu.toFixed(2) + " %" : 0 + "%");
+      }
+    }
+  }
+  async function nextPage(machineID) {
+    localStorage.setItem("machineID", machineID);
+    // window.location.href = "index.html?id=" + machineID;
+    await $('#machines').hide();
+    await $('#machinesProfile').show();
+    await init();
+  }
+  const msToHMS = (ms) => {
+    // console.log('ms', ms, `machines[${idx}]`, window.machines[idx])//, window.machines[idx].timer)
+    // ms = window.machines[idx].downtimeData.startDateTime
+    var ms = new Date(ms);
+    var current = IST();
+    var diff = current - ms;
+    function pad(n, z) {
+      z = z || 2;
+      return ('00' + n).slice(-z);
+    }
+    var mis = diff % 1000;
+    diff = (diff - mis) / 1000;
+    var secs = diff % 60;
+    diff = (diff - secs) / 60;
+    var mins = diff % 60;
+    var hrs = (diff - mins) / 60;
+    // console.log("timer", pad(hrs) + ':' + pad(mins) + ':' + pad(secs), ms)
+    // $(`#timer${idx}`).text(pad(hrs) + ':' + pad(mins) + ':' + pad(secs));
+    $(`#timer${mID}`).html(pad(hrs) + ':' + pad(mins) + ':' + pad(secs))
+    // $(`#timer`).html(pad(hrs) + ':' + pad(mins) + ':' + pad(secs))
+  }
+  async function machineProfileData() { }
+  async function init() {
+    press = false;
+    mID = localStorage.getItem("machineID");
+    operatorData = [];
+    shiftsObject = {};
+    operators = [];
+    selOperatorId = "none"
+    dtOptions = {};
+    selectedDowntime = "";
+    downtimeOptionId = "";
+    await clearInterval(ghp);
+    // await $(`#timer`)
+    await $(`.Time`).attr('id', `timer${mID}`);
+    // await $(`#timer`).text("00:00:00");
+    await $(`#timer${mID}`).text("00:00:00");
+    await $("#dtWatch").hide();
+    await $("#dtButtons").show();
+    currentTime = await ist();
+    currentShift = localStorage.getItem("CurrentShift");
+    currentDate = localStorage.getItem("currentDate");
+    operatorData = JSON.parse(localStorage.getItem("opData"));
+    statsUrl = localStorage.getItem("statsUrl");
+    shiftsObject = JSON.parse(localStorage.getItem("shiftsObject"));
+    // console.log('shiftsObjectSW', shiftsObject);
+    var machineUrl = getMachines + '?clientId=' + clientId + '&id=' + mID;
+    var machineData = await getCallAPI(machineUrl, token, 'GET');
+    operators = await getCallAPI(getOperators + '?clientId=' + clientId + '&plantId=' + localStorage.getItem("opPlantId"), token, 'GET');
+    // console.log('operators', operators);
+
+    if (operators && operators.length != 0) {
+      $('#selectOperator').empty();
+      for (let g = 0; g < operators.length; g++) {
+        if (g == 0) {
+          $('#selectOperator').append(`<option value="none">No Operator</option>`);
+        }
+        $('#selectOperator').append(`<option value=${operators[g].id}>${operators[g].fullName}</option>`);
+      }
+    }
+    if (machineData && machineData[0] && machineData[0].image) {
+      var machineImg = machineData[0].image.replace("uploads/", "image/");
+      machineImg = pelUrl + machineImg
+      document.getElementById("machineImage").src = machineImg;
+    }
+    document.getElementById("machineName").textContent = machineData && machineData[0] && machineData[0].name ? machineData[0].name : " ";
+    var lineOb = JSON.parse(localStorage.getItem('LineD'));
+    document.getElementById("lineName").textContent = machineData && machineData[0] && machineData[0].lineId && lineOb[machineData[0].lineId] ? lineOb[machineData[0].lineId]['name'] : " ";
+    // getAllOperatorLogs
+    await socket.on(localStorage.getItem("opPlantId"), function (data) {
+      // console.log("SwamiData", data)
+      if (data['machineId'] == mID) {
+        if ('count' in data) {
+          if ('stationNo' in data && 'cycleTime' in data) {
+            $(`#ct-${data['stationNo']}`).text(data['cycleTime']);
+          }
+        }
+        if ('stationCount' in data) {
+          for (let b = 0; b < data['stationCount'].length; b++) {
+            $(`#st-${data['stationCount'][b]['number']}`).text(data['stationCount'][b]['value']);
+          }
+        }
+        if ('status' in data) {
+          if (data['status'] == 'Active' || data['status'] == 'active') {
+            document.getElementById("status").style.color = "#007F00";
+            $('#status').text(data['status']);
+          } else {
+            document.getElementById("status").style.color = "#FF0101";
+            $('#status').text(data['status']);
+
+          }
+        }
+
+      }
+    });
+    var operatorUrl = getAllOperatorLogs + "?shift=" + currentShift + "&activeMachines=" + mID + "&date=" + currentDate + "&clientId=" + clientId;
+    var opData = await getCallAPI(operatorUrl, token, 'GET');
+    console.log('KLJ', opData);
+
+    // console.log('SwamiopName', opData, operators, operatorUrl);
+    if (opData.length != 0) {
+      // opData[0].operatorId;
+      var opName = operatorData.filter(obj => obj.id == opData[0].operatorId);
+      var desigOprId = '';
+      selOperatorId = opName[0].id;
+      document.getElementById('selectOperator').value = selOperatorId;
+      // console.log("opName", opName);
+      if (opName && opName[0] && opName[0].fullName) {
+        if (opName[0].aadharNumber) {
+          desigOprId = ' (XXXX-XXXX-' + ((opName[0].aadharNumber).toString()).slice(-4) + ')'
+          if (opName[0].designation) desigOprId = ', ' + opName[0].designation + ' (XXXX-XXXX-' + ((opName[0].aadharNumber).toString()).slice(-4) + ')'
+        } else {
+          desigOprId = ''
+          if (opName[0].designation) desigOprId = ', ' + opName[0].designation
+        }
+        $('#operatorName').text(opName[0].fullName + desigOprId);
+        $("#operatorNameModal").text(opName[0].fullName + desigOprId)
+        $("#operatorIdModal").text(opName[0].id);
+        opName[0].type ? $("#operatorType").text(opName[0].type) : $("#operatorType").text('Operator')
+
+      } else {
+        $('#operatorName').text("");
+      }
+      if (opName && opName[0] && opName[0].image) {
+        var opImg = opName[0].image.replace("uploads/", "image/");
+        opImg = opmsUrl + opImg;
+        // console.log('JK', opImg);
+        document.getElementById("operatorImage").src = opImg;
+      }
+    }
+    else {
+      $('#operatorName').text("No Operator Selected");
+      $(`#operatorImage`).attr('src', 'default.gif');
+      selOperatorId = 'none';
+      document.getElementById('selectOperator').value = "none";
+      $('#select2-selectOperator-container').text('Select Operator')
+      //   // $('#operatorName').text('No Operator Selected');
+      $("#operatorNameModal").text('No Operator Selected')
+      $('#operatorId').text('');
+      $("#operatorIdModal").text('')
+      $("#operatorType").text('')
+      $("#joining").text('')
+      $("#contact").text('')
+      $("#avgPerformance").text('')
+      $("#efficiency").text('')
+    }
+    await operatorEff();
+    await hourlyData();
+    // console.log("operatorUrl", operatorUrl, opData);
+  }
+
+  async function showOperatorModal() {
+    $("#operatorModal").modal('show')
+  }
+
+  async function hourlyData() {
+    // var from, to; //to current-time 
+    // from = await setTime(shiftsObject[currentShift + '-startDate'], shiftsObject[currentShift + '-startDateTime']);
+    // to = await setTime(currentDate, currentTime.time);
+    var from, to;
+    from = await setTime(shiftsObject[currentShift + '-startDate'], shiftsObject[currentShift + '-startDateTime']);
+    to = await setTime(shiftsObject[currentShift + '-endDate'], shiftsObject[currentShift + '-endDateTime']);
+    var countArray = {};
+    var halfHourly123 = await new Promise((r, j) => {
+      dummyData(r, j, from, to, countArray)
+    }).then((result) => {
+      return result;
+    });
+    $('#countit').empty();
+    $('#tbody').empty();
+    // console.log('LPL', halfHourly123);
+    var halfHourlyArray = Object.keys(halfHourly123);
+    var tableHead = '<tr id="timeid"><th class="rowgroup"  ></th>';
+    var tableHead1 = '<tr id="timeid1"><th class="rowgroup"  ></th>';
+    var Target_row_total = '<tr id="count-tt"><th style="padding: 20px;font-size: 15px;">PLAN</th>';
+    var Actual_row_total = '<tr id="count-tp"><th style="padding: 20px;font-size: 15px;">ACTUAL</th></th>';
+    for (let k = 0; k < halfHourlyArray.length / 2; k++) {
+      if (halfHourlyArray[k + k + 2] == undefined) {
+        // console.log("hal1", halfHourlyArray[k + k].slice(0, -3));
+
+        tableHead += `<th class="text-nowrap" style="padding: 5px">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))}</th></tr>`
+        tableHead1 += `<th class="text-nowrap" style="padding: 5px">${await tConvert(shiftsObject[currentShift + '-endDateTime'].slice(0, -3))}</th ></tr >`
+        // tableHead += `<th class="text-nowrap">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))}</th></tr>`
+
+        Target_row_total += `<td style="padding: 20px;text-align: start;"><b><span id="total-target-${k}">0</span></b></td></tr>`;
+        Actual_row_total += `<td style="padding: 20px;text-align: start;"><b><span id="total-actual-${k}">0</span></b></td></tr>`;
+        $('#countit').append(tableHead);
+        $('#countit').append(tableHead1);
+
+        $('#tbody').append(Target_row_total);
+        $('#tbody').append(Actual_row_total);
+
+      } else {
+        // console.log("hal", halfHourlyArray[k + k].slice(0, -3));
+        tableHead += `<th class="text-nowrap" style="padding: 5px">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))}</th>`;
+        tableHead1 += `<th class="text-nowrap"style="padding: 5px" >${await tConvert(halfHourlyArray[k + k + 2].slice(0, -3))}</th>`;
+        Target_row_total += `<td style="padding: 20px;text-align: start;"><b><span id="total-target-${k}">0</span></b></td>`;
+        Actual_row_total += `<td style="padding: 20px;text-align: start;"><b><span id="total-actual-${k}">0</span></b></td>`;
+      }
+    }
+    var hourlyUrl = halfHourlyProduction + "?clientId=" + clientId + "&plantId=" + localStorage.getItem("opPlantId") + "&machineId=" + mID + "&date=" + currentDate;
+    var response = await getCallAPI(hourlyUrl, token, 'GET');
+
+    var from, to; //to current-time 
+    from = await setTime(shiftsObject[currentShift + '-startDate'], shiftsObject[currentShift + '-startDateTime']);
+    to = await setTime(currentTime.date, currentTime.time);
+    var countArray = {};
+    var halfHourly = await new Promise((r, j) => {
+      dummyData(r, j, from, to, countArray)
+    }).then((result) => {
+      return result;
+    });
+    var halfHourlyArray = Object.keys(halfHourly123);
+
+    // console.log('hourlyResponce', response, halfHourly);
+    var totalProd = 0;
+
+    for (let s = 0; s < response.length; s++) {
+      var halfHourlyArrayData = response[s].halfHourly;
+      var halfHourlyTargetArrayData = response[s].halfHourlyTargets;
+      var totaltargetH = 0;
+      var totalactualH = 0;
+      if (halfHourlyTargetArrayData != undefined && halfHourlyArrayData != undefined && Object.keys(halfHourlyTargetArrayData).length != 0 && Object.keys(halfHourlyArrayData).length != 0) {
+        for (let r = 0; r < halfHourlyArray.length / 2; r++) {
+          if (halfHourlyArray[r + r + 1] == undefined) {
+            totalactualH += halfHourlyArrayData[halfHourlyArray[r + r]];
+            var targetVal = 0;
+            if (halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != null) {
+              targetVal = halfHourlyTargetArrayData[halfHourlyArray[r + r]].target;
+            }
+            totaltargetH += targetVal;
+            totalProd += halfHourlyArrayData[halfHourlyArray[r + r]];
+            $('#total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]]);
+            $('#total-target-' + r).text(targetVal);
+            $('#totalProduction').text(totalProd);
+
+          } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
+            totalactualH += halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]];
+            var targetVal1 = 0;
+            var targetVal2 = 0;
+            if (halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != null) {
+              targetVal1 = halfHourlyTargetArrayData[halfHourlyArray[r + r]].target;
+            }
+            if (halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target != null) {
+              targetVal2 = halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target;
+            }
+            totaltargetH += targetVal1 + targetVal2;
+            totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+            $('#total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+            $('#total-target-' + r).text(targetVal1 + targetVal2);
+            $('#totalProduction').text(totalProd);
+          }
+          else {
+            var targetVal1 = 0;
+            var targetVal2 = 0;
+            if (halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != null) {
+              targetVal1 = halfHourlyTargetArrayData[halfHourlyArray[r + r]].target;
+            }
+            if (halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target != null) {
+              targetVal2 = halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target;
+            }
+            totalactualH += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+            totaltargetH += (targetVal1 + targetVal2);
+            totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+            $('#total-actual-' + r).text((halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]));
+            $('#total-target-' + r).text((targetVal1 + targetVal2));
+          }
+        }
+      } else if (halfHourlyTargetArrayData == undefined || halfHourlyTargetArrayData == null) {
+        for (let r = 0; r < halfHourlyArray.length / 2; r++) {
+          if (halfHourlyArray[r + r + 1] == undefined) {
+            totalactualH += halfHourlyArrayData[halfHourlyArray[r + r]];
+            var targetVal = 0;
+            totaltargetH += targetVal;
+            totalProd += halfHourlyArrayData[halfHourlyArray[r + r]];
+            $('#total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]]);
+            $('#total-target-' + r).text(targetVal);
+            $('#totalProduction').text(totalProd);
+
+          } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
+            totalactualH += halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]];
+            var targetVal1 = 0;
+            var targetVal2 = 0;
+            totaltargetH += targetVal1 + targetVal2;
+            totalProd += halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]];
+            $('#total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+            $('#total-target-' + r).text(targetVal1 + targetVal2);
+            $('#totalProduction').text(totalProd);
+          }
+          else {
+            var targetVal1 = 0;
+            var targetVal2 = 0;
+            totalactualH += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+            totaltargetH += (targetVal1 + targetVal2);
+            totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]])
+            $('#total-actual-' + r).text((halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]));
+            $('#total-target-' + r).text((targetVal1 + targetVal2));
+          }
+        }
+      }
+    }
+    await downtimeType();
+  }
+  async function setTime(d, t) {
+    var dateTime = d + 'T' + t + '.000Z';
+    var response = moment(dateTime).toDate();
+    return response;
+  }
+  async function tConvert(time) {
+    // Check correct time format and split into components
+    time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+    if (time.length > 1) { // If time format correct
+      time = time.slice(1);  // Remove full string match value
+      // console.log('time0', time);
+      time[3] = null; // Set AM/PM
+      time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+      time[0] = +time[0] % 12 || 12; // Adjust hours
+      // time[1] = null;
+      // time[2] = null;
+      time[1] = +time[2] == "0" ? null : ":";
+      time[2] = +time[2] == "0" ? null : +time[2];
+    }
+    return time.join(''); // return adjusted time or original string
+  }
+  async function tConvertFirst(time) {
+    // Check correct time format and split into components
+    time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+    if (time.length > 1) { // If time format correct
+      time = time.slice(1);  // Remove full string match value
+      time[3] = null; // Set AM/PM
+      time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+      time[0] = +time[0] % 12 || 12; // Adjust hours
+      time[1] = +time[2] == "0" ? null : ":";
+      time[2] = +time[2] == "0" ? null : +time[2];
+    }
+    return time.join(''); // return adjusted time or original string
+  }
+  async function downtimeType() {
+    await $('#clock').empty();
+    await AnalogClock("clock", new AnalogClockOption(120, "#eee", "#333"));//using option class to customize
+    //base on object use, returns an clock object, can do some further style controll by the returned object.
+    var opt = new AnalogClockOption(); opt.width = 100;
+    await myFunctionS();
+
+    socket.on('selectDowntime', data => {
+      // console.log('selectDowntime', data.machineId)
+      if (data.machineId == mID) {
+        console.log('dtType', 'Swami786786');
+
+        hideButton(data.downTimeTypes[0], false);
+      }
+    });
+
+    socket.on('cancelDowntime', data => {
+      if (data.machineId == mID) {
+        // console.log('cancelDowntime', data.machineId)
+        backToDTbuttons(false);
+      }
+    });
+
+    socket.on('selectDowntimeOption', data => {
+      if (data.machineId == mID) {
+        // console.log('SwamiMain', data)
+        subDttype(data.subType.name, false);
+      }
+    })
+
+    socket.on('selectDowntimeSubOption', data => {
+      // console.log('selectDowntimeSubOption', data);
+      if (data.machineId == mID) {
+        subDtt(data.subOption.names[0], false);
+      }
+    });
+
+    socket.on('initialData', async (initialData) => {
+      if ("machineId" in initialData && initialData["machineId"] && mID == initialData["machineId"]) {
+        console.log('initialData', initialData);
+        await clearInterval(ghp);
+        // await $(`#timer`).text("00:00:00");
+        await $(`#timer${mID}`).text("00:00:00");
+        if (!initialData.subType && !initialData.subOption) {
+          startTime = initialData.startDateTime;
+          // await clearInterval(ghp);
+          console.log('dtType', 'Swami786786786786');
+
+          await hideButton(initialData.name, false);
+          await startCounter(startTime);
+        } else if (initialData.subType) {
+          // await clearInterval(ghp);
+          startTime = initialData.subType.startDateTime;
+          await subDttype(initialData.subType.name, false);
+          await startCounter(startTime);
+        } else if (initialData.subOption) {
+          // await clearInterval(ghp);
+          startTime = initialData.subOption.startDateTime;
+          await subDtt(initialData.subOption.names[0], false);
+          await startCounter(startTime);
+
+        }
+      }
+    });
+
+    socket.on('activityData', async (activityData) => {
+      if (activityData.machineId == mID) {
+
+        // if (ghp) {
+        //   console.log('activityData', activityData);
+        await clearInterval(ghp);
+
+        // } else {
+        //   console.log('activityData1', activityData);
+
+        // }
+        optionTypeValue = "";
+        subOptionTypeValue = "";
+        selectedDowntime = "";
+        startTime = "";
+        localStorage.setItem("machineStartD", "");
+        // console.log('ms', localStorage.getItem("machineStartD"))
+        // await $(`#timer`).text("00:00:00");
+        await $(`#timer${mID}`).text("00:00:00");
+
+        await $('#subDowntime').empty();
+        await $('#subDowntimeTypes').empty();
+        await $("#dtWatch").hide();
+        await $("#dtButtons").show();
+      }
+    })
+
+    var downtimeTypesUrl = downtimeTypes + "?clientId=" + clientId + "&plantId=" + localStorage.getItem("opPlantId") + "&divisionId=" + localStorage.getItem("opDivisionId");
+    var downtimeData = await getCallAPI(downtimeTypesUrl, token, 'GET');
+    // console.log("downtimeData", downtimeData);
+    if (downtimeData && "types" in downtimeData && downtimeData.types && downtimeData.types.length != 0) {
+      for (let g = 0; g < downtimeData.types.length; g++) {
+        if (g != 0) {
+          dtOptions[downtimeData.types[g]['option']] = downtimeData.types[g].options;
+        }
+        if (g == 0) {
+          var dtData = downtimeData.types[0]["options"];
+          $('#downtimeButtons').empty();
+          for (let d = 0; d < dtData.length; d++) {
+            $('#downtimeButtons').append(`<div class="col-md-3" style="height: auto;float: left;margin-top: 15px;" onClick="hideButton('${dtData[d]}',${true})">
+        <div class="gr" style="height: 100%;width: 90%;margin-left: 5%;border-radius: 8px;">
+          <h5 style="padding: 10px;font-size:17px;">${dtData[d]}</h5>
+        </div>
+      </div>`);
+          }
+        }
+      }
+    }
+  }
+  async function backToMachine() {
+    await $('.station').text("0");
+    await clearInterval(ghp);
+    // await $(`#timer`).text("00:00:00");
+    await $(`#timer${mID}`).text("00:00:00");
+
+    await socket.off('selectDowntime');
+    await socket.off('cancelDowntime');
+    await socket.off('selectDowntimeOption');
+    await socket.off('selectDowntimeSubOption');
+    await socket.off('initialData');
+    await socket.off('activityData');
+    await localStorage.setItem("machineID", "");
+    await $('#machinesProfile').hide();
+    await $('#machines').show();
+  }
+  async function hideButton(dtType, doEmit) {
+    // for (let s = 0; s < 999; s++) {
+    //   await clearInterval(s);
+    // }
+    await clearInterval(ghp);
+    // await $(`#timer`).text("00:00:00");
+    await $(`#timer${mID}`).text("00:00:00");
+
+    console.log('dtType', 'Swami786');
+
+    $('#subDowntime').empty();
+    $('#subDowntimeTypes').empty();
+    $("#dtButtons").hide();
+    $("#dtWatch").show();
+    $('#dtReason').text(dtType);
+    $('#subDowntime').empty();
+    $('#confirm').show()
+    $('#back').show()
+    $('#downtimeConfirm').hide()
+
+    selectedDowntime = dtType;
+    if (dtOptions[dtType] && dtOptions[dtType].length != 0) {
+      for (let i = 0; i < dtOptions[dtType].length; i++) {
+        $("#subDowntime").append(`<button id="${dtOptions[dtType][i].split(" ").join("-")}" class="btn btn-outline-info px-1 subdt all" style="margin:6px" onClick="subDttype('${dtOptions[dtType][i]}',${true})"
+ >${dtOptions[dtType][i]}</button>`);
+      }
+    } else {
+      $('#subDowntimeTypes').html('<div style="color:#040709">.</div>');
+      $('#subDowntime').html('<div style="color:#040709">.</div>');
+    }
+
+    if (doEmit) {
+      var emitData = {
+        "dataId": 0,
+        "downTimeTypes": [dtType],
+        "machineId": mID,
+        "name": dtType,
+        "startDateTime": IST().toISOString(),
+        "type": "activity"
+      }
+      socket.emit('selectDowntime', emitData)
+    }
+
+  }
+  const IST = () => {
+    var dateUTC = new Date();
+    var dateUTC = dateUTC.getTime();
+    var dateIST = new Date(dateUTC);
+    dateIST.setHours(dateIST.getHours() + 5);
+    dateIST.setMinutes(dateIST.getMinutes() + 30);
+    return dateIST;
+  }
+  async function backToDTbuttons(doEmit) {
+    $("#dtWatch").hide();
+    $("#dtButtons").show();
+    optionTypeValue = "";
+    subOptionTypeValue = "";
+    selectedDowntime = "";
+    startTime = "";
+    subOptionObject = {};
+    subOptionD = {};
+    if (doEmit) {
+      // console.log("doEmit", mID);
+      socket.emit('cancelDowntime', { "machineId": mID })
+    }
+  }
+
+  async function operatorEff() {
+    var statURL = statsUrl + '&machineId=' + mID;
+    var downtimeD = JSON.parse(localStorage.getItem("downtimeD"));
+    console.log('downtimeD', downtimeD);
+    var statsD = await getCallAPI(statURL, token, 'GET');
+    console.log('downtimeD1', statsD, statURL);
+
+    if (statsD && statsD.length != 0) {
+
+      var shiftobj = statsD[0].stats[currentShift];
+      var totaldeduction = 0;
+      var totaladd = 0;
+      var LAStop = 0;
+
+      Object.keys(shiftobj.activity).map((data) => {
+        if (downtimeD[localStorage.getItem("opPlantId")]["downtimeDeductions"].includes(data)) {
+          totaldeduction += shiftobj.activity[data];
+        } else {
+          if (data != 'Late Start' && data != 'Early Stop') {
+            totaladd += shiftobj.activity[data];
+          } else {
+            LAStop += shiftobj.activity[data];
+          }
+        }
+      });
+      var cal1 = shiftobj.runtime + shiftobj.loading + shiftobj.unloading + totaladd;
+      var cal2 = (shiftobj.total - shiftobj.breaks) - totaldeduction;
+      var oE = (cal1 / cal2) * 100;
+      // console.log("Swamishiftobj", shiftobj);
+      $("#eff").text(isFinite(oE) && oE ? oE.toFixed(2) + " %" : 0 + "%");
+      var idelT = shiftobj && shiftobj.idleTime ? shiftobj.idleTime.toFixed(2) : 0;
+      $('#idleTime').text(idelT);
+    }
+
+  }
+  async function subDttype(subDType, doEmit) {
+    optionTypeValue = subDType;
+    $('#subDowntimeTypes').empty();
+    $(".subdt").removeClass('btn-info').addClass('btn-outline-info');
+    // console.log("subDType", subDType);
+    if (subDType) { $('#' + subDType.split(" ").join("-")).removeClass('btn-outline-info').addClass('btn-info'); }
+    if (dtOptions[subDType] && dtOptions[subDType].length != 0) {
+      for (let i = 0; i < dtOptions[subDType].length; i++) {
+        $("#subDowntimeTypes").append(`<button id="sub${dtOptions[subDType][i].split(" ").join("-")}" class="btn btn-outline-info px-1 subtt all" style="margin:6px"
+      onClick="subDtt('${dtOptions[subDType][i]}',${true})">${dtOptions[subDType][i]}</button>`);
+      }
+    }
+    subOptionD = {
+      "machineId": mID,
+      "initialPulseId": initialPulseId,
+      "subType": {
+        "dataId": "",
+        "name": subDType,
+        "startDateTime": IST().toISOString()
+      }
+    }
+    if (doEmit) {
+      // console.log('JH', subOptionD)
+      socket.emit('selectDowntimeOption', { ...subOptionD, ...{ "machineId": mID } });
+    }
+  }
+  const submitDowntime = async (idx, initialData, callback) => {
+
+    // console.log("SQQ", initialData);
+    var ipResult = await getCallAPI(pelUrl + 'initial-pulse', token, 'POST', initialData);
+    if (ipResult && ipResult.initialPulse) initialPulseId = ipResult.initialPulse._id;
+    if (callback) {
+      if ("initialPulseId" in subOptionD) {
+        subOptionD["initialPulseId"] = initialPulseId;
+        subOptionD.subType.dataId = initialPulseId;
+
+      }
+      // console.log("subOptionObject", subOptionD, initialData.startDateTime);
+
+      subOptionD.subType.startDateTime = initialData.startDateTime
+      // window.machines[idx].downtimeOption.initialPulseId = $(`#initialPulseId${idx}`).val()
+      // window.machines[idx].downtimeOption.subType.dataId = $(`#initialPulseId${idx}`).val()
+      callback("", subOptionD, submitDowntimeSubOption)
+    } else {
+      if (localStorage.getItem("machineStartD") != null || localStorage.getItem("machineStartD") != "") {
+        console.log('ms1', localStorage.getItem("machineStartD"))
+        startTime = initialData.startDateTime;
+        ghp = setInterval(() => msToHMS(initialData.startDateTime), 1000);
+      }
+      // completeDowntime(initialData.name, true, initialData.startDateTime, "", mID);
+
+    }
+  }
+  const submitDowntimeOption = async (idx, downtimeOption, callback) => {
+    console.log('downtimeOption2', downtimeOption)
+    //   await reviewToken()
+    $.ajax({
+      url: pelUrl + 'initial-pulse',
+      data: JSON.stringify(downtimeOption),
+      type: "PUT",
+      headers: { "Authorization": "Bearer " + token },
+      dataType: 'json',
+      contentType: 'application/json',
+      success: function (data) {
+        downtimeOptionId = data.subTypes[data.subTypes.length - 1]._id
+        // $(`#downtimeOptionId${idx}`).val(data.subTypes[data.subTypes.length - 1]._id)
+        if (callback && subOptionTypeValue != "") {
+          // window.machines[idx].downtimeSubOption.initialPulseId = $(`#initialPulseId${idx}`).val()
+          subOptionObject.initialPulseId = initialPulseId;
+          subOptionObject.subOption.optionId = downtimeOptionId;
+          subOptionObject.subOption.startDateTime = downtimeOption.subType.startDateTime;
+          // console.log('downtimeOption3', subOptionObject)
+          submitDowntimeSubOption(idx, subOptionObject)
+        } else {
+          startTime = downtimeOption.subType.startDateTime;
+          console.log("ms3");
+          ghp = setInterval(() => msToHMS(downtimeOption.subType.startDateTime), 1000);
+
+        }
+      },
+      error: error => {
+        console.log('put initial-pulse update error1', error)
+        if (error && error.responseJSON && error.responseJSON.message == 'Unauthorized') logout()
+        if (error && error.responseJSON) console.log(error.responseJSON)
+        else if (error && error.responseText) console.log(error.responseText)
+        else console.log({ error })
+      }
+    })
+  }
+  const submitDowntimeSubOption = async (idx, downtimeSubOption) => {
+    // console.log('downtimeSubOption', downtimeSubOption)
+    $.ajax({
+      url: pelUrl + 'initial-pulse',
+      data: JSON.stringify(downtimeSubOption),
+      type: "PUT",
+      headers: { "Authorization": "Bearer " + token },
+      dataType: 'json',
+      contentType: 'application/json',
+      success: function (data) {
+        startTime = downtimeSubOption.subOption.startDateTime;
+        console.log('ms4');
+        ghp = setInterval(() => msToHMS(downtimeSubOption.subOption.startDateTime), 1000);
+      },
+      error: error => {
+        console.log('put initial-pulse update error')
+        if (error && error.responseJSON && error.responseJSON.message == 'Unauthorized') logout()
+        if (error && error.responseJSON) console.log(error.responseJSON)
+        else if (error && error.responseText) console.log(error.responseText)
+        else console.log({ error })
+      }
+    })
+  }
+  async function completeDowntime() {
+    event.stopPropagation()
+    var currentDateTime = IST();
+    var downtimeOption = "";
+    if (optionTypeValue != "") {
+      downtimeOption = optionTypeValue;
+    }
+    if (subOptionTypeValue != "") {
+      downtimeOption = subOptionTypeValue;
+    }
+
+    var activityData = {
+      dataId: "1",
+      type: 'activity',
+      name: selectedDowntime,
+      option: downtimeOption,
+      downTimeTypes: [selectedDowntime],
+      machineId: mID,
+      startDateTime: startTime,
+      endDateTime: currentDateTime.toISOString()
+    };
+    // console.log('SwamiactivityData', activityData);
+    // if (submitActivityData) {
+    $.ajax({
+      url: pelUrl + 'activities', //callThisApi,
+      data: JSON.stringify(activityData),
+      type: "POST",
+      headers: { "Authorization": "Bearer " + token },
+      dataType: 'json',
+      contentType: 'application/json',
+      success: async function (data) {
+        await clearInterval(ghp)
+        localStorage.setItem("machineStartD", "");
+        // console.log('ms', localStorage.getItem("machineStartD"))
+        // await $(`#timer`).text("00:00:00");
+        await $(`#timer${mID}`).text("00:00:00");
+        await $('#subDowntime').empty();
+        await $('#subDowntimeTypes').empty();
+        await $("#dtWatch").hide();
+        await $("#dtButtons").show();
+      },
+      error: function (error) {
+        console.log('activities error', error)
+        if (error && error.responseJSON && error.responseJSON.message == 'Unauthorized') {
+          window.location.href = './login.html';
+        }
+        if (error && error.responseJSON) console.log(error.responseJSON)
+        else if (error && error.responseText) console.log(error.responseText)
+        else console.log({ error })
+      }
+    });
+  }
+  async function subDtt(subDType, doEmit) {
+    subOptionTypeValue = subDType;
+    $(".subtt").removeClass('btn-info').addClass('btn-outline-info');
+    $('#sub' + subDType.split(" ").join("-")).removeClass('btn-outline-info').addClass('btn-info');
+    subOptionObject = {
+      "initialPulseId": initialPulseId,
+      "subOption": {
+        "optionId": downtimeOptionId,
+        "names": [subDType],
+        "startDateTime": IST().toISOString()
+      }
+    }
+    if (doEmit) {
+      // console.log('JH', subOptionObject)
+      socket.emit('selectDowntimeSubOption', { ...subOptionObject, ...{ "machineId": mID } });
+    }
+  }
+  async function myFunctionS() {
+    var machineUrl = getMachines + '?clientId=' + clientId + '&id=' + mID;
+    var machineData = await getCallAPI(machineUrl, token, 'GET');
+
+    var dtD = {};
+    var dtOpt = {};
+    var dtSubOpt = {};
+    if (machineData && machineData[0] && machineData[0].downtimeData && machineData[0].downtimeData.length != 0) {
+      dtD = machineData[0].downtimeData[machineData[0].downtimeData.length - 1];
+    }
+    if (machineData && machineData[0] && machineData[0].downtimeOptions && machineData[0].downtimeOptions.length != 0) {
+      dtOpt = machineData[0].downtimeOptions[machineData[0].downtimeOptions.length - 1];
+    }
+    if (machineData && machineData[0] && machineData[0].downtimeSubOptions && machineData[0].downtimeSubOptions.length != 0) {
+      dtSubOpt = machineData[0].downtimeSubOptions[machineData[0].downtimeSubOptions.length - 1];
+    }
+
+    var downTimeId, downTimeType, startDateTime
+    if (dtD) {
+      downTimeId = dtD._id
+      downTimeType = dtD.name
+      startDateTime = dtD.startDateTime
+    } else {
+      downTimeId = undefined
+      downTimeType = undefined
+      startDateTime = undefined
+    }
+    // console.log('SwamiK', dtD, dtOpt, dtSubOpt);
+    if (dtD && dtD.name) {
+      console.log('dtType', 'Swami786786786');
+
+      await hideButton(dtD.name, false);
+    }
+    if (dtOpt && dtOpt.name) {
+      await subDttype(dtOpt.name, false);
+    }
+    if (dtSubOpt && dtSubOpt.names && dtSubOpt.names[0]) {
+      await subDtt(dtSubOpt.names[0], false);
+    }
+    if (startDateTime) {
+      startTime = startDateTime;
+      await startCounter(startDateTime)
+    }
+
+  }
+  async function startCounter(startDateTime) {
+    await $('#confirm').hide();
+    await $('#back').hide();
+    await $('#downtimeConfirm').show();
+    // for (let s = 0; s < 999; s++) {
+    //   await clearInterval(s);
+    // }
+    // await $(`#timer`).text("00:00:00");
+    await clearInterval(ghp);
+    await $(`#timer${mID}`).text("00:00:00");
+
+    console.log("ms2");
+    ghp = setInterval(() => msToHMS(startDateTime), 1000);
+    await $('.all').prop('disabled', true);
+  }
+  async function updateOperatorTable(ths) {
+    selOperatorId = "none"
+    // console.log('$(ths).val()', "1" + $(ths).val());
+    var operator = operators.find(o => o.id == $(ths).val())
+    // console.log('ths', operator);
+    if (operator) {
+      if (operator.aadharNumber) {
+        var desigOprId = ' (XXXX-XXXX-' + ((operator.aadharNumber).toString()).slice(-4) + ')'
+        if (operator.designation) desigOprId = ', ' + operator.designation + ' (XXXX-XXXX-' + ((operator.aadharNumber).toString()).slice(-4) + ')'
+      } else {
+        var desigOprId = ''
+        if (operator.designation) desigOprId = ', ' + operator.designation
+      }
+      selOperatorId = operator.id;
+      $('#select2-selectOperator-container').text(operator.fullName + desigOprId)
+      // $('#operatorName').text(operator.fullName + desigOprId)
+      $("#operatorNameModal").text(operator.fullName + desigOprId)
+      $('#operatorId').text(operator.id);
+      $("#operatorIdModal").text(operator.id)
+      operator.type ? $("#operatorType").text(operator.type) : $("#operatorType").text('Operator')
+      // $("#joining").text(moment(operator.experience[operator.experience.length - 1]["startEmployment"]).format('DD-MM-YYYY'))
+      operator.contact ? $("#contact").text(operator.contact) : $("#contact").text('')
+      $("#avgPerformance").text(operator.avgPerformance)
+      $("#efficiency").text(operator.efficiency)
+    } else {
+      $('#select2-selectOperator-container').text('Select Operator')
+      // $('#operatorName').text('No Operator Selected');
+      $("#operatorNameModal").text('No Operator Selected')
+      $('#operatorId').text('');
+      $("#operatorIdModal").text('')
+      $("#operatorType").text('')
+      $("#joining").text('')
+      $("#contact").text('')
+      $("#avgPerformance").text('')
+      $("#efficiency").text('')
+    }
+  }
+  async function acceptOperator() {
+    if (selOperatorId && selOperatorId != "") {
+      let now = new Date()
+      now.setSeconds(0); now.setMilliseconds(0);
+      let isoDateTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+      let currentDate = isoDateTime.toISOString().substr(0, 11) + '00:00:00.000Z'
+      var operatorData = {
+        "operatorId": selOperatorId,
+        "machineId": mID,
+        "clientId": clientId,
+        "plantId": localStorage.getItem("opPlantId"),
+        "date": currentDate,
+        "dateTime": isoDateTime,
+        "shift": currentShift
+      }
+
+      $.ajax({
+        url: opmsUrl + 'operator-logs',
+        data: JSON.stringify(operatorData),
+        headers: { "Authorization": "Bearer " + token },
+        type: "POST",
+        dataType: 'json',
+        contentType: 'application/json',
+        success: (data) => {
+          if (selOperatorId == 'none') {
+            $(`#operatorName`).text('No Operator Selected');
+            $(`#operatorImage`).attr('src', 'default.gif');
+            selOperatorId = "none";
+          } else {
+            var operator = operators.find(o => o.id == data.operatorId)
+            // console.log('operatorData1', operator, operatorData, data);
+            if (operator) {
+              $(`#operatorImage`).attr('src', operator.image ? opmsUrl + operator.image.replace('uploads', 'image') : apiUrl + 'image/users/default-profile-image.jpg');
+              if (operator.aadharNumber) {
+                var desigOprId = ' (XXXX-XXXX-' + ((operator.aadharNumber).toString()).slice(-4) + ')'
+                if (operator.designation) desigOprId = ', ' + operator.designation + ' (XXXX-XXXX-' + ((operator.aadharNumber).toString()).slice(-4) + ')'
+              } else {
+                var desigOprId = ''
+                if (operator.designation) desigOprId = ', ' + operator.designation
+              }
+              selOperatorId = operator.id;
+              $(`#operatorName`).text(operator.fullName + desigOprId);
+            } else {
+              $(`#operatorName`).text('No Operator Selected');
+              selOperatorId = "none";
+            }
+          }
+          $("#operatorModal").modal('toggle');
+        },
+        error: (error) => {
+          console.log(error)
+          if (error && error.responseJSON && error.responseJSON.message == 'Unauthorized') logout()
+        }
+      })
+    } else {
+      // $("#operatorModal").modal('close');
+      $("#operatorModal").modal('toggle');
+
+    }
+  }
+  async function submitD(time) {
+    await clearInterval(ghp);
+
+    press = true;
+    var cTime = "";
+    if (time != "") {
+      cTime = time;
+    } else {
+      cTime = IST().toISOString();
+    }
+    localStorage.setItem("machineStartD", cTime);
+    $('.all').prop('disabled', true);
+    var dataConfirm = {
+      "dataId": "0",
+      "downTimeTypes": [$('#dtReason').text()],
+      "machineId": mID,
+      "name": $('#dtReason').text(),
+      "startDateTime": cTime,
+      "type": "activity"
+    }
+
+    // console.log("SQ", dataConfirm);
+    if (optionTypeValue != "" || subOptionTypeValue != "") {
+      await submitDowntime("", dataConfirm, submitDowntimeOption);
+    } else {
+      await submitDowntime("", dataConfirm);
+    }
+    $('#confirm').hide()
+    $('#back').hide()
+    $('#downtimeConfirm').show()
+  }
+</script>
+
+</html>

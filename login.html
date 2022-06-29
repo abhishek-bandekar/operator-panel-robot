@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://kit.fontawesome.com/a25b1600a4.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://getbootstrap.com/docs/5.1/dist/css/bootstrap.min.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <script src="https://getbootstrap.com/docs/5.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+  <title>Document</title>
+</head>
+
+<body style="background-color: #192039;">
+  <div class="container-fluid" style="background-color: #192039;width:100%;height: 700px;float: left;">
+    <div style="height: auto;padding: 30px;">
+      <div class="col-md-4" style="float:left">hhii
+      </div>
+      <div class="col-md-4" style="text-align: center;float:left">
+        <img src="auto_log.png" style="width: 30%;"></img>
+      </div>
+      <div class="col-md-4" style="float:left">
+      </div>
+    </div>
+    <div class="col-md-12" style="margin-top:30px;background-color: #192039;float: left;">
+      <div class="col-md-4" style="float: left;">.
+      </div>
+      <div class="col-md-4" style="float: left;">
+        <div style="float: left;width:100%;height: 550px;background-color: #192039;">
+          <div
+            style="height:100%;background-color: #1C233F;margin:0px 90px;box-shadow: 10px;border: 2px solid #192039;border-radius: 10px;">
+            <div style="padding:50px 60px">
+              <h5 style="color: white;font-size: 1.14rem;font-weight:500;font-family: inherit;line-height :2;">
+                Welcome
+                back</h5>
+              <h6
+                style="color: #B8C2CC !important;font-size: small;font-weight: 400; font-family:'Montserrat', Helvetica, Arial, serif;">
+                Login to manage your account</h6>
+              <form id="loginForm" class="" role="form" method="post" onSubmit="authenticateUser()">
+
+                <div class=" mb-3 form-group" style="padding-top: 10px;">
+                  <label for="exampleFormControlInput1" class="form-label" style="color: #5E676F;font-size: 18px;">Email
+                  </label>
+                  <input type="email" class="form-control" id="username" required placeholder="Enter Email">
+                </div>
+                <div class="mb-3 form-group">
+                  <label for="exampleFormControlInput1" class="form-label"
+                    style="color: #5E676F;font-size: 18px;">Password
+                  </label>
+                  <input type="password" class="form-control" id="password" required placeholder="Password">
+                </div>
+
+                <div style="text-align: right;">
+                  <span style="color: #B8C2CC !important;">Forgot password?</span>
+                </div>
+
+                <div class="form-check" style="margin-top: 10px;">
+                  <input class="form-check-input" type="checkbox" value="" id="remember">
+                  <label class="form-check-label" for="flexCheckDefault" style="color: #5E676F;font-size: 17px;">
+                    Remember me
+                  </label>
+                </div>
+                <div id="loginMessage" class="alert d-none" role="alert" style="margin-top: 10px">
+                  A simple primary alert—check it out!
+                </div>
+                <button type="submit" class="btn"
+                  style="background-color:#7367F0;color: white;margin-top: 20px;width: 50%;font-family: inherit;">Sign
+                  in</button>
+              </form>
+              <h6 style="color: #B8C2CC !important;font-weight: 400;margin-top: 15px;">Do not have an account?</h6>
+              <h6 style="color: #3A7EED !important;font-weight: 400;margin-top: 5px;padding-bottom: 20px;">Sign up
+              </h6>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" style="float: left;">
+        .</div>
+    </div>
+
+    <div class="col-md-12" style="margin-top:30px;background-color: #192039;">
+      <div class="col-md-4" style="float: left;">.
+      </div>
+      <div class="col-md-4" style="float: left;color: white;">
+        <div style="float: left;width:100%;height: 200px;background-color: #192039;">
+          <div style="padding:30px 60px;text-align: center;font-family: 'Montserrat', Helvetica, Arial, serif;
+          font-size: 1rem;
+          font-weight: 400;
+          color: #B8C2CC !important;
+          line-height: 1.45;">
+            <span>Copyright © 2018 Autosys Industrial</span><br />
+            <span>Solutions Pvt. Ltd. All rights reserved</span><br />
+            <span>Terms of use | Privacy Policy</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" style="float: left;">.
+      </div>
+    </div>
+  </div>
+  <script src="systemConfiguration.js"></script>
+  <script src="login.js"></script>
+
+</body>
+
+</html>
