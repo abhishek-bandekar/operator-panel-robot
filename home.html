@@ -26,7 +26,7 @@
 <body style="background-color: black">
   <div id="nav"></div>
   <div id="machines" style="display: block;" class="container-fluid">
-    <div class="col-md-12" id="data">
+    <div class="col-md-12" id="data" style="margin-top: 70px;">
       <div class="col-md-3" style="float: left;">
         <div style="height:100%;background-color: #42454A;float: left;border-radius: 10px;margin: 15px;">
           <div style="margin: 20px;">
@@ -74,7 +74,7 @@
     </div>
   </div>
 
-  <div id="machinesProfile" style="display: none;" class="container-fluid">
+  <div id="machinesProfile" style="display: none;margin-top: 70px;" class="container-fluid">
     <div class="col-md-12" style="min-height:620px;background-color: #202120;float: left;width: 100%;">
       <div class="col-md-3" style="height:620px;background-color: black;float: left;">
         <div style="height:100%;background-color: #202120;margin: 10px;border-radius: 10px;">
@@ -229,15 +229,15 @@
                       </div>
                       <div style="float: left;width: 40%;">
                         <span>
-                          <span style="font-size: 17px;font-weight: 700;">Idle Time :<span
-                              style="margin-left: 10px;">0</span>
+                          <span style="font-size: 17px;font-weight: 700;">Idle Time :<span style="margin-left: 10px;"
+                              id="idealTable">0</span>
                           </span>
                         </span>
                       </div>
                       <div style="float: left;width: 25%;">
                         <span>
                           <span style="font-size: 17px;font-weight: 700;">Operator Efficiency :<span
-                              style="margin-left: 10px;">0</span>
+                              style="margin-left: 10px;" id="effTable">0</span>
                           </span>
                         </span>
                       </div>
@@ -292,7 +292,9 @@
                       </div>
                       <div style="margin-top: 20px;">
                         <h6 style="line-height: 1rem;" id="dtReason">Maintenance</h6>
-                        <h6 style="line-height: 1rem;">Timer : <span class="Time" id="timer">00:00:00</span></h6>
+                        <div id="TimeDiv">
+                          <h6 style="line-height: 1rem;">Timer : <span class="Time" id="timer">00:00:00</span></h6>
+                        </div>
                         <!-- <button id="downtimeConfirm${i}" class="btn btn-outline-info px-3" onclick="completeD()"
                           style="margin:6px">Finish</button> -->
                         <button id="downtimeConfirm" class="btn btn-outline-info px-3" onclick="completeDowntime()"
@@ -506,6 +508,15 @@
     /* Handle on hover */
     .AB::-webkit-scrollbar-thumb:hover {
       background: #797A79;
+    }
+
+    nav.navbar.navbar-expand-lg {
+      background-color: black;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1;
     }
   </style>
   <script>

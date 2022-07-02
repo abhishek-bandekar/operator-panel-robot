@@ -110,7 +110,6 @@ $(document).ready(async function () {
   });
   socket.on('activityData', (activityData) => {
     if (activityData.machineId == mID) {
-
       clearInterval(ghp);
       optionTypeValue = "";
       subOptionTypeValue = "";
