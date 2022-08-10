@@ -28,7 +28,7 @@ async function authenticateUser() {
 
       localStorage.setItem('usertoken', response.token)
       localStorage.setItem('clientId', response.clientId)
-      localStorage.setItem('clientLogo', response._clientId.logo)
+      // localStorage.setItem('clientLogo', response._clientId.logo)
       localStorage.setItem('fullname', response.fullname)
       localStorage.setItem('userId', response["_id"])
       localStorage.setItem('designation', response.designation)

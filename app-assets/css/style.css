@@ -1,0 +1,9 @@
+/*
+Custom css
+*/
+.active {
+	background: #1c233f;
+}
+.inactive {
+    background: red;
+}

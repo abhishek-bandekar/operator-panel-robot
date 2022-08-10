@@ -1,44 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<head>
+  <!-- <script src="jquery.cookies.js"></script>
+  <script type="text/javascript"
+    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script> -->
+</head>
 <!-- <body> -->
-<nav class="navbar navbar-expand-lg " style="background-color: black;">
+<nav class="navbar1 navbar-expand-lg " style="background-color: black;">
   <div class="container-fluid">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
-      aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+      aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation"
+      style="float:left;margin-right: 10px;">
+      <span class="navbar-toggler-icon"><i class="fal fa-bars" style="color: white;margin-top: 10px;"></i></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <div style="width: auto;float:left" class="navbar-toggler">
+      <span class="nav-item dropdown ">
+        <a class="nav-link dropdown-toggle plantDropdown1" href="#" id="navbarDropdown" role="button"
+          data-bs-toggle="dropdown" aria-expanded="false" style="color:aliceblue;padding:.5rem 0rem">
+          <i class="fal fa-cube" style="color:aliceblue"></i></a>
+        <ul class="dropdown-menu dropdown-menu-dark ab" aria-labelledby="navbarDropdown"
+          style="background-color: #192039;">
+        </ul>
+      </span>
+      <span class="nav-item dropdown ">
+        <a class="nav-link dropdown-toggle divisionDropdown1" href="#" id="navbarDropdown" role="button"
+          data-bs-toggle="dropdown" aria-expanded="false" style="color:aliceblue;padding:.5rem 0rem">
+          <i class="fal fa-cube" style="color:aliceblue"></i></a>
+        <ul class="dropdown-menu dropdown-menu-dark divisionDropdown" id="divisionDropdown"
+          aria-labelledby="navbarDropdown" style="background-color: #192039;">
+        </ul>
+      </span>
+      <span class="nav-item dropdown ">
+        <a class="nav-link dropdown-toggle lineDropdown1" href="#" id="navbarDropdown" role="button"
+          data-bs-toggle="dropdown" aria-expanded="false" style="padding-top:0px;color:aliceblue;padding:.5rem 0rem">
+          <i class="fal fa-cube" style="color:aliceblue"></i></a>
+        <ul class="dropdown-menu dropdown-menu-dark lineDropdown" aria-labelledby="navbarDropdown" id="lineDropdown"
+          style="background-color: #192039;">
+        </ul>
+      </span>
+      <span class="nav-item dropdown ">
+        <a class="nav-link dropdown-toggle locationDropdown1" href="#" id="navbarDropdown" role="button"
+          data-bs-toggle="dropdown" aria-expanded="false" style="color:aliceblue;padding:.5rem 0rem">
+          <i class=" fal fa-map-marker-alt" style="color:aliceblue"></i></a>
+        <ul class=" dropdown-menu dropdown-menu-dark locationDropdown" aria-labelledby="navbarDropdown"
+          id="locationDropdown" style="background-color: #192039;">
+        </ul>
+      </span>
+    </div>
+    <!-- <i class="fal fa-cube" style="color:aliceblue"></i>
+    <i class="fal fa-cube" style="color:aliceblue"></i>
+    <i class=" fal fa-map-marker-alt" style="color:aliceblue"></i> -->
+    <span style="color: white"></span>
+    <div class="dropdown navbar-toggler">
+      <a class="nav-link dropdown-toggle" href="#" id="logout" role="button" data-bs-toggle="dropdown"
+        aria-expanded="false" style="padding-top:0px;color:aliceblue">
+        <span style="float: left;text-align: right;width:auto;margin-top:0px;line-height:20px;padding-right: 8px;"><span
+            id="user" class="user"></span>
+          <br />
+          <small>Available</small>
+        </span>
+        <span style="width:30%">
+          <img src="avatar-s-11.jpg" style="width: 40px;border-radius: 20px;height: 40px;" class="userImg"
+            id="userImg"></img>
+        </span>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="locationDropdownn" id="logout"
+        style="background-color: #192039;">
+        <li data-menu="" class="active" onclick="logout()"><a class="dropdown-item" data-toggle="dropdown"
+            style="font-size: 14px;">Logout</a>
+        </li>
+      </ul>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo012">
       <div class="col-md-4">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false" style="padding-top:0px;color:aliceblue">
+          <li class="nav-item dropdown ">
+            <a class="nav-link dropdown-toggle plantDropdown1 " href="#" id="navbarDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false" style="padding-top:0px;color:aliceblue">
               <i class="fal fa-cube" style="margin-top:13px;color:aliceblue"></i>
-              <span id="selectedPlant" data-i18n="UI Elements">Select Plant</span>
+              <span id="selectedPlant" data-i18n="UI Elements" style="font-size: 14px;">Select Plant</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark ab" aria-labelledby="navbarDropdown"
               style="background-color: #192039">
             </ul>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false" style="padding-top:0px;color:aliceblue">
+          <li class="nav-item dropdown ">
+            <a class="nav-link dropdown-toggle divisionDropdown1" href="#" id="navbarDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false" style="padding-top:0px;color:aliceblue">
               <i class="fal fa-cube" style="margin-top:13px;color:aliceblue"></i>
-              <span id="selectedDivision" data-i18n="UI Elements">Select Division</span>
+              <span id="selectedDivision" data-i18n="UI Elements" style="font-size: 14px;">Select Division</span>
             </a>
-            <ul class="dropdown-menu dropdown-menu-dark" id="divisionDropdown" aria-labelledby="navbarDropdown"
-              style="background-color: #192039">
+            <ul class="dropdown-menu dropdown-menu-dark divisionDropdown" id="divisionDropdown"
+              aria-labelledby="navbarDropdown" style="background-color: #192039">
             </ul>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false" style="padding-top:0px;color:aliceblue">
-              <i class="fal fa-cube" style="margin-top:13px;color:aliceblue"></i>
-              <span id="selectedLine" data-i18n="UI Elements">Select Line</span>
-
+          <!-- <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle divisionDropdown1" href="#" id="navbarDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false" style="padding-top:0px;color:aliceblue">
+              <i class="fas fa-language" style="font-size: large;"></i></span>
             </a>
-            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown" id="lineDropdown"
+            <ul class="dropdown-menu dropdown-menu-dark divisionDropdown3" id="divisionDropdown3"
+              aria-labelledby="navbarDropdown" style="background-color: #192039">
+              <li data-menu="" class="active" rel="en"><a onclick="translatePage(this)"
+                  class="dropdown-item notranslate" data-toggle="dropdown" data-i18n="English">English</a></li>
+              <li data-menu="" rel="hi"><a onclick="translatePage(this)" class="dropdown-item notranslate"
+                  data-toggle="dropdown" data-i18n="Hindi">Hindi</a></li>
+              <li data-menu="" rel="pa"><a onclick="translatePage(this)" class="dropdown-item notranslate"
+                  data-toggle="dropdown" data-i18n="Punjabi">Punjabi</a></li>
+            </ul>
+          </li> -->
+
+          <!-- <li class="nav-item dropdown">
+            <a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="fas fa-language"
+                style="font-size: large;"></i>
+            </a>
+            <ul id="selectLanguage" class="dropdown-menu">
+              <li data-menu="" class="active" rel="en"><a onclick="translatePage(this)"
+                  class="dropdown-item notranslate" data-toggle="dropdown" data-i18n="English">English</a></li>
+              <li data-menu="" rel="hi"><a onclick="translatePage(this)" class="dropdown-item notranslate"
+                  data-toggle="dropdown" data-i18n="Hindi">Hindi</a></li>
+              <li data-menu="" rel="pa"><a onclick="translatePage(this)" class="dropdown-item notranslate"
+                  data-toggle="dropdown" data-i18n="Punjabi">Punjabi</a></li>
+            </ul>
+
+          </li> -->
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle lineDropdown1" href="#" id="navbarDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false" style="padding-top:0px;color:aliceblue">
+              <i class="fal fa-cube" style="margin-top:13px;color:aliceblue"></i>
+              <span id="selectedLine" data-i18n="UI Elements" style="font-size: 14px;">Select Line</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark lineDropdown" aria-labelledby="navbarDropdown" id="lineDropdown"
               style="background-color: #192039;">
             </ul>
           </li>
@@ -48,38 +142,38 @@
         <img src="auto_log.png" style="width: 30%;"></img>
       </div>
       <div class="col-md-4 nav navbar-nav navbar-right">
-        <div style="width: 40%;float: left;"></div>
-        <div style="float: left;width: 60%;">
+        <!-- <div style="width: 40%;float: left;"></div> -->
+        <div style="float: left;width: 100%;">
           <div style="float: left;width: 50%;text-align: right;">
-            <div class="dropdown" style="float: right;">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false" style="padding-top:0px;color:aliceblue">
+            <div class="dropdown " style="float: right;">
+              <a class="nav-link dropdown-toggle locationDropdown1" href="#" id="navbarDropdown" role="button"
+                data-bs-toggle="dropdown" aria-expanded="false" style="padding-top:0px;color:aliceblue">
                 <i class=" fal fa-map-marker-alt" style="margin-top:13px;color:aliceblue"></i>
-                <span id="selectedLocation" data-i18n="UI Elements">Select location</span>
+                <span id="selectedLocation" data-i18n="UI Elements" style="font-size: 14px;">Select location</span>
               </a>
-              <ul class=" dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown" id="locationDropdown"
-                style="background-color: #192039;">
+              <ul class=" dropdown-menu dropdown-menu-dark locationDropdown" aria-labelledby="navbarDropdown"
+                id="locationDropdown" style="background-color: #192039;">
               </ul>
             </div>
           </div>
           <div style="float: left;width: 50%;text-align: right;color:aliceblue">
             <div class="dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="logout" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false" style="padding-top:0px;color:aliceblue">
-                <span
-                  style="float: left;text-align: right;width:70%;margin-top:0px;line-height:20px;padding-right: 8px;"><span
-                    id="user"></span>
+              <a class="nav-link dropdown-toggle " href="#" id="logout" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false" style="padding-top:0px;color:aliceblue;font-size: 14px;">
+                <span style="float: left;text-align: right;margin-top:0px;line-height:20px;padding-right: 8px;"><span
+                    id="user" class="user"></span>
                   <br />
                   <small>Available</small>
                 </span>
                 <span style="width:30%">
-                  <img src="avatar-s-11.jpg" style="width: 40px;border-radius: 20px;height: 40px;" id="userImg"></img>
+                  <img src="avatar-s-11.jpg" style="width: 40px;border-radius: 20px;height: 40px;" class="userImg"
+                    id="userImg"></img>
                 </span>
               </a>
               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="locationDropdownn" id="logout"
                 style="background-color: #192039;">
-                <li data-menu="" class="active" onclick="logout()"><a class="dropdown-item"
-                    data-toggle="dropdown">Logout</a>
+                <li data-menu="" class="active" onclick="logout()"><a class="dropdown-item" data-toggle="dropdown"
+                    style="font-size: 14px;">Logout</a>
                 </li>
               </ul>
             </div>
@@ -96,6 +190,8 @@
 <script src="analogClock.js"></script>
 
 <script>
+  var TimouT = null;
+  var muT = null;
   var timerData = {};
   var divisionData = [];
   var linesData = [];
@@ -130,19 +226,25 @@
 
 
 
-
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      transliterationEnabled: true
+    }, 'google_translate_element');
+  }
 
   $(document).ready(async function () {
-
+    // await googleTranslateElementInit();
     setTimeout("preventBack()", 0);
     window.onunload = function () { null };
 
 
 
     $('.ab').empty();
-    $('#locationDropdown').empty();
-    $('#user').text(localStorage.getItem("fullname"));
+    $('.locationDropdown').empty();
+    $('.user').text(localStorage.getItem("fullname"));
     var userImg = localStorage.getItem("userImg");
+
 
     var btn = document.getElementById('flip_content');
     var btn1 = document.getElementById('flip_content1');
@@ -160,10 +262,14 @@
     }
 
 
+    if (localStorage.getItem("Pages") == null) {
+      localStorage.setItem("Pages", "1");
+    }
+
     if (userImg != undefined) {
       userImg = userImg.replace("uploads/", "image/")
       userImg = pelUrl + userImg
-      document.getElementById("userImg").src = userImg
+      document.getElementsByClassName("userImg").src = userImg
     }
     var plantUrl = getPlants + '?clientId=' + clientId
     plants = await getCallAPI(plantUrl, token, 'GET');
@@ -174,11 +280,12 @@
     linesData = await getCallAPI(pelUrl + 'client/location/plant/division/lines?clientId=' + clientId, token, 'GET');
     locationData = await getCallAPI(getLocations + '?clientId=' + clientId, token, 'GET');
     for (let z = 0; z < locationData.length; z++) {
-      $('#locationDropdown').append(`<li data-menu="" class="active" rel='${locationData[z].id}'><a onclick="populateplants(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">${locationData[z].name}</a></li>`);
+      $('.locationDropdown').append(`<li data-menu="" class="active" style="font-size: 14px;"rel='${locationData[z].id}'><a onclick="populateplants(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">${locationData[z].name}</a></li>`);
       if (z == locationData.length - 1) {
-        await populateplants(`<li data-menu="" class="active" rel='${locationData[0].id}'><a onclick="populateplants(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">${locationData[0].name}</a></li>`)
+        await populateplants(`<li data-menu="" class="active" style="font-size: 14px;" rel='${locationData[0].id}'><a onclick="populateplants(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">${locationData[0].name}</a></li>`)
       }
     }
+    // await googleTranslateElementInit();
     // console.log("locationData", locationData);
 
   });
@@ -194,7 +301,7 @@
     downtimeD = {};
 
     for (let x = 0; x < plantsD.length; x++) {
-      $('.ab').append(`<li data-menu="" class="active" rel='${plantsD[x].id}'><a onclick="populateDivision(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">${plantsD[x].name}</a></li>`);
+      $('.ab').append(`<li data-menu="" class="active" style="font-size: 14px;" rel='${plantsD[x].id}'><a onclick="populateDivision(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">${plantsD[x].name}</a></li>`);
       downtimeD[plantsD[x].id] = {};
       downtimeD[plantsD[x].id] = { "downtimeDeductions": plantsD[x].downtimeDeductions }
       if (x == plantsD.length - 1) {
@@ -213,15 +320,30 @@
     plantId = $(ths).closest('li').attr('rel');
     localStorage.setItem('opPlantId', plantId);
     var divisions = divisionData.filter(obj => obj.plantId == $(ths).closest('li').attr('rel'));
-    $('#divisionDropdown').empty();
-    $('#divisionDropdown').append(`<li data-menu="" class="active" rel='all'><a onclick="populateLines(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">All</a></li>`);
+    $('.divisionDropdown').empty();
+    $('.divisionDropdown').append(`<li data-menu="" class="active" style="font-size: 14px;" rel='all'><a onclick="populateLines(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">All</a></li>`);
     for (let j = 0; j < divisions.length; j++) {
-      $('#divisionDropdown').append(`<li data-menu="" class="active" rel='${divisions[j].id}'><a onclick="populateLines(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">${divisions[j].name}</a></li>`);
+      $('.divisionDropdown').append(`<li data-menu="" class="active" style="font-size: 14px;"rel='${divisions[j].id}'><a onclick="populateLines(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">${divisions[j].name}</a></li>`);
       if (j == divisions.length - 1) {
         await populateLines(`<li data-menu="" class="active" rel='${divisions[0].id}'><a onclick="populateLines(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">${divisions[0].name}</a></li>`);
+
       }
     }
   }
+
+  // function googleTranslateElementInit() {
+  //   new google.translate.TranslateElement({
+  //     pageLanguage: 'en',
+  //     transliterationEnabled: true
+  //   }, 'google_translate_element');
+  // }
+  function googleTranslateElementInit1() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      transliterationEnabled: true
+    }, 'google_translate_element');
+  }
+
   const populateLines = async ths => {
     $('#selectedDivision').html($(ths).text());
     divId = $(ths).closest('li').attr('rel');
@@ -236,15 +358,17 @@
     } else {
       lines = linesData.filter(obj => obj.divisionId == $(ths).closest('li').attr('rel'));
     }
-    $('#lineDropdown').empty();
-    $('#lineDropdown').append(`<li data-menu="" class="active" rel='all'><a onclick="populateMachine(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">All</a></li>`);
+    $('.lineDropdown').empty();
+    $('.lineDropdown').append(`<li data-menu="" class="active" style="font-size: 14px;" rel='all'><a onclick="populateMachine(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">All</a></li>`);
     for (let j = 0; j < lines.length; j++) {
-      $('#lineDropdown').append(`<li data-menu="" class="active" rel='${lines[j].id}'><a onclick="populateMachine(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">${lines[j].name}</a></li>`);
+      $('.lineDropdown').append(`<li data-menu="" class="active" style="font-size: 14px;" rel='${lines[j].id}'><a onclick="populateMachine(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">${lines[j].name}</a></li>`);
       lineD[lines[j].id] = {};
       lineD[lines[j].id] = { 'name': lines[j]['name'] }
       if (j == lines.length - 1) {
         localStorage.setItem('LineD', JSON.stringify(lineD));
+
         await populateMachine(`<li data-menu="" class="active" rel='${lines[0].id}'><a onclick="populateMachine(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">${lines[0].name}</a></li>`);
+
       }
     }
   }
@@ -276,6 +400,8 @@
 
     localStorage.setItem("opData", JSON.stringify(opData));
     var mData = await getCallAPI(mUrl, token, 'GET');
+    console.log("Sw", mData);
+
     var shiftsData = await getCallAPI(shiftUrl, token, 'GET');
     if (dateData.time >= "00:00:00" && dateData.time < shiftsData[0]['startDateTime'].substring(11, 19)) {
       currentDate = moment(currentDate).add(1, "days").format("YYYY-MM-DD");
@@ -300,15 +426,18 @@
     localStorage.setItem("statsUrl", statsUrl);
     var statsData = await getCallAPI(statsUrl, token, 'GET');
     $('#data').empty();
+    var mCOunt = 0;
     await mData.map((data, i) => {
-      $('#data').append(`<div class="col-md-3" style="float: left; " id='${data.id}'>
-        <a onClick="nextPage('${data.id}')">
+      if (data && data.type && data.type == "swr" || data.type == "mwr" || data.type == "twr") {
+        mCOunt++;
+        $('#data').append(`<div class="col-md-3" style="float: left;" id='${data.id}'>
+        <a class="opI" onClick="nextPage('${data.id}')">
         <div class="blackbox" style="min-height:259px;height:100%;background-color: #42454A;float: left;border-radius: 10px;margin: 15px;">
           <div style="padding:20px 7px 20px 15px">
             <p style="color: white;width: 100%;float: left;">
               <span style="float: left;width: 100%;font-weight:500;font-size: 19px;">
-                <span style="float: left;width: 75%;font-weight:600;font-size: 19px;" >${data.name}</span>
-                  <span style="float: left;text-align:right;width:25%;font-weight: 500;font-size: 20px;color: #0ed00e;" id="mu-${data.id}">72.12 %<span>
+                <span style="float: left;width: 70%;font-weight:600;font-size: 19px;" >${data.name}</span>
+                  <span style="float: left;text-align:right;width:30%;font-weight: 500;font-size: 20px;color: #0ed00e;" id="mu-${data.id}">0 %<span>
                     </span>
             </p>
             <div style="margin-top: 20px;">
@@ -349,31 +478,103 @@
         </div>
       </a>
       </div>`);
+      }
     })
-    console.log("statsData12", statsData);
-    await machineUt(statsData);
-    await socket.on(plantId, function (data) {
-      // console.log("SwamiData", data, plantId)
-      if ('count' in data) {
-        if ('stationNo' in data && 'cycleTime' in data) {
-          $(`#ct-${data['stationNo']}-${data['machineId']}`).text(data['cycleTime']);
+    if (mCOunt == 0) {
+      $('#data').append(`<div><h4 style="color:white;text-align:center;margin:22%" >No Machines (Robot) Found. </h4></div>`)
+    } else {
+      console.log("statsData12", statsData);
+      await machineUt(statsData);
+      muT = await setInterval(async function () { console.log("SSS"); await statsDataUrl(); }, 1 * 60 * 1000);
+
+      await socket.on(plantId, function (data) {
+        // console.log("SwamiData", data, plantId)
+        if ('count' in data) {
+          if ('stationNo' in data && 'cycleTime' in data) {
+            $(`#ct-${data['stationNo']}-${data['machineId']}`).text(data['cycleTime']);
+          }
         }
-      }
-      if ('stationCount' in data) {
-        for (let b = 0; b < data['stationCount'].length; b++) {
-          $(`#st-${data['stationCount'][b]['number']}-${data['machineId']}`).text(data['stationCount'][b]['value']);
+        if ('stationCount' in data) {
+          for (let b = 0; b < data['stationCount'].length; b++) {
+            $(`#st-${data['stationCount'][b]['number']}-${data['machineId']}`).text(data['stationCount'][b]['value']);
+          }
         }
+      });
+      // console.log('mIk', statsData, downtimeD);
+      if (localStorage.getItem("Pages") == "2") {
+        for (let h = 0; h < 99999; h++) {
+          await clearInterval(h)
+        }
+        await $('#machines').hide();
+        await $('#machinesProfile').show();
+        await init();
+        // 
+        TimouT = await setInterval(async function () { await init2(); }, 1 * 60 * 1000);
+
       }
-    });
-    // console.log('mIk', statsData, downtimeD);
+    }
   }
-  function machineUt(statsD) {
+
+  async function statsDataUrl() {
+
+    var dateData = await ist();
+    var currentDate = dateData.date;
+    // var mUrl = getMachines + '?plantId=' + plantId;
+    var statsUrl = downtimeStats + '?clientId=' + clientId + '&plantId=' + plantId;
+    // var shiftUrl = getIntervalsNew + '?clientId=' + clientId + '&plantId=' + plantId + '&type=Daily' + '&date=' + dateData.date;
+    // var shiftUrl1 = getIntervalsNew + '?clientId=' + clientId + '&plantId=' + plantId + '&type=Daily';
+    if (divId != 'all') {
+      // mUrl += '&divisionId=' + divId;
+      statsUrl += '&divisionId=' + divId;
+      // shiftUrl += '&divisionId=' + divId;
+      // shiftUrl1 += '&divisionId=' + divId;
+    }
+    if (lineId != 'all') {
+      // mUrl += '&lineId=' + lineId;
+      statsUrl += '&lineId=' + lineId;
+    }
+    // var opUrl = getOperators + '?clientId=' + clientId + '&plantId=' + plantId;
+    // console.log('opUrl', opUrl);
+
+    // var opData = await getCallAPI(opUrl, token, 'GET');
+
+    // localStorage.setItem("opData", JSON.stringify(opData));
+    // var mData = await getCallAPI(mUrl, token, 'GET');
+    // console.log("Sw", mData);
+
+    // var shiftsData = await getCallAPI(shiftUrl, token, 'GET');
+    // if (dateData.time >= "00:00:00" && dateData.time < shiftsData[0]['startDateTime'].substring(11, 19)) {
+    //   currentDate = moment(currentDate).add(1, "days").format("YYYY-MM-DD");
+    // }
+    // localStorage.setItem("currentDate", currentDate);
+    // var intervalsUrl = shiftUrl1 + "&date=" + currentDate;
+    // var intervalsData = await getCallAPI(intervalsUrl, token, 'GET');
+    // shiftsObject = {};
+    // for (let c = 0; c < intervalsData.length; c++) {
+    //   shiftsObject[intervalsData[c]['name'] + '-startDateTime'] = intervalsData[c]['startDateTime'].substring(11, 19);
+    //   shiftsObject[intervalsData[c]['name'] + '-startDate'] = intervalsData[c]['startDateTime'].substring(0, 10);
+    //   shiftsObject[intervalsData[c]['name'] + '-endDateTime'] = intervalsData[c]['endDateTime'].substring(11, 19);
+    //   shiftsObject[intervalsData[c]['name'] + '-endDate'] = intervalsData[c]['endDateTime'].substring(0, 10);
+    //   if (dateData.date + 'T' + dateData.time + '.000Z' >= intervalsData[c]['startDateTime'] && intervalsData[c]['endDateTime'] > dateData.date + 'T' + dateData.time + '.000Z') {
+    //     currentShift = intervalsData[c]['name']
+    //     localStorage.setItem("shiftsObject", JSON.stringify(shiftsObject));
+    //     localStorage.setItem("CurrentShift", currentShift);
+
+    //   }
+    // }
+    statsUrl += "&date=" + currentDate;
+    localStorage.setItem("statsUrl", statsUrl);
+    var statsData = await getCallAPI(statsUrl, token, 'GET');
+    muT = await setInterval(async function () { await machineUt(statsData) }, 1 * 60 * 1000);
+
+  }
+  async function machineUt(statsD) {
     console.log("currentShift786", currentShift);
     for (let s = 0; s < statsD.length; s++) {
       if (statsD[s].stats && Object.values(statsD[s].stats).length != 0) {
         var shiftobj = statsD[s].stats[currentShift];
         if (shiftobj != undefined) {
-          console.log("shiftobj", shiftobj);
+          // console.log("shiftobj", shiftobj);
           // console.log('shiftobj', shiftobj, currentShift);
           var cal1 = shiftobj.runtime + shiftobj.loading + shiftobj.unloading;
           var totaldeduction = 0;
@@ -386,18 +587,25 @@
             }
           });
           var cal2 = (shiftobj.total - shiftobj.breaks) - totaldeduction;
-          var mu = (cal1 / cal2) * 100
+          var mu = (cal1 / cal2) * 100;
+          console.log('`#mu-${statsD[s].machineId}`', `#mu-${statsD[s].machineId}`, isFinite(mu) && mu ? mu.toFixed(2) + " %" : 0 + "%")
           $(`#mu-${statsD[s].machineId}`).text(isFinite(mu) && mu ? mu.toFixed(2) + " %" : 0 + "%");
         }
       }
     }
   }
+
   async function nextPage(machineID) {
     localStorage.setItem("machineID", machineID);
     // window.location.href = "index.html?id=" + machineID;
     await $('#machines').hide();
     await $('#machinesProfile').show();
+    for (let h = 0; h < 99999; h++) {
+      await clearInterval(h)
+    }
     await init();
+    TimouT = await setInterval(async function () { await init2(); }, 1 * 60 * 1000);
+
   }
   const msToHMS = (ms) => {
     // console.log('ms', ms, `machines[${idx}]`, window.machines[idx])//, window.machines[idx].timer)
@@ -426,8 +634,24 @@
     // $(`#timer`).html(pad(hrs) + ':' + pad(mins) + ':' + pad(secs))
   }
   async function machineProfileData() { }
-  async function init() {
 
+  async function translatePage(ths) {
+    $('#selectedLanguage').html($(ths).text())
+    $(ths).closest('ul').find('li').removeClass('active')
+    $(ths).closest('li').addClass('active')
+    let languageId = $(ths).closest('li').attr('rel')
+    $.cookie('googtrans', `/en/${languageId}`);
+    location.reload(true);
+  }
+  async function init() {
+    console.log("A1Swami", " Shree Swami Samarth");
+    // await googleTranslateElementInit1();
+
+    $('.divisionDropdown1').prop('disabled', 'disabled');
+    $('.lineDropdown1').prop('disabled', true);
+    $('.plantDropdown1').prop('disabled', true);
+    $('.locationDropdown1').prop('disabled', true);
+    localStorage.setItem("Pages", "2");
     press = false;
     mID = localStorage.getItem("machineID");
     operatorData = [];
@@ -437,16 +661,16 @@
     dtOptions = {};
     selectedDowntime = "";
     downtimeOptionId = "";
-    for (let h = 0; h < 99999; h++) {
-      await clearInterval(h)
-    }
+    // for (let h = 0; h < 99999; h++) {
+    //   await clearInterval(h)
+    // }
     // await clearInterval(ghp);1
     if (timerData[mID] && timerData[mID].timeID) {
       await clearInterval(timerData[mID].timeID);
     }
     // await $(`#timer`)
-    await $(`#TimeDiv`).empty();
-    await $(`#TimeDiv`).append(`<h6 style="line-height: 1rem;">Timer : <span class="Time1" id="timer${mID}">00:00:00</span></h6>`);
+    await $(`.TimeDiv`).empty();
+    await $(`.TimeDiv`).append(`<h6 style="line-height: 1rem;">Timer : <span class="Time1" id="timer${mID}">00:00:00</span></h6>`);
     // await $(`.Time`).attr('id', `timer${mID}`);
     // await $(`#timer`).text("00:00:00");
     await $(`#timer${mID}`).text("00:00:00");
@@ -463,13 +687,14 @@
     var machineData = await getCallAPI(machineUrl, token, 'GET');
     operators = await getCallAPI(getOperators + '?clientId=' + clientId + '&plantId=' + localStorage.getItem("opPlantId"), token, 'GET');
     // console.log('operators', operators);
+    $('#selectOperator').empty();
+    $('#selectOperator').append(`<option value="none">No Operator</option>`);
 
     if (operators && operators.length != 0) {
-      $('#selectOperator').empty();
       for (let g = 0; g < operators.length; g++) {
-        if (g == 0) {
-          $('#selectOperator').append(`<option value="none">No Operator</option>`);
-        }
+        // if (g == 0) {
+        //   $('#selectOperator').append(`<option value="none">No Operator</option>`);
+        // }
         $('#selectOperator').append(`<option value=${operators[g].id}>${operators[g].fullName}</option>`);
       }
     }
@@ -478,7 +703,8 @@
       machineImg = pelUrl + machineImg
       document.getElementById("machineImage").src = machineImg;
     }
-    document.getElementById("machineName").textContent = machineData && machineData[0] && machineData[0].name ? machineData[0].name : " ";
+    document.getElementById("machineName").textContent = machineData && machineData[0] && machineData[0].name ? _.truncate(machineData[0].name, { 'length': 12, 'omission': '...' }) : " ";
+    document.getElementById("machineName").title = machineData && machineData[0] && machineData[0].name ? machineData[0].name : " ";
     var lineOb = JSON.parse(localStorage.getItem('LineD'));
     document.getElementById("lineName").textContent = machineData && machineData[0] && machineData[0].lineId && lineOb[machineData[0].lineId] ? lineOb[machineData[0].lineId]['name'] : " ";
     // getAllOperatorLogs
@@ -498,8 +724,8 @@
         }
         if ('status' in data) {
           if (data['status'] == 'Active' || data['status'] == 'active') {
-            // document.getElementById("status").style.color = "#007F00";
-            document.getElementById("status").style.color = rgb(0, 255, 76);
+            document.getElementById("status").style.color = "#007F00";
+            // document.getElementById("status").style.color = rgb(0, 255, 76);
             $('#status').text(data['status']);
           } else {
             document.getElementById("status").style.color = "#FF0101";
@@ -562,13 +788,129 @@
     }
     await operatorEff();
     await hourlyData();
+
     // console.log("operatorUrl", operatorUrl, opData);
   }
 
+  async function init2() {
+    console.log("A1Swami", " Shree Swami Samarth !!");
+    $('.divisionDropdown1').prop('disabled', 'disabled');
+    $('.lineDropdown1').prop('disabled', true);
+    $('.plantDropdown1').prop('disabled', true);
+    $('.locationDropdown1').prop('disabled', true);
+    localStorage.setItem("Pages", "2");
+    press = false;
+    mID = localStorage.getItem("machineID");
+    operatorData = [];
+    shiftsObject = {};
+    operators = [];
+    selOperatorId = "none"
+    dtOptions = {};
+    selectedDowntime = "";
+    downtimeOptionId = "";
+    // for (let h = 0; h < 99999; h++) {
+    //   await clearInterval(h)
+    // }
+    // await clearInterval(ghp);1
+    // if (timerData[mID] && timerData[mID].timeID) {
+    //   await clearInterval(timerData[mID].timeID);
+    // }
+    // await $(`#timer`)
+    // await $(`.TimeDiv`).empty();
+    // await $(`.TimeDiv`).append(`<h6 style="line-height: 1rem;">Timer : <span class="Time1" id="timer${mID}">00:00:00</span></h6>`);
+
+    // await $("#dtWatch").hide();
+    // await $("#dtButtons").show();
+    currentTime = await ist();
+    currentShift = localStorage.getItem("CurrentShift");
+    currentDate = localStorage.getItem("currentDate");
+    operatorData = JSON.parse(localStorage.getItem("opData"));
+    statsUrl = localStorage.getItem("statsUrl");
+    shiftsObject = JSON.parse(localStorage.getItem("shiftsObject"));
+    // console.log('shiftsObjectSW', shiftsObject);
+    var machineUrl = getMachines + '?clientId=' + clientId + '&id=' + mID;
+    var machineData = await getCallAPI(machineUrl, token, 'GET');
+    operators = await getCallAPI(getOperators + '?clientId=' + clientId + '&plantId=' + localStorage.getItem("opPlantId"), token, 'GET');
+    // console.log('operators', operators);
+
+    if (operators && operators.length != 0) {
+      $('#selectOperator').empty();
+      for (let g = 0; g < operators.length; g++) {
+        if (g == 0) {
+          $('#selectOperator').append(`<option value="none">No Operator</option>`);
+        }
+        $('#selectOperator').append(`<option value=${operators[g].id}>${operators[g].fullName}</option>`);
+      }
+    }
+    if (machineData && machineData[0] && machineData[0].image) {
+      var machineImg = machineData[0].image.replace("uploads/", "image/");
+      machineImg = pelUrl + machineImg
+      document.getElementById("machineImage").src = machineImg;
+    }
+    document.getElementById("machineName").textContent = machineData && machineData[0] && machineData[0].name ? _.truncate(machineData[0].name, { 'length': 12, 'omission': '...' }) : " ";
+    document.getElementById("machineName").title = machineData && machineData[0] && machineData[0].name ? machineData[0].name : " ";
+    var lineOb = JSON.parse(localStorage.getItem('LineD'));
+    document.getElementById("lineName").textContent = machineData && machineData[0] && machineData[0].lineId && lineOb[machineData[0].lineId] ? lineOb[machineData[0].lineId]['name'] : " ";
+
+    var operatorUrl = getAllOperatorLogs + "?shift=" + currentShift + "&activeMachines=" + mID + "&date=" + currentDate + "&clientId=" + clientId;
+    var opData = await getCallAPI(operatorUrl, token, 'GET');
+    // console.log('KLJ', opData);
+
+    // console.log('SwamiopName', opData, operators, operatorUrl);
+    if (opData.length != 0) {
+      // opData[0].operatorId;
+      var opName = operatorData.filter(obj => obj.id == opData[0].operatorId);
+      var desigOprId = '';
+      selOperatorId = opName[0].id;
+      document.getElementById('selectOperator').value = selOperatorId;
+      // console.log("opName", opName);
+      if (opName && opName[0] && opName[0].fullName) {
+        if (opName[0].aadharNumber) {
+          desigOprId = ' (XXXX-XXXX-' + ((opName[0].aadharNumber).toString()).slice(-4) + ')'
+          if (opName[0].designation) desigOprId = ', ' + opName[0].designation + ' (XXXX-XXXX-' + ((opName[0].aadharNumber).toString()).slice(-4) + ')'
+        } else {
+          desigOprId = ''
+          if (opName[0].designation) desigOprId = ', ' + opName[0].designation
+        }
+        $('#operatorName').text(opName[0].fullName + desigOprId);
+        $("#operatorNameModal").text(opName[0].fullName + desigOprId)
+        $("#operatorIdModal").text(opName[0].id);
+        opName[0].type ? $("#operatorType").text(opName[0].type) : $("#operatorType").text('Operator')
+
+      } else {
+        $('#operatorName').text("");
+      }
+      if (opName && opName[0] && opName[0].image) {
+        var opImg = opName[0].image.replace("uploads/", "image/");
+        opImg = opmsUrl + opImg;
+        // console.log('JK', opImg);
+        document.getElementById("operatorImage").src = opImg;
+      }
+    }
+    else {
+      $('#operatorName').text("No Operator Selected");
+      $(`#operatorImage`).attr('src', 'default.gif');
+      selOperatorId = 'none';
+      document.getElementById('selectOperator').value = "none";
+      $('#select2-selectOperator-container').text('Select Operator')
+      //   // $('#operatorName').text('No Operator Selected');
+      $("#operatorNameModal").text('No Operator Selected')
+      $('#operatorId').text('');
+      $("#operatorIdModal").text('')
+      $("#operatorType").text('')
+      $("#joining").text('')
+      $("#contact").text('')
+      $("#avgPerformance").text('')
+      $("#efficiency").text('')
+    }
+    await operatorEff();
+    await hourlyData2();
+    // console.log("operatorUrl", operatorUrl, opData);
+
+  }
   async function showOperatorModal() {
     $("#operatorModal").modal('show')
   }
-
   async function hourlyData() {
     // var from, to; //to current-time 
     // from = await setTime(shiftsObject[currentShift + '-startDate'], shiftsObject[currentShift + '-startDateTime']);
@@ -584,34 +926,39 @@
     });
     $('#countit').empty();
     $('#tbody').empty();
+    $('#tbody1').empty();
     // console.log('LPL', halfHourly123);
     var halfHourlyArray = Object.keys(halfHourly123);
     var tableHead = '<tr id="timeid"><th class="rowgroup"  ></th>';
     var tableHead1 = '<tr id="timeid1"><th class="rowgroup"  ></th>';
     var Target_row_total = '<tr id="count-tt"><th style="padding: 20px;font-size: 15px;">PLAN</th>';
     var Actual_row_total = '<tr id="count-tp"><th style="padding: 20px;font-size: 15px;">ACTUAL</th></th>';
+    var Vertical_table = ``;
     for (let k = 0; k < halfHourlyArray.length / 2; k++) {
+      Vertical_table += `<tr>`;
       if (halfHourlyArray[k + k + 2] == undefined) {
         // console.log("hal1", halfHourlyArray[k + k].slice(0, -3));
 
-        tableHead += `<th class="text-nowrap" style="padding: 5px">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))}</th></tr>`
-        tableHead1 += `<th class="text-nowrap" style="padding: 5px">${await tConvert(shiftsObject[currentShift + '-endDateTime'].slice(0, -3))}</th ></tr >`
+        tableHead += `<th class="text-nowrap" style="padding: 5px;text-align:start">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))}</th></tr>`
+        tableHead1 += `<th class="text-nowrap" style="padding: 5px;text-align:start">${await tConvert(shiftsObject[currentShift + '-endDateTime'].slice(0, -3))}</th ></tr >`
         // tableHead += `<th class="text-nowrap">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))}</th></tr>`
 
-        Target_row_total += `<td style="padding: 20px;text-align: start;"><b><span id="total-target-${k}">0</span></b></td></tr>`;
-        Actual_row_total += `<td style="padding: 20px;text-align: start;"><b><span id="total-actual-${k}">0</span></b></td></tr>`;
+        Target_row_total += `<td style="padding: 20px;text-align: start;"><b><span id="total-target-${k}" class="total-target-${k} zero">0</span></b></td></tr>`;
+        Actual_row_total += `<td style="padding: 20px;text-align: start;"><b><span id="total-actual-${k}" class="total-actual-${k} zero">0</span></b></td></tr>`;
         $('#countit').append(tableHead);
         $('#countit').append(tableHead1);
-
+        Vertical_table += ` <td style="text-align:left;font-weight:600">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))} To ${await tConvert(shiftsObject[currentShift + '-endDateTime'].slice(0, -3))}</td><td style="text-align: center;"><b><span id="total-actual-${k}" class=id="total-actual-${k}">0</span></b></td><td style="text-align: center;"><b><span id="total-target-${k}" class="total-target-${k}">0</span></b></td></tr>`;
         $('#tbody').append(Target_row_total);
         $('#tbody').append(Actual_row_total);
+        $('#tbody1').append(Vertical_table);
 
       } else {
         // console.log("hal", halfHourlyArray[k + k].slice(0, -3));
-        tableHead += `<th class="text-nowrap" style="padding: 5px">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))}</th>`;
-        tableHead1 += `<th class="text-nowrap"style="padding: 5px" >${await tConvert(halfHourlyArray[k + k + 2].slice(0, -3))}</th>`;
-        Target_row_total += `<td style="padding: 20px;text-align: start;"><b><span id="total-target-${k}">0</span></b></td>`;
-        Actual_row_total += `<td style="padding: 20px;text-align: start;"><b><span id="total-actual-${k}">0</span></b></td>`;
+        tableHead += `<th class="text-nowrap" style="padding: 5px;text-align:start">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))}</th>`;
+        tableHead1 += `<th class="text-nowrap"style="padding: 5px;text-align:start" >${await tConvert(halfHourlyArray[k + k + 2].slice(0, -3))}</th>`;
+        Target_row_total += `<td style="padding: 20px;text-align: start;"><b><span id="total-target-${k}" class="total-target-${k} zero">0</span></b></td>`;
+        Actual_row_total += `<td style="padding: 20px;text-align: start;"><b><span id="total-actual-${k}" class="total-actual-${k} zero">0</span></b></td>`;
+        Vertical_table += ` <td style="text-align:left;font-weight:600">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))} To ${await tConvert(halfHourlyArray[k + k + 2].slice(0, -3))}</td><td style="text-align: center;"><b><span id="total-actual-${k}" class="total-actual-${k}">0</span></b></td><td style="text-align: center;"><b><span id="total-target-${k}" class="total-target-${k}">0</span></b></td></tr>`;
       }
     }
     var hourlyUrl = halfHourlyProduction + "?clientId=" + clientId + "&plantId=" + localStorage.getItem("opPlantId") + "&machineId=" + mID + "&date=" + currentDate;
@@ -646,8 +993,8 @@
             }
             totaltargetH += targetVal;
             totalProd += halfHourlyArrayData[halfHourlyArray[r + r]];
-            $('#total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]]);
-            $('#total-target-' + r).text(targetVal);
+            $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]]);
+            $('.total-target-' + r).text(targetVal);
             $('#totalProduction').text(totalProd);
 
           } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
@@ -662,8 +1009,8 @@
             }
             totaltargetH += targetVal1 + targetVal2;
             totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
-            $('#total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
-            $('#total-target-' + r).text(targetVal1 + targetVal2);
+            $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+            $('.total-target-' + r).text(targetVal1 + targetVal2);
             $('#totalProduction').text(totalProd);
           }
           else {
@@ -678,8 +1025,8 @@
             totalactualH += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
             totaltargetH += (targetVal1 + targetVal2);
             totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
-            $('#total-actual-' + r).text((halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]));
-            $('#total-target-' + r).text((targetVal1 + targetVal2));
+            $('.total-actual-' + r).text((halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]));
+            $('.total-target-' + r).text((targetVal1 + targetVal2));
           }
         }
       } else if (halfHourlyTargetArrayData == undefined || halfHourlyTargetArrayData == null) {
@@ -689,8 +1036,8 @@
             var targetVal = 0;
             totaltargetH += targetVal;
             totalProd += halfHourlyArrayData[halfHourlyArray[r + r]];
-            $('#total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]]);
-            $('#total-target-' + r).text(targetVal);
+            $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]]);
+            $('.total-target-' + r).text(targetVal);
             $('#totalProduction').text(totalProd);
 
           } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
@@ -699,8 +1046,8 @@
             var targetVal2 = 0;
             totaltargetH += targetVal1 + targetVal2;
             totalProd += halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]];
-            $('#total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
-            $('#total-target-' + r).text(targetVal1 + targetVal2);
+            $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+            $('.total-target-' + r).text(targetVal1 + targetVal2);
             $('#totalProduction').text(totalProd);
           }
           else {
@@ -709,13 +1056,156 @@
             totalactualH += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
             totaltargetH += (targetVal1 + targetVal2);
             totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]])
-            $('#total-actual-' + r).text((halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]));
-            $('#total-target-' + r).text((targetVal1 + targetVal2));
+            $('.total-actual-' + r).text((halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]));
+            $('.total-target-' + r).text((targetVal1 + targetVal2));
           }
         }
       }
     }
     await downtimeType();
+  }
+  async function hourlyData2() {
+    var from, to;
+    from = await setTime(shiftsObject[currentShift + '-startDate'], shiftsObject[currentShift + '-startDateTime']);
+    to = await setTime(shiftsObject[currentShift + '-endDate'], shiftsObject[currentShift + '-endDateTime']);
+    var countArray = {};
+    var halfHourly123 = await new Promise((r, j) => {
+      dummyData(r, j, from, to, countArray)
+    }).then((result) => {
+      return result;
+    });
+    $('#countit').empty();
+    $('#tbody').empty();
+    $('#tbody1').empty();
+    var halfHourlyArray = Object.keys(halfHourly123);
+    var tableHead = '<tr id="timeid"><th class="rowgroup"  ></th>';
+    var tableHead1 = '<tr id="timeid1"><th class="rowgroup"  ></th>';
+    var Target_row_total = '<tr id="count-tt"><th style="padding: 20px;font-size: 15px;">PLAN</th>';
+    var Actual_row_total = '<tr id="count-tp"><th style="padding: 20px;font-size: 15px;">ACTUAL</th></th>';
+    var Vertical_table = ``;
+    for (let k = 0; k < halfHourlyArray.length / 2; k++) {
+      Vertical_table += `<tr>`;
+      if (halfHourlyArray[k + k + 2] == undefined) {
+        tableHead += `<th class="text-nowrap" style="padding: 5px;text-align:start">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))}</th></tr>`
+        tableHead1 += `<th class="text-nowrap" style="padding: 5px;text-align:start">${await tConvert(shiftsObject[currentShift + '-endDateTime'].slice(0, -3))}</th ></tr >`
+        Target_row_total += `<td style="padding: 20px;text-align: start;"><b><span id="total-target-${k}" class="total-target-${k}">0</span></b></td></tr>`;
+        Actual_row_total += `<td style="padding: 20px;text-align: start;"><b><span id="total-actual-${k}" class="total-actual-${k}">0</span></b></td></tr>`;
+        $('#countit').append(tableHead);
+        $('#countit').append(tableHead1);
+        Vertical_table += ` <td style="text-align:left;font-weight:600">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))} To ${await tConvert(shiftsObject[currentShift + '-endDateTime'].slice(0, -3))}</td><td style="text-align: center;"><b><span id="total-actual-${k}" class=id="total-actual-${k}">0</span></b></td><td style="text-align: center;"><b><span id="total-target-${k}" class="total-target-${k}">0</span></b></td></tr>`;
+        $('#tbody').append(Target_row_total);
+        $('#tbody').append(Actual_row_total);
+        $('#tbody1').append(Vertical_table);
+
+      } else {
+        tableHead += `<th class="text-nowrap" style="padding: 5px;text-align:start">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))}</th>`;
+        tableHead1 += `<th class="text-nowrap"style="padding: 5px;text-align:start" >${await tConvert(halfHourlyArray[k + k + 2].slice(0, -3))}</th>`;
+        Target_row_total += `<td style="padding: 20px;text-align: start;"><b><span id="total-target-${k}" class="total-target-${k}">0</span></b></td>`;
+        Actual_row_total += `<td style="padding: 20px;text-align: start;"><b><span id="total-actual-${k}" class="total-actual-${k}">0</span></b></td>`;
+        Vertical_table += ` <td style="text-align:left;font-weight:600">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))} To ${await tConvert(halfHourlyArray[k + k + 2].slice(0, -3))}</td><td style="text-align: center;"><b><span id="total-actual-${k}" class="total-actual-${k}">0</span></b></td><td style="text-align: center;"><b><span id="total-target-${k}" class="total-target-${k}">0</span></b></td></tr>`;
+      }
+    }
+    var hourlyUrl = halfHourlyProduction + "?clientId=" + clientId + "&plantId=" + localStorage.getItem("opPlantId") + "&machineId=" + mID + "&date=" + currentDate;
+    var response = await getCallAPI(hourlyUrl, token, 'GET');
+
+    var from, to; //to current-time 
+    from = await setTime(shiftsObject[currentShift + '-startDate'], shiftsObject[currentShift + '-startDateTime']);
+    to = await setTime(currentTime.date, currentTime.time);
+    var countArray = {};
+    var halfHourly = await new Promise((r, j) => {
+      dummyData(r, j, from, to, countArray)
+    }).then((result) => {
+      return result;
+    });
+    var halfHourlyArray = Object.keys(halfHourly123);
+
+    // console.log('hourlyResponce', response, halfHourly);
+    var totalProd = 0;
+
+    for (let s = 0; s < response.length; s++) {
+      var halfHourlyArrayData = response[s].halfHourly;
+      var halfHourlyTargetArrayData = response[s].halfHourlyTargets;
+      var totaltargetH = 0;
+      var totalactualH = 0;
+      if (halfHourlyTargetArrayData != undefined && halfHourlyArrayData != undefined && Object.keys(halfHourlyTargetArrayData).length != 0 && Object.keys(halfHourlyArrayData).length != 0) {
+        for (let r = 0; r < halfHourlyArray.length / 2; r++) {
+          if (halfHourlyArray[r + r + 1] == undefined) {
+            totalactualH += halfHourlyArrayData[halfHourlyArray[r + r]];
+            var targetVal = 0;
+            if (halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != null) {
+              targetVal = halfHourlyTargetArrayData[halfHourlyArray[r + r]].target;
+            }
+            totaltargetH += targetVal;
+            totalProd += halfHourlyArrayData[halfHourlyArray[r + r]];
+            $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]]);
+            $('.total-target-' + r).text(targetVal);
+            $('#totalProduction').text(totalProd);
+
+          } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
+            totalactualH += halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]];
+            var targetVal1 = 0;
+            var targetVal2 = 0;
+            if (halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != null) {
+              targetVal1 = halfHourlyTargetArrayData[halfHourlyArray[r + r]].target;
+            }
+            if (halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target != null) {
+              targetVal2 = halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target;
+            }
+            totaltargetH += targetVal1 + targetVal2;
+            totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+            $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+            $('.total-target-' + r).text(targetVal1 + targetVal2);
+            $('#totalProduction').text(totalProd);
+          }
+          else {
+            var targetVal1 = 0;
+            var targetVal2 = 0;
+            if (halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != null) {
+              targetVal1 = halfHourlyTargetArrayData[halfHourlyArray[r + r]].target;
+            }
+            if (halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target != null) {
+              targetVal2 = halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target;
+            }
+            totalactualH += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+            totaltargetH += (targetVal1 + targetVal2);
+            totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+            $('.total-actual-' + r).text((halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]));
+            $('.total-target-' + r).text((targetVal1 + targetVal2));
+          }
+        }
+      } else if (halfHourlyTargetArrayData == undefined || halfHourlyTargetArrayData == null) {
+        for (let r = 0; r < halfHourlyArray.length / 2; r++) {
+          if (halfHourlyArray[r + r + 1] == undefined) {
+            totalactualH += halfHourlyArrayData[halfHourlyArray[r + r]];
+            var targetVal = 0;
+            totaltargetH += targetVal;
+            totalProd += halfHourlyArrayData[halfHourlyArray[r + r]];
+            $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]]);
+            $('.total-target-' + r).text(targetVal);
+            $('#totalProduction').text(totalProd);
+
+          } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
+            totalactualH += halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]];
+            var targetVal1 = 0;
+            var targetVal2 = 0;
+            totaltargetH += targetVal1 + targetVal2;
+            totalProd += halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]];
+            $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+            $('.total-target-' + r).text(targetVal1 + targetVal2);
+            $('#totalProduction').text(totalProd);
+          }
+          else {
+            var targetVal1 = 0;
+            var targetVal2 = 0;
+            totalactualH += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+            totaltargetH += (targetVal1 + targetVal2);
+            totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]])
+            $('.total-actual-' + r).text((halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]));
+            $('.total-target-' + r).text((targetVal1 + targetVal2));
+          }
+        }
+      }
+    }
   }
   async function setTime(d, t) {
     var dateTime = d + 'T' + t + '.000Z';
@@ -759,13 +1249,15 @@
     var opt = new AnalogClockOption(); opt.width = 100;
     await myFunctionS();
 
-    socket.on('selectDowntime', data => {
+    socket.on('selectDowntime', async data => {
       if (data.machineId == mID) {
         console.log('selectDowntime', data)
 
-        console.log('dtType', 'Swami786786');
+        // console.log('dtType', 'Swami786786');
+        console.log("KPL", "1");
+        await hideButton(data.downTimeTypes[0], false);
+        TimouT = await setInterval(async function () { await init2(); }, 1 * 60 * 1000);
 
-        hideButton(data.downTimeTypes[0], false);
       }
     });
 
@@ -809,8 +1301,11 @@
             console.log('', timerData[mID]["machineId"]);
             await clearInterval(timerData[mID].timeID);
           }
+          console.log("KPL", "2");
           await hideButton(initialData.name, false);
           await startCounter(startTime);
+          TimouT = await setInterval(async function () { await init2(); }, 1 * 60 * 1000);
+
         } else if (initialData.subType) {
           // await clearInterval(ghp);
           if (timerData[mID] && timerData[mID].timeID) {
@@ -878,7 +1373,7 @@
           var dtData = downtimeData.types[0]["options"];
           $('#downtimeButtons').empty();
           for (let d = 0; d < dtData.length; d++) {
-            $('#downtimeButtons').append(`<div class="col-md-3" style="height: auto;float: left;margin-top: 15px;" onClick="hideButton('${dtData[d]}',${true})">
+            $('#downtimeButtons').append(`<div class="col-md-3 dtBTN"  onClick="hideButton('${dtData[d]}',${true})">
         <div class="gr" style="height: 100%;width: 90%;margin-left: 5%;border-radius: 8px;">
           <h5 style="padding: 10px;font-size:17px;">${dtData[d]}</h5>
         </div>
@@ -890,7 +1385,16 @@
   }
   async function backToMachine() {
     await $('.station').text("0");
+    await $('.zero').text("0");
+    await $('.ArmUtil').text("0 %");
     // await clearInterval(ghp);4
+
+    $('.divisionDropdown1').prop('disabled', false);
+    $('.lineDropdown1').prop('disabled', false);
+    $('.plantDropdown1').prop('disabled', false);
+    $('.locationDropdown1').prop('disabled', false);
+
+
     if (timerData[mID] && timerData[mID].timeID) {
       console.log("timerData[mID].timeID", timerData[mID].timeID);
       await clearInterval(timerData[mID].timeID);
@@ -910,12 +1414,17 @@
     await localStorage.setItem("machineID", "");
     await $('#machinesProfile').hide();
     await $('#machines').show();
+    await clearInterval(TimouT);
+    await localStorage.setItem("Pages", "1");
+    await statsDataUrl();
+
   }
   async function hideButton(dtType, doEmit) {
     // for (let s = 0; s < 999; s++) {
     //   await clearInterval(s);
     // }
     // await clearInterval(ghp);5
+
     for (let h = 0; h < 99999; h++) {
       await clearInterval(h)
     }
@@ -924,9 +1433,9 @@
       await clearInterval(timerData[mID].timeID);
     }
     // await $(`#timer`).text("00:00:00");
-    await $(`#TimeDiv`).empty();
-    await $(`#TimeDiv`).append(`<h6 style="line-height: 1rem;">Timer : <span class="Time1 time2 3" id="timer${mID}">00:00:00</span></h6>`);
-    await $(`#timer${mID}`).text("00:00:00");
+    await $(`.TimeDiv`).empty();
+    await $(`.TimeDiv`).append(`<h6 style="line-height: 1rem;">Timer : <span class="Time1 time2 3 timer${mID}" id="timer${mID}">00:00:00</span></h6>`);
+    await $(`.timer${mID}`).text("00:00:00");
 
     console.log('dtType', 'Swami786');
 
@@ -943,7 +1452,7 @@
     selectedDowntime = dtType;
     if (dtOptions[dtType] && dtOptions[dtType].length != 0) {
       for (let i = 0; i < dtOptions[dtType].length; i++) {
-        $("#subDowntime").append(`<button id="${dtOptions[dtType][i].split(" ").join("-")}" class="btn btn-outline-info px-1 subdt all" style="margin:6px" onClick="subDttype('${dtOptions[dtType][i]}',${true})"
+        $("#subDowntime").append(`<button id="${dtOptions[dtType][i].split(" ").join("-")}" class="btn btn-outline-info px-1 subdt all AC" style="margin:6px;float:left" onClick="subDttype('${dtOptions[dtType][i]}',${true})"
  >${dtOptions[dtType][i]}</button>`);
       }
     } else {
@@ -962,6 +1471,9 @@
       }
       socket.emit('selectDowntime', emitData)
     }
+    console.log("KMM");
+
+    // TimouT = await setInterval(async function () { await init2(); }, 1 * 60 * 1000);
 
   }
   const IST = () => {
@@ -975,6 +1487,7 @@
   async function backToDTbuttons(doEmit) {
     $("#dtWatch").hide();
     $("#dtButtons").show();
+
     optionTypeValue = "";
     subOptionTypeValue = "";
     selectedDowntime = "";
@@ -987,6 +1500,7 @@
     }
   }
   async function operatorEff() {
+    console.log("KL", "OP");
     var statURL = statsUrl + '&machineId=' + mID;
     var downtimeD = JSON.parse(localStorage.getItem("downtimeD"));
     console.log('downtimeD', downtimeD);
@@ -1013,14 +1527,35 @@
           }
         });
         var cal1 = shiftobj.runtime + shiftobj.loading + shiftobj.unloading + totaladd;
+        var cal1Mu = shiftobj.runtime + shiftobj.loading + shiftobj.unloading;
         var cal2 = (shiftobj.total - shiftobj.breaks) - totaldeduction;
+        console.log('cal1Mu', cal1Mu);
         var oE = (cal1 / cal2) * 100;
-        // console.log("Swamishiftobj", shiftobj);
+        var Mu = (cal1Mu / cal2) * 100;
+        console.log("Mu", cal1Mu, cal2, Mu);
         $("#eff").text(isFinite(oE) && oE ? oE.toFixed(2) + " %" : 0 + "%");
+        $(".ArmUtil").text(isFinite(Mu) && Mu ? Mu.toFixed(2) + " %" : 0 + "%");
+        $(`#mu-${mID}`).text(isFinite(Mu) && Mu ? Mu.toFixed(2) + " %" : 0 + "%");
         $("#effTable").text(isFinite(oE) && oE ? oE.toFixed(2) + " %" : 0 + "%");
-        var idelT = shiftobj && shiftobj.idleTime ? shiftobj.idleTime.toFixed(2) : 0;
-        $('#idleTime').text(idelT);
-        $('#idealTable').text(idelT);
+        // var idelT = shiftobj && shiftobj.idleTime ? shiftobj.idleTime.toFixed(2) : 0;
+        var idle = 0;
+        var onlyIdel = 0;
+        if (shiftobj && shiftobj.idleTime) {
+          idle = shiftobj.idleTime;
+          onlyIdel = shiftobj.idleTime;
+        }
+        console.log("LAStop", idle, LAStop);
+        idle = idle + LAStop;
+        var idleTime = Math.floor(idle);
+        // console.log("shiftobj1", shiftobj, shiftobj.idleTime, idleTime);
+        // console.log("Swami1", Math.floor(idleTime / 60), "T" + (((Math.round(idleTime) % 60) < 10 ? '0' : ''), "K" + Math.round(idleTime) % 60))
+
+        idleTime = Math.floor(idleTime / 60) + ':' + (((Math.round(idleTime) % 60) < 10 ? '0' : '') + Math.round(idleTime) % 60);
+        onlyIdel = Math.floor(onlyIdel / 60) + ':' + (((Math.round(onlyIdel) % 60) < 10 ? '0' : '') + Math.round(onlyIdel) % 60);
+        $('#idleTime').text(idleTime + " H:M");
+        $('#idealTable').text(onlyIdel + " H:M");
+
+
       }
 
     }
@@ -1255,9 +1790,12 @@
     }
     // console.log('SwamiK', dtD, dtOpt, dtSubOpt);
     if (dtD && dtD.name) {
-      console.log('dtType', 'Swami786786786');
+      // console.log('dtType', 'Swami786786786');
+      console.log("KPL", "3");
 
       await hideButton(dtD.name, false);
+      TimouT = await setInterval(async function () { await init2(); }, 1 * 60 * 1000);
+
     }
     if (dtOpt && dtOpt.name) {
       console.log('dtType', 'Swami7867867861');
@@ -1433,5 +1971,134 @@
     $('#downtimeConfirm').show()
   }
 </script>
+<style>
+  a {
+    cursor: pointer !important;
+  }
+
+  .navbar1 span.nav-item.dropdown {
+    float: left;
+    margin-right: 10px;
+  }
+
+  /* .goog-te-banner-frame {
+    visibility: hidden !important;
+  } */
+
+  .dtBTN {
+    height: auto;
+    float: left;
+    margin-top: 15px;
+  }
+
+  .right0 {
+    right: 0 !important;
+    left: 75% !important;
+  }
+
+  .TP {
+    float: left;
+    width: 35%;
+  }
+
+  .IT {
+    float: left;
+    width: 37%;
+    padding-left: 50px
+  }
+
+  .OE {
+    float: left;
+    width: 28%;
+  }
+
+  .TH {
+    margin: 0px;
+  }
+
+  .TV {
+    margin: 10px 0px 0px 0px;
+    display: none
+  }
+
+  .infoD {
+    padding: 10px 35px;
+    float: left;
+    width: 100%;
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  nav.navbar1.navbar-expand-lg {
+    float: left;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .dropdown {
+    position: relative;
+    float: right;
+  }
+
+  .navbar-toggler {
+    padding: 0 !important;
+  }
+
+  @media screen and (min-device-width: 700px) and (max-device-width: 950px) {
+    #data .col-md-3 {
+      flex: 0 0 auto;
+      width: 50%;
+    }
+
+
+  }
+
+
+
+  @media screen and (min-device-width: 350px) and (max-device-width: 1281px) {
+    .TH {
+      display: none;
+    }
+
+    .dtBTN {
+      width: 50% !important;
+    }
+
+    .TV {
+      display: inline-table;
+    }
+
+    .TP {
+      width: 100%;
+    }
+
+    .IT {
+      width: 100%;
+      padding-left: 0px
+    }
+
+    .OE {
+      width: 100%;
+    }
+
+    .infoD {
+      padding: 10px 10px;
+      float: left;
+      width: 100%;
+      font-size: 12px;
+      font-weight: 600;
+    }
+  }
+
+  @media screen and (min-device-width: 951px) and (max-device-width: 1050px) {
+    #data .col-md-3 {
+      flex: 0 0 auto;
+      width: 33.3333%;
+    }
+  }
+</style>
 
 </html>

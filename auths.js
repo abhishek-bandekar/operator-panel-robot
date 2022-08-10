@@ -68,7 +68,7 @@ export async function apiUrlCallback(type, url, data = null, callback = null) {
       dataType: 'json', contentType: 'application/json',
       success: async result => {
         // console.log(`${url} result`, result)
-        callback(result) 
+        callback(result)
       },
       error: (error) => {
         if (error && error.responseJSON && error.responseJSON.message == 'Unauthorized') logout()

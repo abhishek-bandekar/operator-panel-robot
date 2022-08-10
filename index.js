@@ -309,7 +309,7 @@ async function operatorEff() {
     console.log("Swamishiftobj", shiftobj);
     $("#eff").text(isFinite(oE) && oE ? oE.toFixed(2) + " %" : 0 + "%");
     var idelT = shiftobj && shiftobj.idleTime ? shiftobj.idleTime.toFixed(2) : 0;
-    $('#idleTime').text(idelT);
+    // $('#idleTime').text(idelT);
   }
 
 }
@@ -859,6 +859,7 @@ async function completeDowntime() {
 }
 function logout() {
   // delete localStorage.aisplopdata
+  localStorage.setItem("Pages", "1");
   location.href = 'login.html'
 }
 async function myFunctionS() {

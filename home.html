@@ -2,12 +2,15 @@
 <html>
 
 <head>
+
   <script src="https://kit.fontawesome.com/a25b1600a4.js" crossorigin="anonymous"></script>
   <link href='https://fonts.googleapis.com/css?family=Ek Mukta' rel='stylesheet' />
   <meta charset="utf-8">
   <script type="text/JavaScript" src="https://MomentJS.com/downloads/moment.js"></script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Robot Operator Panel | AISPL</title>
+  <link rel="shortcut icon" type="image/x-icon" href="ICON.png">
   <link rel="stylesheet" href="https://getbootstrap.com/docs/5.1/dist/css/bootstrap.min.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://getbootstrap.com/docs/5.1/dist/js/bootstrap.bundle.min.js"
@@ -19,15 +22,107 @@
   <script src="https://getbootstrap.com/docs/5.1/assets/js/docs.min.js"></script>
   <script src="socket.io.js"></script>
   <script src="systemConfiguration.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+  <!-- <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script> -->
+  <!-- <script src="jquery.cookies.js"></script>
+  <script type="text/javascript"
+    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script> -->
+
 
   <title>Home</title>
 </head>
 
-<body style="background-color: black">
+<body style="background-color: black;">
+
+
+  <div class="modal fade" id="operatorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color:#FD9E42">
+          <h5 class="modal-title" id="exampleModalLabel" style="color: white;"><i class="fal fa-user"></i>&nbsp;Change
+            Operator</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="background-color: #262C49;">
+          <div class="form-group my-0 col-md-12" style="padding: 10px;">
+            <label for="selectOperator" style="margin-bottom: 6px; color: white!important;">You can assign
+              an
+              operator
+              to a machine by simple searching for the operator name and verifying his identity by the last four
+              digits
+              of his/her Operator ID. Please note that the operator must be registered by the Human Resources into
+              the
+              Quad Operator Management System for him to be visible here. </label>
+            <label for="selectOperator" style="margin-bottom: 6px; color: white!important;"><i
+                class='feather alert-circle'></i>If your name does not show here, kindly contact your plant's
+              human
+              resources. </label>
+            <hr style="color: white;" />
+            <label for="selectOperator" style="margin-bottom: 6px; color: white!important;">
+              आप ऑपरेटर के नाम की सरल खोज करके और उसके ऑपरेटर आईडी के अंतिम चार अंकों द्वारा उसकी पहचान सत्यापित
+              करके
+              किसी मशीन को एक ऑपरेटर असाइन कर सकते हैं। कृपया ध्यान दें कि ऑपरेटर को मानव संसाधन द्वारा क्वाड
+              ऑपरेटर
+              प्रबंधन प्रणाली में पंजीकृत होना चाहिए ताकि वह यहां दिखाई दे।
+            </label>
+            <label for="selectOperator" style="margin-bottom: 6px; color: white!important;">
+              यदि आपका नाम यहां नहीं दिखता है, तो कृपया अपने संयंत्र के मानव संसाधन से संपर्क करें।
+            </label>
+          </div>
+          <div class="form-group mt-0 col-md-12">
+            <select class="select2 form-control mt-1" id="selectOperator" onchange="updateOperatorTable(this)">
+
+            </select>
+          </div>
+          <table width="100%" style="color: white;margin-top: 10px;">
+            <tr>
+              <th width='30%' class="text-light NAO">Name</th>
+              <td>
+                <h6 id="operatorNameModal"></h6>
+              </td>
+            </tr>
+            <tr>
+              <th class="text-light">ID</th>
+              <td>
+                <h6 id="operatorIdModal"></h6>
+              </td>
+            </tr>
+            <tr>
+              <th class="text-light">Type</th>
+              <td>
+                <h6 id="operatorType"></h6>
+              </td>
+            </tr>
+            <tr>
+              <th class="text-light">Joining</th>
+              <td>
+                <h6 id="joining"></h6>
+              </td>
+            </tr>
+            <tr>
+              <th class="text-light">Contact</th>
+              <td>
+                <h6 id="contact"></h6>
+              </td>
+            </tr>
+
+          </table>
+
+        </div>
+        <div class="modal-footer" style="background-color: #262C49;">
+          <button type="button" class="btn btn-primary" style="background-color:#FD9E42"
+            onclick="acceptOperator()">Accept</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div id="nav"></div>
   <div id="machines" style="display: block;" class="container-fluid">
     <div class="col-md-12" id="data" style="margin-top: 70px;">
-      <div class="col-md-3" style="float: left;">
+      <!-- <div class="col-md-3" style="float: left;">
         <div style="height:100%;background-color: #42454A;float: left;border-radius: 10px;margin: 15px;">
           <div style="margin: 20px;">
             <p style="color: white;width: 100%;float: left;">
@@ -70,39 +165,42 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 
-  <div id="machinesProfile" style="display: none;margin-top: 70px;" class="container-fluid">
-    <div class="col-md-12" style="min-height:620px;background-color: #202120;float: left;width: 100%;">
-      <div class="col-md-3" style="height:620px;background-color: black;float: left;">
-        <div style="height:100%;background-color: #202120;margin: 10px;border-radius: 10px;">
-
-          <div><i style="color: white;font-size: 30px;padding: 10px;" class="fad fa-chevron-circle-left"
-              onclick="backToMachine()"></i></div>
-
-          <div style="padding-top : 2px; text-align: center;">
-            <h2 style="color: white;" id="machineName">Loading..</h2>
+  <div id="machinesProfile" style="display: none;margin-top: 2%;" class="container-fluid">
+    <div class="col-md-12 imgDiv">
+      <div class="col-md-3 part1">
+        <div class="margint40" style="
+        background-color: #202120;
+        float: left;
+        width: 100%;
+        border-radius: 10px;">
+          <div class="flw100">
+            <i style="color: white;font-size: 30px;padding: 10px;" class="fad fa-chevron-circle-left opI"
+              onclick="backToMachine()"></i>
+          </div>
+          <div class="flw100" style="padding-top : 2px; text-align: center;">
+            <h2 style="color: white;font-size: 26px;" id="machineName" title="">Loading..</h2>
 
             <h5 style="color: white;" id="lineName">Module</h5>
 
-            <img src="" id="machineImage" style="height: 350px;max-width: 100%;padding:20px;margin-top: 10px;"></img>
+            <img src="" id="machineImage" style="height: 350px;max-width: 100%;padding:20px;margin-top: 0px;"></img>
 
-            <div style="margin-top: 10px; text-align: center;">
-              <h1 style="color: green;font-weight: 800;font-size: 60px;">0 %</h1>
+            <div style="margin-top: 10px; text-align: center;margin-bottom: 20px;">
+              <h1 class="ArmUtil">0 %</h1>
               <h5 style="color: white;font-weight: 700;">Arm Utilisation</h5>
             </div>
-
           </div>
-
         </div>
       </div>
-      <div class="col-md-9"
-        style="height:620px;background-color: black;float: left;padding-left:30px;padding-right:10px">
-        <div class="col-md-12" style="height:43%;background-color: black;border-radius: 10px;margin-top: 10px;">
-          <div
-            style="height:100%; width:47%;background-color: #202120;float: left;border-radius: 10px;margin-right: 3%;">
+
+
+      <div class="col-md-9 rightside" style="float: left;padding-left:30px;padding-right:10px;padding-bottom: 20px;">
+        <div class="col-md-12 rightside3 margint40 flw100">
+          <div class="rightside1"
+            style="min-height: 262px; width:47%;background-color: #202120;float: left;border-radius: 10px;margin-right: 3%;">
             <div style="margin: 20px;">
               <h4 style="color: white;">Fixture Statistics</h4>
 
@@ -143,25 +241,28 @@
 
             </div>
           </div>
-          <div style="height:100%;width:47%;background-color: #202120;float: left;border-radius: 10px;margin-left: 3%;">
-            <div style="margin: 20px;">
+          <div class="rightside1"
+            style="min-height: 262px;width:47%;background-color: #202120;float: left;border-radius: 10px;margin-left: 3%;">
+            <div style="margin: 20px;" class="FX">
               <h4 style="color: white;">Operator Statistics</h4>
-              <div style="margin-top: 20px;">
+              <div style="margin-top: 20px;" class="opI" onclick="showOperatorModal()">
                 <img src="default.gif" style="width:70px;border-radius: 50px;float: left;height: 70px;"
-                  id="operatorImage" onclick="showOperatorModal()"></img>
-                <div style="margin-left: 90px; padding-top:10px;">
+                  id="operatorImage"></img>
+                <div style="margin-left: 90px; padding-top:10px;" class="marginn">
                   <h6 style="color: white;" id="operatorName">No Operator Selected</h5>
                     <p style="color: green;font-weight: 500;"><i class="fas fa-signal-alt-3"
                         style="float: left;margin-top: 2px;"></i><span>Average
-                        Efficiency :</span><span style="color: white;padding-left: 10px;" id="eff">0 %</span>
+                        Efficiency :</span><span style="color: white;padding-left: 10px;" class="zero" id="eff">0
+                        %</span>
                 </div>
               </div>
-              <div style="margin-top: 25px;width: 100%;">
+              <div style="margin-top: 25px;width: 100%;" class="Tbox">
                 <div style="width: 45%;height:80px; background-color: black;float: left;border-radius: 10px;">
                   <div style="padding-top: 10px;">
-                    <h4 style="text-align: center;color: red;font-weight: 700;margin: 2px;" id="idleTime">0 Mins
+                    <h4 style="text-align: center;color: red;font-weight: 700;margin: 2px;" class="zero" id="idleTime">0
+                      Mins
                     </h4>
-                    <h6 style="text-align: center;color: red;font-weight: 500;">Idle Time</h6>
+                    <h6 style="text-align: center;color: red;font-weight: 500;">Idle & PL</h6>
                   </div>
                 </div>
                 <div style="width: 45%;height:80px;background-color: black;float: right;border-radius: 10px;">
@@ -182,25 +283,84 @@
             </div>
           </div>
         </div>
-        <div class="col-md-12"
-          style="background-color: transparent;perspective: 1000px;height:50%;background-color: #090613;border-radius: 10px;margin-top: 35px;">
-          <div id="f1_card" class="shadow">
-            <div class="front face">
-              <div class="col-md-12" style="height:auto;background-color: #202120;border-radius: 10px;">
-                <div style=" color: white;">
-                  <div style="padding: 20px;float: left;width: 100%;">
-                    <span style="float: left;"><i class="fal fa-info-circle"></i>
-                      <span style="font-size: 18px;">Hourly Production Monitoring | <span
-                          style="font-family: 'Ek Mukta';font-size: 18px;"> प्रति घंटा
-                          उत्पादन की निगरानी</span></span>
-                    </span>
-                    <a style="float: right;"><i class="fal fa-repeat" id="flip_content1"></i></a>
-                  </div>
-                  <div>
-                    <table class="table" style="margin: 0px;">
-                      <thead style="border-top:2px solid white;border-bottom:2px solid white;color: white;" id="countit"
-                        class="1">
-                        <!-- <tr style="font-size: 12px;">
+
+
+        <!--  -->
+
+
+
+        <style>
+          body {
+            font-family: Arial, Helvetica, sans-serif;
+          }
+
+          .flip-card {
+            background-color: transparent;
+            width: 100%;
+            height: 300px;
+            perspective: 1000px;
+          }
+
+          .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+          }
+
+          /* .flip-card:hover .flip-card-inner {
+            transform: rotateX(180deg);
+          } */
+
+          .flip-card-front,
+          .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+          }
+
+          .flip-card-front {
+            background-color: #bbb;
+            color: black;
+          }
+
+          .flip-card-back {
+            background-color: #2980b9;
+            color: white;
+            transform: rotateX(180deg);
+          }
+        </style>
+
+        <!--  -->
+
+
+
+
+
+
+        <div class="col-md-12 flw100 minhight" style="margin-top: 30px;">
+          <div class="flip-card">
+            <div id="f1_card" class="shadow flip-card-inner">
+              <div class="front face">
+                <div class="col-md-12 flw100" style="background-color: #202120;border-radius: 10px; min-height: 319px;">
+                  <div class="flw100" style=" color: white;">
+                    <div class="flw100" style="padding: 20px;">
+                      <span class="textt" style="float: left;"><i class="fal fa-info-circle" title="Production"></i>
+                        <span style="font-size: 18px;">Hourly Production Monitoring | <span
+                            style="font-family: 'Ek Mukta';font-size: 18px;"> प्रति घंटा
+                            उत्पादन की निगरानी</span></span>
+                      </span>
+                      <a style="float: right;"><i class="fal fa-repeat opI" id="flip_content1"></i></a>
+                    </div>
+                    <div class="flw100">
+                      <table class="table TH">
+                        <thead style="border-top:2px solid white;border-bottom:2px solid white;color: white;"
+                          id="countit" class="1">
+                          <!-- <tr style="font-size: 12px;">
                           <th></th>
                           <th>8 TO 9 AM</th>
                           <th>9 TO 10 AM</th>
@@ -211,99 +371,180 @@
                           <th>2 TO 3 PM</th>
                           <th>4 TO 5 PM</th>
                         </tr> -->
-                      </thead>
-                      <tbody style="border:0px;border-color: none;border-bottom:2px solid white;color: white;"
-                        id="tbody" class="1">
-                      </tbody>
-                    </table>
-                  </div>
-                  <div
-                    style="color: white;width: 100%;float: left;background-color: #202120;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
-                    <div style="padding: 10px 35px;float: left;width: 100%;">
-                      <div style="float: left;width: 35%;">
-                        <span>
-                          <span style="font-size: 17px;font-weight: 700;">Total Production :<span
-                              style="margin-left: 10px;" id="totalProduction">20,123</span>
+                        </thead>
+                        <tbody style="border:0px;border-color: none;border-bottom:2px solid white;color: white;"
+                          id="tbody" class="1">
+                        </tbody>
+                      </table>
+
+                      <table class="table TV">
+                        <thead style="border-top:2px solid white;border-bottom:2px solid white;color: white;"
+                          id="countit" class="1">
+                          <tr style="font-size: 15px;">
+                            <th style="text-align:left"></th>
+                            <th style="text-align:center">Actual</th>
+                            <th style="text-align:center">Plan</th>
+                          </tr>
+                          <!-- <tr style="font-size: 12px;">
+                          <th></th>
+                          <th>8 TO 9 AM</th>
+                          <th>9 TO 10 AM</th>
+                          <th>10 TO 11 AM</th>
+                          <th>11 TO 12 PM</th>
+                          <th>12 TO 1 PM</th>
+                          <th>1 TO 2 PM</th>
+                          <th>2 TO 3 PM</th>
+                          <th>4 TO 5 PM</th>
+                        </tr> -->
+                        </thead>
+                        <tbody
+                          style="border:0px;border-color: none;border-bottom:2px solid white;color: white;font-size: 14px;"
+                          id="tbody1" class="1">
+                          <tr>
+                            <td>8 TO 9 AM</td>
+                            <th>1</th>
+                            <th>2</th>
+                          </tr>
+                          <tr>
+                            <td>8 TO 9 AM</td>
+                            <th>1</th>
+                            <th>2</th>
+                          </tr>
+                          <tr>
+                            <td>8 TO 9 AM</td>
+                            <th>1</th>
+                            <th>2</th>
+                          </tr>
+                          <tr>
+                            <td>8 TO 9 AM</td>
+                            <th>1</th>
+                            <th>2</th>
+                          </tr>
+                          <tr>
+                            <td>8 TO 9 AM</td>
+                            <th>1</th>
+                            <th>2</th>
+                          </tr>
+                          <tr>
+                            <td>8 TO 9 AM</td>
+                            <th>1</th>
+                            <th>2</th>
+                          </tr>
+                          <tr>
+                            <td>8 TO 9 AM</td>
+                            <th>1</th>
+                            <th>2</th>
+                          </tr>
+                          <tr>
+                            <td>8 TO 9 AM</td>
+                            <th>1</th>
+                            <th>2</th>
+                          </tr>
+                          <tr>
+                            <td>8 TO 9 AM</td>
+                            <th>1</th>
+                            <th>2</th>
+                          </tr>
+                          <tr>
+                            <td>8 TO 9 AM</td>
+                            <th>1</th>
+                            <th>2</th>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="flw100">
+                      <div class="infoD leftA">
+                        <div class="TP" style="text-align: start;">
+                          <span>
+                            <span>Total Production :<span style="margin-left: 10px;" class="zero"
+                                id="totalProduction"></span>
+                            </span>
                           </span>
-                        </span>
-                      </div>
-                      <div style="float: left;width: 40%;">
-                        <span>
-                          <span style="font-size: 17px;font-weight: 700;">Idle Time :<span style="margin-left: 10px;"
-                              id="idealTable">0</span>
+                        </div>
+                        <div class="IT" style="text-align: start;">
+                          <span>
+                            <span>Idle Time :<span style="margin-left: 10px;" class="zero" id="idealTable">0</span>
+                            </span>
                           </span>
-                        </span>
-                      </div>
-                      <div style="float: left;width: 25%;">
-                        <span>
-                          <span style="font-size: 17px;font-weight: 700;">Operator Efficiency :<span
-                              style="margin-left: 10px;" id="effTable">0</span>
+                        </div>
+                        <div class="OE">
+                          <span>
+                            <span>Operator Efficiency :<span style="margin-left: 10px;" class="zero" id="effTable">0
+                                %</span>
+                            </span>
                           </span>
-                        </span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="back face center">
-              <div class="col-md-12" style="height: 100%;background-color: #202120;border-radius: 10px;">
-                <div style=" color: white;height: 100%;display: block;" id="dtButtons">
-                  <div style="padding: 20px;padding-bottom: 0px;width: 100%;min-height: 50px;">
-                    <span style="float: left;"><i class="fal fa-info-circle"></i>
-                      <span style="font-size: 18px;">Hourly Production Monitoring | <span
-                          style="font-family: 'Ek Mukta';font-size: 18px;"> प्रति घंटा
-                          उत्पादन की निगरानी</span></span>
-                    </span>
-                    <a style="float: right;"><i class="fal fa-repeat" id="flip_content"></i></a>
-                  </div>
-                  <div class="AB" style="margin: 0px 20px;max-height: 250px;overflow-y: scroll;" id="downtimeButtons">
-                  </div>
-                </div>
-                <div style=" color: white;height: 100%;display: none;" id="dtWatch">
-                  <div style="padding: 20px;padding-bottom: 0px;width: 100%;min-height: 50px;">
-                    <span style="float: left;"><i class="fal fa-info-circle"></i>
-                      <span style="font-size: 18px;">Declare Downtime Reasons | <span
-                          style="font-family: 'Ek Mukta';font-size: 18px;"> डाउनटाइम कारण घोषित
-                          करें</span></span>
-                    </span>
-                    <a style="float: right;"><i class="fal fa-repeat" id="flip_content2"></i></a>
-                  </div>
-
-                  <div class="col-md-12" style="height: 200px;padding: 20px;">
-                    <div class="col-md-6" style="float: left;">
-                      <div class="col-md-6" style="float: left; padding: 40px 0px" id="subDowntime"></div>
-                      <div class="col-md-6" style="float: left;padding: 20px" id="subDowntimeTypes"></div>
-
+              <div class="back face center heightforwatch">
+                <div class="col-md-12 watch1" style="background-color: #202120;border-radius: 10px;min-height: 319px;">
+                  <div style=" color: white;height: 100%;display: block" id="dtButtons">
+                    <div class="flw100" style="padding: 20px 20px 0px 20px;
+                  width: 100%;
+                  float: left;
+                  margin-bottom: 10px;">
+                      <span class="textt" style="float: left;"><i class="fal fa-info-circle" title="Production"></i>
+                        <span style="font-size: 18px;">Declare Downtime Reasons | <span
+                            style="font-family: 'Ek Mukta';font-size: 18px;">डाउनटाइम कारण घोषित करें</span></span>
+                      </span>
+                      <a style="float: right;"><i class="fal fa-repeat opI" id="flip_content"></i></a>
                     </div>
-                    <div class="col-md-2" id="" style="float: left;">
-
-                      <div class="form-group" style="height:auto;margin: 20% 0px;">
-                        <button id="back" class="btn btn-outline-info px-1" style="margin:6px"
-                          onclick="backToDTbuttons(true)">Back</button>
-                        <button id="confirm" class="btn btn-outline-info px-1" onclick="submitD('')"
-                          style="margin:6px">Confirm</button>
-
-
-                      </div>
+                    <div class="AB" style="margin: 0px 2%;height: 250px;overflow-y: scroll;width: 96%;
+                  " id="downtimeButtons">
                     </div>
-                    <div class="col-md-4" style="float: left;text-align: -webkit-center;height: auto;">
-                      <div id="clock">
-                      </div>
-                      <div style="margin-top: 20px;">
-                        <h6 style="line-height: 1rem;" id="dtReason">Maintenance</h6>
-                        <div id="TimeDiv">
-                          <h6 style="line-height: 1rem;">Timer : <span class="Time" id="timer">00:00:00</span></h6>
+                  </div>
+                  <div style=" color: white;height: 100%;display: none;" id="dtWatch">
+                    <div style="padding: 20px;padding-bottom: 0px;width: 100%;min-height: 50px;">
+                      <span class="textt" style="float: left;"><i class="fal fa-info-circle"></i>
+                        <span style="font-size: 18px;">Declare Downtime Reasons | <span
+                            style="font-family: 'Ek Mukta';font-size: 18px;"> डाउनटाइम कारण घोषित
+                            करें</span></span>
+                      </span>
+                      <a style="float: right;"><i class="fal fa-repeat opI" id="flip_content2"></i></a>
+                    </div>
+
+                    <div class="col-md-12 flw100m heightforwatch1 " style="height: 200px;padding: 20px;">
+                      <div class="col-md-6 flw100m">
+                        <div class="col-md-12 flw100m">
+                          <div class="col-md-6 CB NH" style="float: left; padding: 0px 0px; overflow-y: scroll;"
+                            id="subDowntime">
+                          </div>
+                          <div class="col-md-6" style="float: left;padding: 20px" id="subDowntimeTypes">.</div>
                         </div>
-                        <!-- <button id="downtimeConfirm${i}" class="btn btn-outline-info px-3" onclick="completeD()"
-                          style="margin:6px">Finish</button> -->
-                        <button id="downtimeConfirm" class="btn btn-outline-info px-3" onclick="completeDowntime()"
-                          style="margin:6px;display: none;">Finish</button>
+                      </div>
+                      <div class="col-md-2 flw100m" id="" style="float: left;">
 
+                        <div class="form-group BS" style="height:auto;">
+                          <button id="back" class="btn btn-outline-info px-1" style="margin:6px"
+                            onclick="backToDTbuttons(true)">Back</button>
+                          <button id="confirm" class="btn btn-outline-info px-1" onclick="submitD('')"
+                            style="margin:6px">Confirm</button>
+
+
+                        </div>
+                      </div>
+                      <div class="col-md-4 flw100m" style="float: left;text-align: -webkit-center;height: auto;">
+                        <div id="clock">
+                        </div>
+                        <div style="margin-top: 20px;">
+                          <h6 style="line-height: 1rem;" id="dtReason">Maintenance</h6>
+                          <div id="TimeDiv" class="TimeDiv">
+                            <!-- <h6 style="line-height: 1rem;">Timer : <span class="Time" id="timer">00:00:00</span></h6> -->
+                          </div>
+                          <!-- <button id="downtimeConfirm${i}" class="btn btn-outline-info px-3" onclick="completeD()"
+                          style="margin:6px">Finish</button> -->
+                          <button id="downtimeConfirm" class="btn btn-outline-info px-3" onclick="completeDowntime()"
+                            style="margin:6px;display: none;">Finish</button>
+
+                        </div>
                       </div>
                     </div>
-                  </div>
 
+                  </div>
                 </div>
               </div>
             </div>
@@ -315,93 +556,20 @@
 
 
       <!-- Modal -->
-      <div class="modal fade" id="operatorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header" style="background-color:#FD9E42">
-              <h5 class="modal-title" id="exampleModalLabel">Change Operator</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" style="background-color: #262C49;">
-              <div class="form-group my-0 col-md-12">
-                <label for="selectOperator" style="margin-bottom: 6px; color: white!important;">You can assign an
-                  operator
-                  to a machine by simple searching for the operator name and verifying his identity by the last four
-                  digits
-                  of his/her Operator ID. Please note that the operator must be registered by the Human Resources into
-                  the
-                  Quad Operator Management System for him to be visible here. </label>
-                <label for="selectOperator" style="margin-bottom: 6px; color: white!important;"><i
-                    class='feather alert-circle'></i>If your name does not show here, kindly contact your plant's
-                  human
-                  resources. </label>
-                <hr style="color: white;" />
-                <label for="selectOperator" style="margin-bottom: 6px; color: white!important;">
-                  आप ऑपरेटर के नाम की सरल खोज करके और उसके ऑपरेटर आईडी के अंतिम चार अंकों द्वारा उसकी पहचान सत्यापित
-                  करके
-                  किसी मशीन को एक ऑपरेटर असाइन कर सकते हैं। कृपया ध्यान दें कि ऑपरेटर को मानव संसाधन द्वारा क्वाड
-                  ऑपरेटर
-                  प्रबंधन प्रणाली में पंजीकृत होना चाहिए ताकि वह यहां दिखाई दे।
-                </label>
-                <label for="selectOperator" style="margin-bottom: 6px; color: white!important;">
-                  यदि आपका नाम यहां नहीं दिखता है, तो कृपया अपने संयंत्र के मानव संसाधन से संपर्क करें।
-                </label>
-              </div>
-              <div class="form-group mt-0 col-md-12">
-                <select class="select2 form-control mt-1" id="selectOperator" onchange="updateOperatorTable(this)">
 
-                </select>
-              </div>
-              <table width="100%" style="color: white;margin-top: 10px;">
-                <tr>
-                  <th width='30%' class="text-light">Name</th>
-                  <td>
-                    <h6 id="operatorNameModal"></h6>
-                  </td>
-                </tr>
-                <tr>
-                  <th class="text-light">ID</th>
-                  <td>
-                    <h6 id="operatorIdModal"></h6>
-                  </td>
-                </tr>
-                <tr>
-                  <th class="text-light">Type</th>
-                  <td>
-                    <h6 id="operatorType"></h6>
-                  </td>
-                </tr>
-                <tr>
-                  <th class="text-light">Joining</th>
-                  <td>
-                    <h6 id="joining"></h6>
-                  </td>
-                </tr>
-                <tr>
-                  <th class="text-light">Contact</th>
-                  <td>
-                    <h6 id="contact"></h6>
-                  </td>
-                </tr>
-
-              </table>
-
-            </div>
-            <div class="modal-footer" style="background-color: #262C49;">
-              <button type="button" class="btn btn-primary" style="background-color:#FD9E42"
-                onclick="acceptOperator()">Accept</button>
-            </div>
-          </div>
-        </div>
-      </div>
       <!-- End of Operator Central Modal Medium -->
     </div>
   </div>
-
-
-
-
   <style>
+    .flw100 {
+      float: left;
+      width: 100%;
+    }
+
+    .BS {
+      margin: 20% 0px;
+    }
+
     .dropdown-toggle::after {
       display: none;
     }
@@ -411,23 +579,14 @@
       height: 100%;
       transform-style: preserve-3d;
       transition: all 0.5s linear;
-    }
-
-
-    .flip-card-inner {
       position: relative;
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      transition: transform 0.6s;
-      transform-style: preserve-3d;
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     }
+
 
     .flip-card-back {
       /* background-color: #29b976; */
       color: white;
-      transform: rotateY(180deg);
+      transform: rotateX(180deg);
     }
 
     .flip {
@@ -450,7 +609,7 @@
     }
 
     .face.back {
-      display: block;
+      /* display: block; */
       transform: rotateX(180deg);
       box-sizing: border-box;
       /* padding: 10px; */
@@ -485,13 +644,25 @@
       padding: '20px';
     }
   </style>
-
-
   <style>
     /* width */
     .AB::-webkit-scrollbar {
       width: 10px;
     }
+
+    .text-light {
+      color: #BABFC7 !important;
+    }
+
+    .CB::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    .margint40 {
+      margin-top: 40px !important;
+    }
+
+
 
     /* Track */
     /* .AB::-webkit-scrollbar-track {
@@ -505,8 +676,25 @@
       border-radius: 15px;
     }
 
+    .CB::-webkit-scrollbar-thumb {
+      background: #797A79;
+      border-radius: 15px;
+    }
+
+    .ArmUtil {
+      color: green;
+      font-weight: 800;
+      font-size: 60px;
+    }
+
+
+
     /* Handle on hover */
     .AB::-webkit-scrollbar-thumb:hover {
+      background: #797A79;
+    }
+
+    .CB::-webkit-scrollbar-thumb:hover {
       background: #797A79;
     }
 
@@ -517,13 +705,183 @@
       left: 0;
       right: 0;
       z-index: 1;
+
+    }
+
+    nav.navbar1.navbar-expand-lg {
+      z-index: 1;
+    }
+
+    .NH {
+      max-height: 230px;
+    }
+
+    .opI:hover {
+      cursor: pointer;
+    }
+
+    .minhight {
+      min-height: 320px;
+    }
+
+    @media screen and (min-device-width: 360px) and (max-device-width: 699px) {
+
+      /* .heightforwatch {
+        min-height: 600px
+      }
+
+      .heightforwatch1 {
+        height: 00px
+      } */
+
+      .BS {
+        margin: 7% 0px !important;
+      }
+
+      a#logout {
+        padding: 0;
+      }
+
+      .col-md-12.rightside3.margint40.flw100 {
+        margin-top: 15px !important;
+      }
+
+      .col-md-12.rightside3.margint40.flw100 .rightside1:nth-child(2),
+      .col-md-12.flw100.minhight {
+        margin-top: 15px !important;
+      }
+
+      .NAO {
+        vertical-align: top;
+      }
+
+      .Tbox {
+        padding-right: 20px;
+
+      }
+
+      .NH {
+        min-height: 150px !important;
+        max-height: 182px !important;
+      }
+
+      .FX {
+        margin-right: 0px !important;
+      }
+
+      .leftA {
+        text-align: left;
+        font-size: 15px;
+      }
+
+      .back.face.center.heightforwatch .watch1 {
+        min-height: 600px !important;
+      }
+
+      .flip-card {
+        min-height: 600px;
+      }
+
+      .flw100m {
+        float: left;
+        width: 100%;
+      }
+
+      .AB {
+        height: 550px !important;
+      }
+
+
+      .textt {
+        width: 90%;
+        text-align: left;
+      }
+
+      .imgDiv {
+        /* min-height: 620px; */
+        /* background-color: #202120;
+      float: left;
+      width: 100%; */
+
+        margin-top: 30px;
+        width: 100% !important;
+      }
+
+      .ArmUtil {
+        font-size: 30px;
+      }
+
+      .col-md-12.rightside3 {
+        height: 100% !important;
+      }
+
+      body {
+        padding-right: 0px !important;
+      }
+
+      .rightside1 {
+        height: 50% !important;
+        width: 100% !important;
+        margin: 10px 0px !important;
+      }
+
+      .rightside {
+        padding-left: 10px !important;
+      }
+
+      .part1 {
+        width: 100% !important;
+      }
+
+      img#operatorImage {
+        height: 45px !important;
+        width: 45px !important;
+      }
+
+      .marginn {
+        margin-left: 55px !important;
+        padding-top: 0px !important;
+      }
+
+      .col-md-9.rightside {
+        margin-bottom: 30px;
+      }
+
+      .minhight {
+        min-height: 320px;
+      }
+    }
+
+
+    /* .goog-te-banner-frame {
+      visibility: hidden !important;
+    } */
+
+    @media screen and (min-device-width: 700px) and (max-device-width: 1050px) {
+      .rightside {
+        /* padding-left: 10px !important; */
+        width: 100% !important;
+      }
+
+      .part1 {
+        width: 100% !important;
+      }
     }
   </style>
+
   <script>
-    // $(document).ready(function () {
-    $("#nav").load("navbar.html");
-    // console.log('LineID',);
-    // });
+    $(document).ready(async function () {
+
+      await $("#nav").load("navbar.html");
+      // await googleTranslateElementInit();
+      // console.log('LineID',);
+    });
+    // function googleTranslateElementInit() {
+    //   new google.translate.TranslateElement({
+    //     pageLanguage: 'en',
+    //     transliterationEnabled: true
+    //   }, 'google_translate_element');
+    // }
 
     // var btn = document.getElementById('flip_content');
     // var btn1 = document.getElementById('flip_content1');
@@ -536,6 +894,8 @@
     // }
 
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+
   <script src="analogClock.js"></script>
   <script src="socket.io.js"></script>
   <script src="systemConfiguration.js"></script>
