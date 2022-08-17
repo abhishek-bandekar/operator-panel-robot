@@ -12,6 +12,7 @@ var pelUrl = 'https://pel.quadworld.in/',
   getAllOperatorLogs = opmsUrl + 'operator-logs/all',
   downtimeTypes = pelUrl + "downtime-types",
   halfHourlyProduction = pelUrl + 'computed-production/hourly-report',
+  getdowntime_logs = pelUrl + 'downtime-logs',
   getPlants = pelUrl + "client/location/plants";
 
 var token = localStorage.getItem('usertoken'),

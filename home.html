@@ -22,6 +22,8 @@
   <script src="https://getbootstrap.com/docs/5.1/assets/js/docs.min.js"></script>
   <script src="socket.io.js"></script>
   <script src="systemConfiguration.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
   <!-- <script type="text/javascript"
@@ -114,6 +116,40 @@
         <div class="modal-footer" style="background-color: #262C49;">
           <button type="button" class="btn btn-primary" style="background-color:#FD9E42"
             onclick="acceptOperator()">Accept</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="downtimeModal" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color:#FD9E42">
+          <h5 class="modal-title" id="exampleModalLabel1" style="color: white;font-weight: 600 "><i
+              class="fas fa-desktop"></i>&nbsp;Hourly
+            Downtime-logs</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="background-color: #262C49;">
+          <label style="padding:  0px 10px;color: white;"><span id="machineNameD" style="font-weight: 800 ;"></span>
+            Hourly
+            downtime-logs from <span id="startDate" style="font-weight: 800 ;"></span> to <span id="endDate"
+              style="font-weight: 800 ;"></span></label>
+          <table class="table table-striped" id="dtLogsTable" style="margin-top: 10px;">
+            <thead>
+              <tr>
+                <th style="text-align: left;color: white;">Reason</th>
+                <th style="text-align: left;color: white;">Type</th>
+                <th style="text-align: left;color: white;">Start Date Time</th>
+                <th style="text-align: left;color: white;">End Date Time</th>
+                <th style="text-align: left;color: white;">Total Minutes</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyDowntime">
+
+            </tbody>
+          </table>
+
         </div>
       </div>
     </div>
@@ -267,7 +303,8 @@
                 </div>
                 <div style="width: 45%;height:80px;background-color: black;float: right;border-radius: 10px;">
                   <div style="padding-top: 10px;">
-                    <h4 style="text-align: center;color: rgb(0, 255, 76);font-weight: 700;margin: 2px;" id="status">
+                    <h4 style="text-align: center;color: rgb(0, 255, 76);font-weight: 700;margin: 2px;" id="status"
+                      title="">
                       Loading..
                     </h4>
                     <h6 style="text-align: center;color: red;font-weight: 500;">Machine Status</h6>
@@ -531,7 +568,7 @@
                         <div id="clock">
                         </div>
                         <div style="margin-top: 20px;">
-                          <h6 style="line-height: 1rem;" id="dtReason">Maintenance</h6>
+                          <h6 style="line-height: 1rem;" id="dtReason"></h6>
                           <div id="TimeDiv" class="TimeDiv">
                             <!-- <h6 style="line-height: 1rem;">Timer : <span class="Time" id="timer">00:00:00</span></h6> -->
                           </div>
