@@ -204,6 +204,8 @@
   var downtimeD = {};
   var lineD = {};
   var currentShift = "";
+  var stCount = 0;
+  var halfHourlyArray;
   // 
   var mID = "";
   // var currentShift = "";
@@ -224,6 +226,8 @@
   var subOptionTypeValue = "";
   var press = false;
   var timeArrayShow = [];
+  var response = [];
+  var stationHead = '';
 
 
   function googleTranslateElementInit() {
@@ -689,7 +693,11 @@
     // console.log('operators', operators);
     $('#selectOperator').empty();
     $('#selectOperator').append(`<option value="none">No Operator</option>`);
-
+    stCount = 0;
+    // dataObject[data['id']] = { "Target": [], "Actual": [] }
+    if ("stations" in machineData[0] && machineData[0]["stations"]) {
+      stCount = machineData[0]["stations"]
+    }
     if (operators && operators.length != 0) {
       for (let g = 0; g < operators.length; g++) {
         // if (g == 0) {
@@ -932,12 +940,15 @@
     $('#tbody').empty();
     $('#tbody1').empty();
     // console.log('LPL', halfHourly123);
-    var halfHourlyArray = Object.keys(halfHourly123);
+    halfHourlyArray = Object.keys(halfHourly123);
     var tableHead = '<tr id="timeid"><th class="rowgroup"  ></th>';
     var tableHead1 = '<tr id="timeid1"><th class="rowgroup"  ></th>';
     var Target_row_total = '<tr id="count-tt"><th style="padding: 20px;font-size: 15px;">PLAN</th>';
     var Actual_row_total = '<tr id="count-tp"><th style="padding: 20px;font-size: 15px;">ACTUAL</th></th>';
     var Vertical_table = ``;
+    stationHead = '';
+    stationHead = '<tr id="timeid" class="mname" style="border-bottom:2px solid white"><th class="rowgroup" style="color:white" >' + 'Station' + '</th><th style="color:white" > Particulars </th>';
+
     for (let k = 0; k < halfHourlyArray.length / 2; k++) {
       Vertical_table += `<tr>`;
       if (halfHourlyArray[k + k + 2] == undefined) {
@@ -946,9 +957,10 @@
         tableHead += `<th class="text-nowrap" style="padding: 5px;text-align:start"  onClick="showDowntimetable(${k})">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))}</th></tr>`
         tableHead1 += `<th class="text-nowrap" style="padding: 5px;text-align:start"  onClick="showDowntimetable(${k})">${await tConvert(shiftsObject[currentShift + '-endDateTime'].slice(0, -3))}</th ></tr >`
         // tableHead += `<th class="text-nowrap">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))}</th></tr>`
-
-        Target_row_total += `<td style="padding: 20px;text-align: start;"><b><span id="total-target-${k}" class="total-target-${k} zero">0</span></b></td></tr>`;
-        Actual_row_total += `<td style="padding: 20px;text-align: start;"><b><span id="total-actual-${k}" class="total-actual-${k} zero">0</span></b></td></tr>`;
+        stationHead += `<th class="text-nowrap" style="color:white">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))}-${await tConvert(shiftsObject[currentShift + '-endDateTime'].slice(0, -3))}</th>`;
+        stationHead += '<th style="text-align:center;color:white"> Total </th></tr>'
+        Target_row_total += `<td style="padding: 20px;text-align: start;" onClick="showStationtable()"><b><span id="total-target-${k}" class="total-target-${k} zero">0</span></b></td></tr>`;
+        Actual_row_total += `<td style="padding: 20px;text-align: start;" onClick="showStationtable()"><b><span id="total-actual-${k}" class="total-actual-${k} zero">0</span></b></td></tr>`;
         $('#countit').append(tableHead);
         $('#countit').append(tableHead1);
         Vertical_table += ` <td style="text-align:left;font-weight:600"  onClick="showDowntimetable(${k})">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))} To ${await tConvert(shiftsObject[currentShift + '-endDateTime'].slice(0, -3))}</td><td style="text-align: center;"><b><span id="total-actual-${k}" class=id="total-actual-${k}">0</span></b></td><td style="text-align: center;"><b><span id="total-target-${k}" class="total-target-${k}">0</span></b></td></tr>`;
@@ -960,15 +972,16 @@
         // console.log("hal", halfHourlyArray[k + k].slice(0, -3));
         tableHead += `<th class="text-nowrap" style="padding: 5px;text-align:start"  onClick="showDowntimetable(${k})">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))}</th>`;
         tableHead1 += `<th class="text-nowrap"style="padding: 5px;text-align:start"  onClick="showDowntimetable(${k})">${await tConvert(halfHourlyArray[k + k + 2].slice(0, -3))}</th>`;
-        Target_row_total += `<td style="padding: 20px;text-align: start;"><b><span id="total-target-${k}" class="total-target-${k} zero">0</span></b></td>`;
-        Actual_row_total += `<td style="padding: 20px;text-align: start;"><b><span id="total-actual-${k}" class="total-actual-${k} zero">0</span></b></td>`;
+        stationHead += `<th class="text-nowrap" style="color:white">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))}-${await tConvert(halfHourlyArray[k + k + 2].slice(0, -3))}</th>`;
+        Target_row_total += `<td style="padding: 20px;text-align: start;" onClick="showStationtable()"><b><span id="total-target-${k}" class="total-target-${k} zero">0</span></b></td>`;
+        Actual_row_total += `<td style="padding: 20px;text-align: start;" onClick="showStationtable()"><b><span id="total-actual-${k}" class="total-actual-${k} zero">0</span></b></td>`;
         Vertical_table += ` <td style="text-align:left;font-weight:600"  onClick="showDowntimetable(${k})">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))} To ${await tConvert(halfHourlyArray[k + k + 2].slice(0, -3))}</td><td style="text-align: center;"><b><span id="total-actual-${k}" class="total-actual-${k}">0</span></b></td><td style="text-align: center;"><b><span id="total-target-${k}" class="total-target-${k}">0</span></b></td></tr>`;
         timeArrayShow.push(halfHourlyArray[k + k].slice(0, -3) + '-' + halfHourlyArray[k + k + 2].slice(0, -3))
 
       }
     }
     var hourlyUrl = halfHourlyProduction + "?clientId=" + clientId + "&plantId=" + localStorage.getItem("opPlantId") + "&machineId=" + mID + "&date=" + currentDate;
-    var response = await getCallAPI(hourlyUrl, token, 'GET');
+    response = await getCallAPI(hourlyUrl, token, 'GET');
 
     var from, to; //to current-time 
     from = await setTime(shiftsObject[currentShift + '-startDate'], shiftsObject[currentShift + '-startDateTime']);
@@ -979,7 +992,7 @@
     }).then((result) => {
       return result;
     });
-    var halfHourlyArray = Object.keys(halfHourly123);
+    halfHourlyArray = Object.keys(halfHourly123);
 
     // console.log('hourlyResponce', response, halfHourly);
     var totalProd = 0;
@@ -1084,19 +1097,25 @@
     $('#countit').empty();
     $('#tbody').empty();
     $('#tbody1').empty();
-    var halfHourlyArray = Object.keys(halfHourly123);
+    halfHourlyArray = Object.keys(halfHourly123);
     var tableHead = '<tr id="timeid"><th class="rowgroup"  ></th>';
     var tableHead1 = '<tr id="timeid1"><th class="rowgroup"  ></th>';
     var Target_row_total = '<tr id="count-tt"><th style="padding: 20px;font-size: 15px;">PLAN</th>';
     var Actual_row_total = '<tr id="count-tp"><th style="padding: 20px;font-size: 15px;">ACTUAL</th></th>';
     var Vertical_table = ``;
+    stationHead = '';
+    stationHead = '<tr id="timeid" class="mname" style="border-bottom:2px solid white"><th class="rowgroup" style="color:white" >' + 'Station' + '</th><th style="color:white" > Particulars </th>';
+
     for (let k = 0; k < halfHourlyArray.length / 2; k++) {
       Vertical_table += `<tr>`;
       if (halfHourlyArray[k + k + 2] == undefined) {
         tableHead += `<th class="text-nowrap" style="padding: 5px;text-align:start" onClick="showDowntimetable(${k})">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))}</th></tr>`
         tableHead1 += `<th class="text-nowrap" style="padding: 5px;text-align:start" onClick="showDowntimetable(${k})">${await tConvert(shiftsObject[currentShift + '-endDateTime'].slice(0, -3))}</th ></tr >`
-        Target_row_total += `<td style="padding: 20px;text-align: start;"><b><span id="total-target-${k}" class="total-target-${k}">0</span></b></td></tr>`;
-        Actual_row_total += `<td style="padding: 20px;text-align: start;"><b><span id="total-actual-${k}" class="total-actual-${k}">0</span></b></td></tr>`;
+        Target_row_total += `<td style="padding: 20px;text-align: start;" onClick="showStationtable()"><b><span id="total-target-${k}" class="total-target-${k}">0</span></b></td></tr>`;
+        Actual_row_total += `<td style="padding: 20px;text-align: start;" onClick="showStationtable()"><b><span id="total-actual-${k}" class="total-actual-${k}">0</span></b></td></tr>`;
+        stationHead += `<th class="text-nowrap" style="color:white">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))}-${await tConvert(shiftsObject[currentShift + '-endDateTime'].slice(0, -3))}</th>`;
+        stationHead += '<th style="text-align:center;color:white"> Total </th></tr>'
+
         $('#countit').append(tableHead);
         $('#countit').append(tableHead1);
         Vertical_table += ` <td style="text-align:left;font-weight:600"  onClick="showDowntimetable(${k})">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))} To ${await tConvert(shiftsObject[currentShift + '-endDateTime'].slice(0, -3))}</td><td style="text-align: center;"><b><span id="total-actual-${k}" class=id="total-actual-${k}">0</span></b></td><td style="text-align: center;"><b><span id="total-target-${k}" class="total-target-${k}">0</span></b></td></tr>`;
@@ -1108,15 +1127,16 @@
       } else {
         tableHead += `<th class="text-nowrap" style="padding: 5px;text-align:start"  onClick="showDowntimetable(${k})">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))}</th>`;
         tableHead1 += `<th class="text-nowrap"style="padding: 5px;text-align:start"  onClick="showDowntimetable(${k})" >${await tConvert(halfHourlyArray[k + k + 2].slice(0, -3))}</th>`;
-        Target_row_total += `<td style="padding: 20px;text-align: start;"><b><span id="total-target-${k}" class="total-target-${k}">0</span></b></td>`;
-        Actual_row_total += `<td style="padding: 20px;text-align: start;"><b><span id="total-actual-${k}" class="total-actual-${k}">0</span></b></td>`;
+        Target_row_total += `<td style="padding: 20px;text-align: start;" onClick="showStationtable()"><b><span id="total-target-${k}" class="total-target-${k}">0</span></b></td>`;
+        Actual_row_total += `<td style="padding: 20px;text-align: start;" onClick="showStationtable()"><b><span id="total-actual-${k}" class="total-actual-${k}">0</span></b></td>`;
         Vertical_table += ` <td style="text-align:left;font-weight:600"  onClick="showDowntimetable(${k})">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))} To ${await tConvert(halfHourlyArray[k + k + 2].slice(0, -3))}</td><td style="text-align: center;"><b><span id="total-actual-${k}" class="total-actual-${k}">0</span></b></td><td style="text-align: center;"><b><span id="total-target-${k}" class="total-target-${k}">0</span></b></td></tr>`;
         timeArrayShow.push(halfHourlyArray[k + k].slice(0, -3) + '-' + halfHourlyArray[k + k + 2].slice(0, -3));
+        stationHead += `<th class="text-nowrap" style="color:white">${await tConvertFirst(halfHourlyArray[k + k].slice(0, -3))}-${await tConvert(halfHourlyArray[k + k + 2].slice(0, -3))}</th>`;
 
       }
     }
     var hourlyUrl = halfHourlyProduction + "?clientId=" + clientId + "&plantId=" + localStorage.getItem("opPlantId") + "&machineId=" + mID + "&date=" + currentDate;
-    var response = await getCallAPI(hourlyUrl, token, 'GET');
+    response = await getCallAPI(hourlyUrl, token, 'GET');
 
     var from, to; //to current-time 
     from = await setTime(shiftsObject[currentShift + '-startDate'], shiftsObject[currentShift + '-startDateTime']);
@@ -1127,7 +1147,7 @@
     }).then((result) => {
       return result;
     });
-    var halfHourlyArray = Object.keys(halfHourly123);
+    halfHourlyArray = Object.keys(halfHourly123);
 
     // console.log('hourlyResponce', response, halfHourly);
     var totalProd = 0;
@@ -1229,12 +1249,10 @@
     } else {
       startDate = Object.values(shiftsObject)[1];
     }
-
     if (time[1] > "00:00" && time[1] < Object.values(shiftsObject)[0].substring(0, 5)) {
       endDate = moment(Object.values(shiftsObject)[1]).add(1, 'days').format('YYYY-MM-DD');
     } else {
       endDate = Object.values(shiftsObject)[1];
-
     }
     var downtimeLogsApi = getdowntime_logs + '?machineId=' + mID + '&startDateTime=' + startDate + 'T' + time[0] + ':00' + '&endDateTime=' + endDate + 'T' + time[1] + ':00';
     var downtimeRespose = await getCallAPI(downtimeLogsApi, token, 'GET');
@@ -1261,6 +1279,110 @@
     $("#downtimeModal").modal('show')
   }
 
+  async function showStationtable() {
+    $('#tbodystation').empty();
+    // $('#tbodystation').empty();
+    // response
+    console.log("response", halfHourlyArray);
+    var stationCount = stCount;
+    if (stationCount > 0) {
+      $(`#noStation`).hide();
+      $('#tbodystation').append(stationHead);
+      for (let a = 1; a <= stationCount; a++) {
+
+        var targetRow = `<tr class="machineid1" ><th class="rowgroup addrowspan" rowspan="${2}" style="white-space:pre-line;text-align:center">${a}</th><th class="second-col rowgroup" colspan="1">Target</th>`;
+        var Actual_row = `<tr class="actualid" ><th class="second-col rowgroup " colspan="1">Actual</th>`;
+        var total_TargetROw = `<tr class="machineid1" style="border-top:2px solid white" ><th class="rowgroup" style="white-space:pre-line;font-weight:750" colspan="2">Total Target</th>`;
+        var total_row = `<tr class="machineid1" ><th class="rowgroup" style="white-space:pre-line;font-weight:750" colspan="2">Total Actual</th>`;
+
+        for (let k = 0; k < halfHourlyArray.length / 2; k++) {
+          if (halfHourlyArray[k + k + 2] == undefined) {
+            targetRow += `<td class="zero-me"  id='target-${a}-${k}' style="text-align:center">0</td><td class="zero-me"  id='total-target-${a}-${k}' style="font-weight:750;text-align:center">0</td></tr>`;
+            Actual_row += `<td class="zero-me"  id='actual-${a}-${k}' style="text-align:center">0</td><td class="zero-me"  id='total-actual-${a}-${k}' style="font-weight:750;text-align:center">0</td></tr>`;
+
+            $('#tbodystation').append(targetRow);
+            $('#tbodystation').append(Actual_row);
+            if (a == stationCount) {
+              total_TargetROw += `<td class="zero-me"  id='sum-target-${k}' style="font-weight:750;text-align:center">0</td><td class="zero-me"  id='grandTargetTotalStation' style="font-weight:750;text-align:center">0</td></tr>`
+              $('#tbodystation').append(total_TargetROw);
+
+              total_row += `<td class="zero-me"  id='sum-actual-${k}' style="font-weight:750;text-align:center">0</td><td class="zero-me"  id='grandActualTotalStation' style="font-weight:750;text-align:center">0</td></tr>`
+              $('#tbodystation').append(total_row);
+
+            }
+
+
+          } else {
+            console.log('KOK');
+            Actual_row += `<td class="zero-me"  id='actual-${a}-${k}' style="text-align:center">0</td>`;
+            targetRow += `<td class="zero-me"  id='target-${a}-${k}' style="text-align:center">0</td>`;
+            if (a == stationCount) {
+              total_row += `<td class="zero-me"  id='sum-actual-${k}' style="font-weight:750;text-align:center">0</td>`;
+              total_TargetROw += `<td class="zero-me"  id='sum-target-${k}' style="font-weight:750;text-align:center">0</td>`;
+
+            }
+          }
+          // kl++;
+        }
+
+      }
+      var responseCheck = response.filter(obj => obj.machineId == mID);
+      console.log('Swami786', responseCheck);
+      if (responseCheck.length > 0 && "stations" in responseCheck[0] && responseCheck[0]['stations'] && Object.keys(responseCheck[0]['stations']).length != 0) {
+        for (let j = 0; j < Object.keys(responseCheck[0]['stations']).length; j++) {
+          var totalstH = 0;
+          for (let r = 0; r < halfHourlyArray.length / 2; r++) {
+            if (halfHourlyArray[r + r + 1] == undefined) {
+              totalstH += Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r]];
+              $(`#actual-${Object.keys(responseCheck[0]['stations'])[j]}-${r}`).text(Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r]]);
+              $(`#total-actual-${Object.keys(responseCheck[0]['stations'])[j]}-${r}`).text(totalstH);
+              $(`#sum-actual-${r}`).text(parseInt($(`#sum-actual-${r}`).text()) + Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r]]);
+              $(`#grandActualTotalStation`).text(parseInt($(`#grandActualTotalStation`).text()) + totalstH);
+            } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
+              totalstH += Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r]] + Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r + 1]];
+              $(`#actual-${Object.keys(responseCheck[0]['stations'])[j]}-${r}`).text(Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r]] + Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r + 1]]);
+              $(`#total-actual-${Object.keys(responseCheck[0]['stations'])[j]}-${r}`).text(totalstH);
+              $(`#sum-actual-${r}`).text(parseInt($(`#sum-actual-${r}`).text()) + (Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r]] + Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r + 1]]));
+              $(`#grandActualTotalStation`).text(parseInt($(`#grandActualTotalStation`).text()) + totalstH);
+
+            } else {
+              totalstH += (Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r]] + Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r + 1]]);
+              $(`#actual-${Object.keys(responseCheck[0]['stations'])[j]}-${r}`).text((Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r]] + Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r + 1]]));
+              $(`#sum-actual-${r}`).text(parseInt($(`#sum-actual-${r}`).text()) + (Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r]] + Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r + 1]]))
+            }
+          }
+        }
+      }
+      if (responseCheck.length > 0 && "stationTargets" in responseCheck[0] && responseCheck[0]['stationTargets'] && Object.keys(responseCheck[0]['stationTargets']).length != 0) {
+        for (let j = 0; j < Object.keys(responseCheck[0]['stationTargets']).length; j++) {
+          var totalstH = 0;
+          for (let r = 0; r < halfHourlyArray.length / 2; r++) {
+            if (halfHourlyArray[r + r + 1] == undefined) {
+              totalstH += Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target'];
+              $(`#target-${Object.keys(responseCheck[0]['stationTargets'])[j]}-${r}`).text(Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target']);
+              $(`#total-target-${Object.keys(responseCheck[0]['stationTargets'])[j]}-${r}`).text(totalstH);
+              $(`#sum-target-${r}`).text(parseInt($(`#sum-target-${r}`).text()) + Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target']);
+              $(`#grandTargetTotalStation`).text(parseInt($(`#grandTargetTotalStation`).text()) + totalstH);
+            } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
+              totalstH += Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target'] + Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r + 1]]['target'];
+              $(`#target-${Object.keys(responseCheck[0]['stationTargets'])[j]}-${r}`).text(Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target'] + Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r + 1]]['target']);
+              $(`#total-target-${Object.keys(responseCheck[0]['stationTargets'])[j]}-${r}`).text(totalstH);
+              $(`#sum-target-${r}`).text(parseInt($(`#sum-target-${r}`).text()) + (Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target'] + Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r + 1]]['target']));
+              $(`#grandTargetTotalStation`).text(parseInt($(`#grandTargetTotalStation`).text()) + totalstH);
+
+            } else {
+              totalstH += (Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target'] + Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r + 1]]['target']);
+              $(`#target-${Object.keys(responseCheck[0]['stationTargets'])[j]}-${r}`).text((Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target'] + Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r + 1]]['target']));
+              $(`#sum-target-${r}`).text(parseInt($(`#sum-target-${r}`).text()) + (Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target'] + Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r + 1]]['target']))
+            }
+          }
+        }
+      }
+      $("#stationModal").modal('show')
+    } else {
+      $(`#noStation`).show();
+    }
+  }
 
   function subDate(start, end) {
     var d1 = moment(start);
@@ -1586,8 +1708,8 @@
       var totaldeduction = 0;
       var totaladd = 0;
       var LAStop = 0;
+      var totalDowntime = 0;
       if (shiftobj != undefined) {
-
         Object.keys(shiftobj.activity).map((data) => {
           if (downtimeD[localStorage.getItem("opPlantId")]["downtimeDeductions"].includes(data)) {
             totaldeduction += shiftobj.activity[data];
@@ -1622,16 +1744,22 @@
         var idleTime = Math.floor(idle);
         // console.log("shiftobj1", shiftobj, shiftobj.idleTime, idleTime);
         // console.log("Swami1", Math.floor(idleTime / 60), "T" + (((Math.round(idleTime) % 60) < 10 ? '0' : ''), "K" + Math.round(idleTime) % 60))
-
+        // Math.floor(totalDowntime)
         idleTime = Math.floor(idleTime / 60) + ':' + (((Math.round(idleTime) % 60) < 10 ? '0' : '') + Math.round(idleTime) % 60);
         onlyIdel = Math.floor(onlyIdel / 60) + ':' + (((Math.round(onlyIdel) % 60) < 10 ? '0' : '') + Math.round(onlyIdel) % 60);
+        totalDowntime = totaldeduction + totaladd;
+        Math.floor(totalDowntime);
+        totalDowntime = Math.floor(totalDowntime / 60) + ':' + (((Math.round(totalDowntime) % 60) < 10 ? '0' : '') + Math.round(totalDowntime) % 60);
+
+        console.log("HH", totalDowntime);
         $('#idleTime').text(idleTime + " H:M");
-        $('#idealTable').text(onlyIdel + " H:M");
+        $('#dtTable').text(totalDowntime + " H:M");
 
 
       }
 
     }
+    console.log("HHLP");
 
   }
   async function subDttype(subDType, doEmit) {
@@ -2052,6 +2180,18 @@
   }
 </script>
 <style>
+  .table-striped>tbody>tr:nth-of-type(odd) {
+    --bs-table-accent-bg: none;
+  }
+
+  .actualid td,
+  .machineid1 th,
+  .machineid1 td,
+  .actualid th {
+    color: #fff !important;
+    --bs-table-accent-bg: transparent !important;
+  }
+
   a {
     cursor: pointer !important;
   }
