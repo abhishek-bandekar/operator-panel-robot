@@ -1,573 +1,155 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" /> -->
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" /> -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autosys Robot Operator Panel | Login</title>
+  <link rel="shortcut icon" type="image/x-icon" href="ICON.png">
   <script src="https://kit.fontawesome.com/a25b1600a4.js" crossorigin="anonymous"></script>
-  <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> -->
-
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/js/bootstrap.min.js"></script> -->
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script> -->
-  <link href='https://fonts.googleapis.com/css?family=Ek Mukta' rel='stylesheet' />
-  <script type="text/JavaScript" src="https://MomentJS.com/downloads/moment.js"></script>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
   <link rel="stylesheet" href="https://getbootstrap.com/docs/5.1/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" href="select2.min.css">
-  <link rel="stylesheet" type="text/css" href="select2.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
   <script src="https://getbootstrap.com/docs/5.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script>
-
-
-  <script src="https://getbootstrap.com/docs/5.1/assets/js/docs.min.js"></script>
-  <!-- <link rel="stylesheet" type="text/css" href="theme.css"> -->
-
-  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
-  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
-
-
-  <title>Page Title</title>
 </head>
 
-<body style="background-color: black">
+<body style="background-color: #192039;">
+  <div class="container-fluid" style="background-color: #192039;width:100%;height: 700px;float: left;">
+    <div style="height: auto;padding: 30px;">
+      <div class="col-md-4" style="float:left">hhii
+      </div>
+      <div class="col-md-4" style="text-align: center;float:left">
+        <img src="auto_log.png" class="autosys"></img>
+      </div>
+      <div class="col-md-4" style="float:left">
+      </div>
+    </div>
+    <div class="col-md-12" style="margin-top:30px;background-color: #192039;float: left;width: 100%;">
+      <div class="col-md-4 tide" style="float: left;">.
+      </div>
+      <div class="col-md-4 mid" style="float: left;">
+        <div style="float: left;width:100%;height: 550px;background-color: #192039;">
+          <div class="login">
+            <div style="padding:50px 60px">
+              <h5 style="color: white;font-size: 1.14rem;font-weight:500;font-family: inherit;line-height :2;">
+                Welcome
+                back</h5>
+              <h6
+                style="color: #B8C2CC !important;font-size: small;font-weight: 400; font-family:'Montserrat', Helvetica, Arial, serif;">
+                Login to manage your account</h6>
+              <form id="loginForm" class="" role="form" method="post" onSubmit="authenticateUser()">
 
-  <nav class="navbar navbar-expand-lg " style="background-color: black">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
-        aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-
-        <div class="col-md-4">
-          <!-- <a class="navbar-brand" href="#">Hidden brand</a> -->
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false" style="padding-top:0px;color:aliceblue">
-                <i class="fal fa-cube" style="margin-top:13px;color:aliceblue"></i> Vte FDB 290
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false" style="padding-top:0px;color:aliceblue">
-                <i class="fal fa-cube" style="margin-top:13px;color:aliceblue"></i> Vte FDB 290
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>
-
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false" style="padding-top:0px;color:aliceblue">
-                <i class="fal fa-cube" style="margin-top:13px;color:aliceblue"></i> Vte FDB 290
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>
-
-            </li>
-            <!-- <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Dropdown
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>
-            </li> -->
-          </ul>
-        </div>
-        <div class="col-md-4" style="text-align: center;">
-          <img src="auto_log.png" style="width: 30%;"></img>
-        </div>
-        <div class="col-md-4 nav navbar-nav navbar-right">
-          <div style="width: 40%;float: left;"></div>
-          <div style="float: left;width: 60%;">
-            <div style="float: left;width: 50%;text-align: right;">
-              <div class="dropdown" style="float: right;">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                  aria-expanded="false" style="padding-top:0px;color:aliceblue">
-                  <i class=" fal fa-map-marker-alt" style="margin-top:13px;color:aliceblue"></i> Vte FDB 290
-                </a>
-                <ul class=" dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-              </div>
-            </div>
-            <div style="float: left;width: 50%;text-align: right;color:aliceblue">
-              <div class="dropdown">
-                <div id="navbarDropdown1" data-bs-toggle="dropdown" aria-expanded="false" class="dropdown-toggle">
-                  <span style="float: left;text-align: right;width:70%;margin-top:0px;line-height:20px">Abdul
-                    zafar<br /><span>HII</span>
-                  </span>
-                  <span style="width:30%">
-                    <img src="default.gif" style="width: 40px;border-radius: 20px;"></img>
-                    <span>
+                <div class=" mb-3 form-group" style="padding-top: 10px;">
+                  <label for="exampleFormControlInput1" class="form-label" style="color: #5E676F;font-size: 18px;">Email
+                  </label>
+                  <input type="email" class="form-control" id="username" required placeholder="Enter Email">
                 </div>
-                <ul class="dropdown-menu  dropdown-menu-end dropdown-menu-dark" aria-labelledby="navbarDropdown1"
-                  style="background-color: #192039">
-                  <li><a class="dropdown-item" href="#">Set Plan</a></li>
-                  <li><a class="dropdown-item" href="#">Logout</a></li>
-                </ul>
-              </div>
+                <div class="mb-3 form-group">
+                  <label for="exampleFormControlInput1" class="form-label"
+                    style="color: #5E676F;font-size: 18px;">Password
+                  </label>
+                  <input type="password" class="form-control" id="password" required placeholder="Password">
+                </div>
+
+                <div style="text-align: right;">
+                  <span style="color: #B8C2CC !important;">Forgot password?</span>
+                </div>
+
+                <div class="form-check" style="margin-top: 10px;">
+                  <input class="form-check-input" type="checkbox" value="" id="remember">
+                  <label class="form-check-label" for="flexCheckDefault" style="color: #5E676F;font-size: 17px;">
+                    Remember me
+                  </label>
+                </div>
+                <div id="loginMessage" class="alert d-none" role="alert" style="margin-top: 10px">
+                  A simple primary alert—check it out!
+                </div>
+                <button type="submit" class="btn"
+                  style="background-color:#7367F0;color: white;margin-top: 20px;width: 50%;font-family: inherit;">Sign
+                  in</button>
+              </form>
+              <h6 style="color: #B8C2CC !important;font-weight: 400;margin-top: 15px;">Do not have an account?</h6>
+              <h6 style="color: #3A7EED !important;font-weight: 400;margin-top: 5px;padding-bottom: 20px;">Sign up
+              </h6>
+
             </div>
           </div>
         </div>
       </div>
-  </nav>
-  <div class="container-fluid">
-    <div class="col-md-12" style="min-height:620px;background-color: #202120;float: left;width: 100%;">
-      <div class="col-md-3" style="height:620px;background-color: black;float: left;">
-        <div style="height:100%;background-color: #202120;margin: 10px;border-radius: 10px;">
+      <div class="col-md-4 tide" style="float: left;">
+        .</div>
+    </div>
 
-          <div style="padding-top : 30px; text-align: center;">
-            <h2 style="color: white;" id="machineName">Loading..</h2>
-            <h5 style="color: white;" id="lineName">Module</h5>
-
-            <img src="" id="machineImage" style="height: 350px;max-width: 100%;padding:20px;margin-top: 10px;"></img>
-
-            <div style="margin-top: 10px; text-align: center;">
-              <h1 style="color: green;font-weight: 800;font-size: 60px;">0 %</h1>
-              <h5 style="color: white;font-weight: 700;">Arm Utilisation</h5>
-            </div>
-
-          </div>
-
-        </div>
+    <div class="col-md-12" style="margin-top:30px;background-color: #192039;">
+      <div class="col-md-4" style="float: left;">.
       </div>
-      <div class="col-md-9"
-        style="height:620px;background-color: black;float: left;padding-left:30px;padding-right:10px">
-        <div class="col-md-12" style="height:43%;background-color: black;border-radius: 10px;margin-top: 10px;">
-          <div
-            style="height:100%; width:47%;background-color: #202120;float: left;border-radius: 10px;margin-right: 3%;">
-            <div style="margin: 20px;">
-              <h4 style="color: white;">Fixture Statistics</h4>
-
-              <div style="margin-top: 20px;">
-                <p style="color: white;float: left;width: 100%;"><span
-                    style="padding-right: 10px; width: 150px;float: left;">STATION 1</span>
-                  <span style="padding-right: 10px;float: left;">: <i class="fal fa-clock"
-                      style="padding-right: 5px;"></i><span id="ct-1">0</span>
-                  </span><span style="float: left;"><i class="fas fa-cube"></i>
-                    <span id="st-1">0</span></span>
-                </p>
-
-                <p style="color: white;float: left;width: 100%;"><span
-                    style="padding-right: 10px; width: 150px;float: left;">STATION 2</span>
-                  <span style="padding-right: 10px;float: left;">: <i class="fal fa-clock"
-                      style="padding-right: 5px;"></i><span id="ct-2">0</span></span><span style="float: left;"><i
-                      class="fas fa-cube"></i>
-                    <span id="st-2">0</span></span>
-                </p>
-
-                <p style="color: white;float: left;width: 100%;"><span
-                    style="padding-right: 10px; width: 150px;float: left;">STATION 3</span>
-                  <span style="padding-right: 10px;float: left;">: <i class="fal fa-clock"
-                      style="padding-right: 5px;"></i><span id="ct-3">0</span></span><span style="float: left;"><i
-                      class="fas fa-cube"></i>
-                    <span id="st-3">0</span></span>
-                </p>
-
-                <p style="color: white;float: left;width: 100%;"><span
-                    style="padding-right: 10px; width: 150px;float: left;">STATION 4</span>
-                  <span style="padding-right: 10px;float: left;">: <i class="fal fa-clock"
-                      style="padding-right: 5px;"></i><span id="ct-4">0</span></span><span style="float: left;"><i
-                      class="fas fa-cube"></i>
-                    <span id="st-4">0</span></span>
-                </p>
-              </div>
-
-
-            </div>
-          </div>
-          <div style="height:100%;width:47%;background-color: #202120;float: left;border-radius: 10px;margin-left: 3%;">
-            <div style="margin: 20px;">
-              <h4 style="color: white;">Operator Statistics</h4>
-              <div style="margin-top: 20px;">
-                <img src="default.gif" style="width:70px;border-radius: 50px;float: left;height: 70px;"
-                  id="operatorImage" onclick="showOperatorModal()"></img>
-                <div style="margin-left: 90px; padding-top:10px;">
-                  <h6 style="color: white;" id="operatorName">No Operator Selected</h5>
-                    <p style="color: green;font-weight: 500;"><i class="fas fa-signal-alt-3"
-                        style="float: left;margin-top: 2px;"></i><span>Average
-                        Efficiency :</span><span style="color: white;padding-left: 10px;" id="eff">0 %</span>
-                </div>
-              </div>
-              <div style="margin-top: 25px;width: 100%;">
-                <div style="width: 45%;height:80px; background-color: black;float: left;border-radius: 10px;">
-                  <div style="padding-top: 10px;">
-                    <h4 style="text-align: center;color: red;font-weight: 700;margin: 2px;" id="idleTime">134 Mins
-                    </h4>
-                    <h6 style="text-align: center;color: red;font-weight: 500;">Idle Time</h6>
-                  </div>
-                </div>
-                <div style="width: 45%;height:80px;background-color: black;float: right;border-radius: 10px;">
-                  <div style="padding-top: 10px;">
-                    <h4 style="text-align: center;color: rgb(0, 255, 76);font-weight: 700;margin: 2px;" id="status">
-                      Loading..
-                    </h4>
-                    <h6 style="text-align: center;color: red;font-weight: 500;">Machine Status</h6>
-                  </div>
-                </div>
-
-              </div>
-
-              <div>
-
-              </div>
-
-            </div>
-          </div>
-        </div>
-        <div class="col-md-12"
-          style="background-color: transparent;perspective: 1000px;height:50%;background-color: #090613;border-radius: 10px;margin-top: 35px;">
-          <div id="f1_card" class="shadow">
-            <div class="front face">
-              <div class="col-md-12" style="height:auto;background-color: #202120;border-radius: 10px;">
-                <div style=" color: white;">
-                  <div style="padding: 20px;float: left;width: 100%;">
-                    <span style="float: left;"><i class="fal fa-info-circle"></i>
-                      <span style="font-size: 18px;">Hourly Production Monitoring | <span
-                          style="font-family: 'Ek Mukta';font-size: 18px;"> प्रति घंटा
-                          उत्पादन की निगरानी</span></span>
-                    </span>
-                    <a style="float: right;"><i class="fal fa-repeat" id="flip_content1"></i></a>
-                  </div>
-                  <div>
-                    <table class="table" style="margin: 0px;">
-                      <thead style="border-top:2px solid white;border-bottom:2px solid white;color: white;" id="countit"
-                        class="1">
-                        <!-- <tr style="font-size: 12px;">
-                          <th></th>
-                          <th>8 TO 9 AM</th>
-                          <th>9 TO 10 AM</th>
-                          <th>10 TO 11 AM</th>
-                          <th>11 TO 12 PM</th>
-                          <th>12 TO 1 PM</th>
-                          <th>1 TO 2 PM</th>
-                          <th>2 TO 3 PM</th>
-                          <th>4 TO 5 PM</th>
-                        </tr> -->
-                      </thead>
-                      <tbody style="border:0px;border-color: none;border-bottom:2px solid white;color: white;"
-                        id="tbody" class="1">
-                      </tbody>
-                    </table>
-                  </div>
-                  <div
-                    style="color: white;width: 100%;float: left;background-color: #202120;border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;">
-                    <div style="padding: 10px 35px;float: left;width: 100%;">
-                      <div style="float: left;width: 35%;">
-                        <span>
-                          <span style="font-size: 17px;font-weight: 700;">Total Production :<span
-                              style="margin-left: 10px;" id="totalProduction">20,123</span>
-                          </span>
-                        </span>
-                      </div>
-                      <div style="float: left;width: 40%;">
-                        <span>
-                          <span style="font-size: 17px;font-weight: 700;">Idle Time :<span
-                              style="margin-left: 10px;">0</span>
-                          </span>
-                        </span>
-                      </div>
-                      <div style="float: left;width: 25%;">
-                        <span>
-                          <span style="font-size: 17px;font-weight: 700;">Operator Efficiency :<span
-                              style="margin-left: 10px;">0</span>
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="back face center">
-              <div class="col-md-12" style="height: 100%;background-color: #202120;border-radius: 10px;">
-                <div style=" color: white;height: 100%;display: block;" id="dtButtons">
-                  <div style="padding: 20px;padding-bottom: 0px;width: 100%;min-height: 50px;">
-                    <span style="float: left;"><i class="fal fa-info-circle"></i>
-                      <span style="font-size: 18px;">Hourly Production Monitoring | <span
-                          style="font-family: 'Ek Mukta';font-size: 18px;"> प्रति घंटा
-                          उत्पादन की निगरानी</span></span>
-                    </span>
-                    <a style="float: right;"><i class="fal fa-repeat" id="flip_content"></i></a>
-                  </div>
-                  <div style="margin: 0px 20px;max-height: 250px;overflow-y: scroll;" id="downtimeButtons">
-                  </div>
-                </div>
-                <div style=" color: white;height: 100%;display: none;" id="dtWatch">
-                  <div style="padding: 20px;padding-bottom: 0px;width: 100%;min-height: 50px;">
-                    <span style="float: left;"><i class="fal fa-info-circle"></i>
-                      <span style="font-size: 18px;">Declare Downtime Reasons | <span
-                          style="font-family: 'Ek Mukta';font-size: 18px;"> डाउनटाइम कारण घोषित
-                          करें</span></span>
-                    </span>
-                    <a style="float: right;"><i class="fal fa-repeat" id="flip_content2"></i></a>
-                  </div>
-
-                  <div class="col-md-12" style="height: 200px;padding: 20px;">
-                    <div class="col-md-6" style="float: left;">
-                      <div class="col-md-6" style="float: left; padding: 40px 0px" id="subDowntime"></div>
-                      <div class="col-md-6" style="float: left;padding: 20px" id="subDowntimeTypes"></div>
-
-                    </div>
-                    <div class="col-md-2" id="" style="float: left;">
-
-                      <div class="form-group" style="height:auto;margin: 20% 0px;">
-                        <button id="back" class="btn btn-outline-info px-1" style="margin:6px"
-                          onclick="backToDTbuttons(true)">Back</button>
-                        <button id="confirm" class="btn btn-outline-info px-1" onclick="submitD('')"
-                          style="margin:6px">Confirm</button>
-
-
-                      </div>
-                    </div>
-                    <div class="col-md-4" style="float: left;text-align: -webkit-center;height: auto;">
-                      <div id="clock">
-                      </div>
-                      <div style="margin-top: 20px;">
-                        <h6 style="line-height: 1rem;" id="dtReason">Maintenance</h6>
-                        <h6 style="line-height: 1rem;">Timer : <span id="timer">00:00:00</span></h6>
-                        <!-- <button id="downtimeConfirm${i}" class="btn btn-outline-info px-3" onclick="completeD()"
-                          style="margin:6px">Finish</button> -->
-                        <button id="downtimeConfirm" class="btn btn-outline-info px-3" onclick="completeDowntime()"
-                          style="margin:6px;display: none;">Finish</button>
-
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
+      <div class="col-md-4" style="float: left;color: white;">
+        <div style="float: left;width:100%;height: 200px;background-color: #192039;">
+          <div style="padding:30px 60px;text-align: center;font-family: 'Montserrat', Helvetica, Arial, serif;
+          font-size: 1rem;
+          font-weight: 400;
+          color: #B8C2CC !important;
+          line-height: 1.45;">
+            <span>Copyright © 2018 Autosys Industrial</span><br />
+            <span>Solutions Pvt. Ltd. All rights reserved</span><br />
+            <span>Terms of use | Privacy Policy</span>
           </div>
         </div>
       </div>
-
-      <!-- Operator Central Modal Medium -->
-
-
-      <!-- Modal -->
-      <div class="modal fade" id="operatorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header" style="background-color:#FD9E42">
-              <h5 class="modal-title" id="exampleModalLabel">Change Operator</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" style="background-color: #262C49;">
-              <div class="form-group my-0 col-md-12">
-                <label for="selectOperator" style="margin-bottom: 6px; color: white!important;">You can assign an
-                  operator
-                  to a machine by simple searching for the operator name and verifying his identity by the last four
-                  digits
-                  of his/her Operator ID. Please note that the operator must be registered by the Human Resources into
-                  the
-                  Quad Operator Management System for him to be visible here. </label>
-                <label for="selectOperator" style="margin-bottom: 6px; color: white!important;"><i
-                    class='feather alert-circle'></i>If your name does not show here, kindly contact your plant's
-                  human
-                  resources. </label>
-                <hr style="color: white;" />
-                <label for="selectOperator" style="margin-bottom: 6px; color: white!important;">
-                  आप ऑपरेटर के नाम की सरल खोज करके और उसके ऑपरेटर आईडी के अंतिम चार अंकों द्वारा उसकी पहचान सत्यापित
-                  करके
-                  किसी मशीन को एक ऑपरेटर असाइन कर सकते हैं। कृपया ध्यान दें कि ऑपरेटर को मानव संसाधन द्वारा क्वाड
-                  ऑपरेटर
-                  प्रबंधन प्रणाली में पंजीकृत होना चाहिए ताकि वह यहां दिखाई दे।
-                </label>
-                <label for="selectOperator" style="margin-bottom: 6px; color: white!important;">
-                  यदि आपका नाम यहां नहीं दिखता है, तो कृपया अपने संयंत्र के मानव संसाधन से संपर्क करें।
-                </label>
-              </div>
-              <div class="form-group mt-0 col-md-12">
-                <select class="select2 form-control mt-1" id="selectOperator" onchange="updateOperatorTable(this)">
-
-                </select>
-              </div>
-              <table width="100%" style="color: white;margin-top: 10px;">
-                <tr>
-                  <th width='30%' class="text-light">Name</th>
-                  <td>
-                    <h6 id="operatorNameModal"></h6>
-                  </td>
-                </tr>
-                <tr>
-                  <th class="text-light">ID</th>
-                  <td>
-                    <h6 id="operatorIdModal"></h6>
-                  </td>
-                </tr>
-                <tr>
-                  <th class="text-light">Type</th>
-                  <td>
-                    <h6 id="operatorType"></h6>
-                  </td>
-                </tr>
-                <tr>
-                  <th class="text-light">Joining</th>
-                  <td>
-                    <h6 id="joining"></h6>
-                  </td>
-                </tr>
-                <tr>
-                  <th class="text-light">Contact</th>
-                  <td>
-                    <h6 id="contact"></h6>
-                  </td>
-                </tr>
-
-              </table>
-
-            </div>
-            <div class="modal-footer" style="background-color: #262C49;">
-              <button type="button" class="btn btn-primary" style="background-color:#FD9E42"
-                onclick="acceptOperator()">Accept</button>
-            </div>
-          </div>
-        </div>
+      <div class="col-md-4" style="float: left;">.
       </div>
-      <!-- End of Operator Central Modal Medium -->
     </div>
   </div>
+  <script src="systemConfiguration.js"></script>
+  <script src="login.js"></script>
+
   <style>
-    .scrollme {
-      overflow-x: auto;
-    }
-
-    .dropdown-toggle::after {
-      display: none;
-    }
-
-    #f1_card {
-      width: 100%;
+    .login {
       height: 100%;
-      transform-style: preserve-3d;
-      transition: all 0.5s linear;
+      background-color: #1C233F;
+      margin: 0px 90px;
+      box-shadow: 10px;
+      border: 2px solid #192039;
+      border-radius: 10px;
     }
 
-    .tdPad {
-      padding: '20px';
+    .autosys {
+      width: 30%;
     }
 
+    @media screen and (min-device-width: 360px) and (max-device-width: 699px) {
 
-    .flip-card-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      transition: transform 0.6s;
-      transform-style: preserve-3d;
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      .login {
+        height: 100%;
+        background-color: #1C233F;
+        box-shadow: 10px;
+        margin: 0px;
+        border: 2px solid #192039;
+        border-radius: 10px;
+      }
+
+      .autosys {
+        width: 55%;
+      }
+
+      .mid {
+        width: 100%
+      }
     }
 
-    .flip-card-back {
-      /* background-color: #29b976; */
-      color: white;
-      transform: rotateY(180deg);
-    }
+    @media screen and (min-device-width: 700px) and (max-device-width: 1290px) {
+      .login {
+        margin: 0px 0px;
+      }
 
-    .flip {
-      transform: rotateX(180deg);
-      box-shadow: -5px 5px 5px #aaa;
-    }
-
-    .face1 {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-    }
-
-    .face {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-    }
-
-    .face.back {
-      display: block;
-      transform: rotateX(180deg);
-      box-sizing: border-box;
-      /* padding: 10px; */
-      color: white;
-      text-align: center;
-      background-color: #040709;
-    }
-
-    .table>:not(caption)>*>* {
-
-      border-bottom-width: 0px;
-    }
-
-    .gr {
-      background: #5ab985;
-      /* Old browsers */
-      background: -moz-linear-gradient(45deg, #5ab985 50%, #4899ac 100%);
-      /* FF3.6-15 */
-      background: -webkit-linear-gradient(45deg, #5ab985 50%, #4899ac 100%);
-      /* Chrome10-25,Safari5.1-6 */
-      background: linear-gradient(45deg, #5ab985 50%, #4899ac 100%);
-      /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#5ab985', endColorstr='#4899ac', GradientType=1);
-      /* IE6-9 fallback on horizontal gradient */
+      .autosys {
+        width: 55%;
+      }
     }
   </style>
-
-  <script src="analogClock.js"></script>
-  <script src="socket.io.js"></script>
-  <script src="systemConfiguration.js"></script>
-  <script src="select/select2.full.min.js"></script>
-  <script src="select/form-select2.js"></script>
-  <script src="index.js"></script>
-
-
 </body>
-<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-<script src="https://cdn.usebootstrap.com/bootstrap/5.0.1/js/bootstrap.min.js"></script>
-<script src="https://cdn.usebootstrap.com/bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script> -->
-<!-- <i class="fal fa-info-circle"></i> -->
 
 </html>

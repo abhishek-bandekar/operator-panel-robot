@@ -404,7 +404,7 @@
 
     localStorage.setItem("opData", JSON.stringify(opData));
     var mData = await getCallAPI(mUrl, token, 'GET');
-    console.log("Sw", mData);
+    // console.log("Sw", mData);
 
     var shiftsData = await getCallAPI(shiftUrl, token, 'GET');
     if (dateData.time >= "00:00:00" && dateData.time < shiftsData[0]['startDateTime'].substring(11, 19)) {
@@ -487,7 +487,7 @@
     if (mCOunt == 0) {
       $('#data').append(`<div><h4 style="color:white;text-align:center;margin:22%" >No Machines (Robot) Found. </h4></div>`)
     } else {
-      console.log("statsData12", statsData);
+      // console.log("statsData12", statsData);
       await machineUt(statsData);
       muT = await setInterval(async function () { console.log("SSS"); await statsDataUrl(); }, 1 * 60 * 1000);
 
@@ -506,6 +506,8 @@
       });
       // console.log('mIk', statsData, downtimeD);
       if (localStorage.getItem("Pages") == "2") {
+        // console.log('mIk');
+
         for (let h = 0; h < 99999; h++) {
           await clearInterval(h)
         }
@@ -573,7 +575,7 @@
 
   }
   async function machineUt(statsD) {
-    console.log("currentShift786", currentShift);
+    // console.log("currentShift786", currentShift);
     for (let s = 0; s < statsD.length; s++) {
       if (statsD[s].stats && Object.values(statsD[s].stats).length != 0) {
         var shiftobj = statsD[s].stats[currentShift];
@@ -592,7 +594,7 @@
           });
           var cal2 = (shiftobj.total - shiftobj.breaks) - totaldeduction;
           var mu = (cal1 / cal2) * 100;
-          console.log('`#mu-${statsD[s].machineId}`', `#mu-${statsD[s].machineId}`, isFinite(mu) && mu ? mu.toFixed(2) + " %" : 0 + "%")
+          // console.log('`#mu-${statsD[s].machineId}`', `#mu-${statsD[s].machineId}`, isFinite(mu) && mu ? mu.toFixed(2) + " %" : 0 + "%")
           $(`#mu-${statsD[s].machineId}`).text(isFinite(mu) && mu ? mu.toFixed(2) + " %" : 0 + "%");
         }
       }
@@ -1992,23 +1994,23 @@
     // console.log('SwamiK', dtD, dtOpt, dtSubOpt);
     if (dtD && dtD.name) {
       // console.log('dtType', 'Swami786786786');
-      console.log("KPL", "3");
+      // console.log("KPL", "3");
 
       await hideButton(dtD.name, false);
       TimouT = await setInterval(async function () { await init2(); }, 1 * 60 * 1000);
 
     }
     if (dtOpt && dtOpt.name) {
-      console.log('dtType', 'Swami7867867861');
+      // console.log('dtType', 'Swami7867867861');
       await subDttype(dtOpt.name, false);
     }
     if (dtSubOpt && dtSubOpt.names && dtSubOpt.names[0]) {
-      console.log('dtType', 'Swami7867867862');
+      // console.log('dtType', 'Swami7867867862');
 
       await subDtt(dtSubOpt.names[0], false);
     }
     if (startDateTime) {
-      console.log('dtType', 'Swami7867867863');
+      // console.log('dtType', 'Swami7867867863');
 
       startTime = startDateTime;
       await startCounter(startDateTime)
