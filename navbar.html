@@ -206,6 +206,7 @@
   var currentShift = "";
   var stCount = 0;
   var halfHourlyArray;
+  var selOperatoionId = 'none';
   // 
   var mID = "";
   // var currentShift = "";
@@ -228,7 +229,9 @@
   var timeArrayShow = [];
   var response = [];
   var stationHead = '';
-
+  var Miracle = {};
+  var operationData = [];
+  var machineData = [];
 
   function googleTranslateElementInit() {
     new google.translate.TranslateElement({
@@ -398,13 +401,12 @@
       statsUrl += '&lineId=' + lineId;
     }
     var opUrl = getOperators + '?clientId=' + clientId + '&plantId=' + plantId;
-    // console.log('opUrl', opUrl);
 
     var opData = await getCallAPI(opUrl, token, 'GET');
 
     localStorage.setItem("opData", JSON.stringify(opData));
     var mData = await getCallAPI(mUrl, token, 'GET');
-    // console.log("Sw", mData);
+    console.log("Sw", mData);
 
     var shiftsData = await getCallAPI(shiftUrl, token, 'GET');
     if (dateData.time >= "00:00:00" && dateData.time < shiftsData[0]['startDateTime'].substring(11, 19)) {
@@ -431,13 +433,27 @@
     var statsData = await getCallAPI(statsUrl, token, 'GET');
     $('#data').empty();
     var mCOunt = 0;
+    console.log('mData', mData);
+    // ${data.status}
     await mData.map((data, i) => {
-      if (data && data.type && data.type == "swr" || data.type == "mwr" || data.type == "twr") {
-        mCOunt++;
-        $('#data').append(`<div class="col-md-3" style="float: left;" id='${data.id}'>
+      // if (data && data.type && data.type == "swr" || data.type == "mwr" || data.type == "twr") {
+      mCOunt++;
+      if (data.id in Miracle) {
+        Miracle[data.id] = data && data.status ? data.status : 'Loading..';
+      } else {
+        Miracle[data.id] = "";
+        Miracle[data.id] = data && data.status ? data.status : 'Loading..';
+      }
+      // <span style="float: left;text-align:right;width:30%;font-weight: 500;font-size: 20px;color: #0ed00e;" id="${data.id}-status">${data.status}<span>
+      //               </span>
+      $('#data').append(`<div class="col-md-3" style="float: left;" id='${data.id}'>
         <a class="opI" onClick="nextPage('${data.id}')">
-        <div class="blackbox" style="min-height:259px;height:100%;background-color: #42454A;float: left;border-radius: 10px;margin: 15px;">
+        <div class="blackbox" style="min-height:259px;height:100%;background-color: #42454A;float: left;border-radius: 10px;margin: 15px;"
+        >
+     
           <div style="padding:20px 7px 20px 15px">
+           
+
             <p style="color: white;width: 100%;float: left;">
               <span style="float: left;width: 100%;font-weight:500;font-size: 19px;">
                 <span style="float: left;width: 70%;font-weight:600;font-size: 19px;" >${data.name}</span>
@@ -482,12 +498,12 @@
         </div>
       </a>
       </div>`);
-      }
+      // }
     })
     if (mCOunt == 0) {
       $('#data').append(`<div><h4 style="color:white;text-align:center;margin:22%" >No Machines (Robot) Found. </h4></div>`)
     } else {
-      // console.log("statsData12", statsData);
+      console.log("statsData12", statsData);
       await machineUt(statsData);
       muT = await setInterval(async function () { console.log("SSS"); await statsDataUrl(); }, 1 * 60 * 1000);
 
@@ -503,11 +519,43 @@
             $(`#st-${data['stationCount'][b]['number']}-${data['machineId']}`).text(data['stationCount'][b]['value']);
           }
         }
+
+        if ('status' in data) {
+          // console.log('data[st]', data['status'], `#${data['id']}-status`)
+          if (data['status'] == 'Active' || data['status'] == 'active') {
+            document.getElementById("status").style.color = "#007F00";
+            // document.getElementById(`${data['machineId']}-status`) && document.getElementById(`${data['machineId']}-status`).style.color ? document.getElementById(`${data['machineId']}-status`).style.color = "#007F00" : true;
+            // document.getElementById(`${data['machineId']}-AI`) && document.getElementById(`${data['machineId']}-AI`).style.color ? document.getElementById(`${data['machineId']}-AI`).style.color = "#007F00" : true;
+            if (data.machineId in Miracle) {
+              Miracle[data.machineId] = data && data.status ? data.status : 'Loading..';
+            } else {
+              Miracle[data.machineId] = "";
+              Miracle[data.machineId] = data && data.status ? data.status : 'Loading..';
+            }
+            // document.getElementById("status").style.color = rgb(0, 255, 76);
+            console.log("h5");
+
+            // $('#status').text(data['status']);
+            $(`#${data['machineId']}-status`).text(data['status']);
+          } else {
+            // document.getElementById("status").style.color = "#FF0101";
+            // document.getElementById(`${data['machineId']}-status`) && document.getElementById(`${data['machineId']}-status`).style.color ? document.getElementById(`${data['machineId']}-status`).style.color = "#FF0101" : true;
+            // document.getElementById(`${data['machineId']}-AI`) && document.getElementById(`${data['machineId']}-AI`).style.color ? document.getElementById(`${data['machineId']}-AI`).style.color = "#FF0101" : true;
+            // console.log("h4");
+
+            // $('#status').text(data['status']);
+            $(`#${data['machineId']}-status`).text(data['status']);
+            if (data.machineId in Miracle) {
+              Miracle[data.machineId] = data && data.status ? data.status : 'Loading..';
+            } else {
+              Miracle[data.machineId] = "";
+              Miracle[data.machineId] = data && data.status ? data.status : 'Loading..';
+            }
+          }
+        }
       });
       // console.log('mIk', statsData, downtimeD);
       if (localStorage.getItem("Pages") == "2") {
-        // console.log('mIk');
-
         for (let h = 0; h < 99999; h++) {
           await clearInterval(h)
         }
@@ -575,7 +623,7 @@
 
   }
   async function machineUt(statsD) {
-    // console.log("currentShift786", currentShift);
+    console.log("currentShift786", currentShift);
     for (let s = 0; s < statsD.length; s++) {
       if (statsD[s].stats && Object.values(statsD[s].stats).length != 0) {
         var shiftobj = statsD[s].stats[currentShift];
@@ -652,7 +700,6 @@
   async function init() {
     console.log("A1Swami", " Shree Swami Samarth");
     // await googleTranslateElementInit1();
-
     $('.divisionDropdown1').prop('disabled', 'disabled');
     $('.lineDropdown1').prop('disabled', true);
     $('.plantDropdown1').prop('disabled', true);
@@ -689,8 +736,16 @@
     statsUrl = localStorage.getItem("statsUrl");
     shiftsObject = JSON.parse(localStorage.getItem("shiftsObject"));
     // console.log('shiftsObjectSW', shiftsObject);
+    console.log("h3");
+    if (Miracle[mID] == 'Active' || Miracle[mID] == 'active') {
+      document.getElementById("status").style.color = "#007F00";
+    } else {
+      document.getElementById("status").style.color = "#FF0101";
+    }
+    $('#status').text(Miracle[mID]);
+
     var machineUrl = getMachines + '?clientId=' + clientId + '&id=' + mID;
-    var machineData = await getCallAPI(machineUrl, token, 'GET');
+    machineData = await getCallAPI(machineUrl, token, 'GET');
     operators = await getCallAPI(getOperators + '?clientId=' + clientId + '&plantId=' + localStorage.getItem("opPlantId"), token, 'GET');
     // console.log('operators', operators);
     $('#selectOperator').empty();
@@ -713,8 +768,27 @@
       machineImg = pelUrl + machineImg
       document.getElementById("machineImage").src = machineImg;
     }
+
+    var operationUrl = getOperations + '?clientId=' + clientId + '&plantId=' + localStorage.getItem("opPlantId");
+    operationData = await getCallAPI(operationUrl, token, 'GET');
+
+    // console.log('opUrl', operationData);
+    $('#selectOperation').empty()
+    $('#selectOperation').append(`<option value='none'>None</option>`);
+    if (operationData && operationData.length != 0) {
+
+      for (let g = 0; g < operators.length; g++) {
+        $('#selectOperation').append(`<option value=${operationData[g].id}>${operationData[g].name}</option>`);
+      }
+    }
+
+
+
     document.getElementById("machineName").textContent = machineData && machineData[0] && machineData[0].name ? _.truncate(machineData[0].name, { 'length': 12, 'omission': '...' }) : " ";
     document.getElementById("machineName").title = machineData && machineData[0] && machineData[0].name ? machineData[0].name : " ";
+    document.getElementById("machineNameO").textContent = machineData && machineData[0] && machineData[0].name ? machineData[0].name : " ";
+
+
     $('#machineNameD').text(machineData && machineData[0] && machineData[0].name ? machineData[0].name : " ");
     var lineOb = JSON.parse(localStorage.getItem('LineD'));
     document.getElementById("lineName").textContent = machineData && machineData[0] && machineData[0].lineId && lineOb[machineData[0].lineId] ? lineOb[machineData[0].lineId]['name'] : " ";
@@ -736,11 +810,35 @@
         if ('status' in data) {
           if (data['status'] == 'Active' || data['status'] == 'active') {
             document.getElementById("status").style.color = "#007F00";
+            // document.getElementById(`${data['machineId']}-status`) && document.getElementById(`${data['machineId']}-status`).style.color ? document.getElementById(`${data['machineId']}-status`).style.color = "#007F00" : true;
+            // document.getElementById(`${data['machineId']}-AI`) && document.getElementById(`${data['machineId']}-AI`).style.color ? document.getElementById(`${data['machineId']}-AI`).style.color = "#007F00" : true;
+
+            if (data.machineId in Miracle) {
+              Miracle[data.machineId] = data && data.status ? data.status : 'Loading..';
+            } else {
+              Miracle[data.machineId] = "";
+              Miracle[data.machineId] = data && data.status ? data.status : 'Loading..';
+            }
             // document.getElementById("status").style.color = rgb(0, 255, 76);
+            console.log("h2");
+
             $('#status').text(data['status']);
+            $(`#${data['machineId']}-status`).text(data['status']);
+
           } else {
             document.getElementById("status").style.color = "#FF0101";
+            // document.getElementById(`${data['machineId']}-status`) && document.getElementById(`${data['machineId']}-status`).style.color ? document.getElementById(`${data['machineId']}-status`).style.color = "#FF0101" : true;
+            // document.getElementById(`${data['machineId']}-AI`) && document.getElementById(`${data['machineId']}-AI`).style.color ? document.getElementById(`${data['machineId']}-AI`).style.color = "#FF0101" : true;
+
+            if (data.machineId in Miracle) {
+              Miracle[data.machineId] = data && data.status ? data.status : 'Loading..';
+            } else {
+              Miracle[data.machineId] = "";
+              Miracle[data.machineId] = data && data.status ? data.status : 'Loading..';
+            }
+            console.log("h1");
             $('#status').text(data['status']);
+            $(`#${data['machineId']}-status`).text(data['status']);
           }
         }
 
@@ -804,7 +902,7 @@
   }
 
   async function init2() {
-    console.log("A1Swami", " Shree Swami Samarth !!");
+    // console.log("A1Swami", " Shree Swami Samarth !!");
     $('.divisionDropdown1').prop('disabled', 'disabled');
     $('.lineDropdown1').prop('disabled', true);
     $('.plantDropdown1').prop('disabled', true);
@@ -840,7 +938,7 @@
     shiftsObject = JSON.parse(localStorage.getItem("shiftsObject"));
     // console.log('shiftsObjectSW', shiftsObject);
     var machineUrl = getMachines + '?clientId=' + clientId + '&id=' + mID;
-    var machineData = await getCallAPI(machineUrl, token, 'GET');
+    machineData = await getCallAPI(machineUrl, token, 'GET');
     operators = await getCallAPI(getOperators + '?clientId=' + clientId + '&plantId=' + localStorage.getItem("opPlantId"), token, 'GET');
     // console.log('operators', operators);
 
@@ -860,6 +958,9 @@
     }
     document.getElementById("machineName").textContent = machineData && machineData[0] && machineData[0].name ? _.truncate(machineData[0].name, { 'length': 12, 'omission': '...' }) : " ";
     document.getElementById("machineName").title = machineData && machineData[0] && machineData[0].name ? machineData[0].name : " ";
+    document.getElementById("machineNameO").textContent = machineData && machineData[0] && machineData[0].name ? machineData[0].name : " ";
+
+
     var lineOb = JSON.parse(localStorage.getItem('LineD'));
     document.getElementById("lineName").textContent = machineData && machineData[0] && machineData[0].lineId && lineOb[machineData[0].lineId] ? lineOb[machineData[0].lineId]['name'] : " ";
 
@@ -922,8 +1023,45 @@
   async function showOperatorModal() {
     $("#operatorModal").modal('show')
   }
+  async function showOperationModal(station_No) {
+    document.getElementById("operatorStation").textContent = station_No;
+    $('#selectOperation').val('none')
+    updateOperationTable($('#selectOperation'))
+    $("#operationModal").modal('show')
+  }
 
+  async function submitOperation() {
 
+    var currentTime = await ist();
+
+    // if (selOperatoionId != 'none') {
+    var obj = {
+      'machineId': machineData[0]['id'],
+      'operationId': selOperatoionId,
+      'dateTime': currentTime.date + 'T' + currentTime.time + '.000Z',
+      'stationNo': $('#operatorStation').text(),
+      // 'cavity': parseInt($('#selected-cavity-number').val()),
+      'type': 't1'
+    }
+    console.log("station_No1", obj);
+
+    var response = await getCallAPI(operationLogs, token, 'POST', obj);
+    // console.log("swami", response)
+    if (response.status == 'Success') {
+      $("#operationModal").modal('toggle');
+
+      // await showMessage("Operation Log Created Successfully");
+    } else {
+      $("#operationModal").modal('toggle');
+
+      // await showErrorMessage("Something Went Wrong");
+    }
+
+    // } else {
+
+    // }
+
+  }
   async function hourlyData() {
     timeArrayShow = [];
     // var from, to; //to current-time 
@@ -1285,7 +1423,7 @@
     $('#tbodystation').empty();
     // $('#tbodystation').empty();
     // response
-    console.log("response", halfHourlyArray);
+    // console.log("response", halfHourlyArray);
     var stationCount = stCount;
     if (stationCount > 0) {
       $(`#noStation`).hide();
@@ -1609,6 +1747,12 @@
     await clearInterval(TimouT);
     await localStorage.setItem("Pages", "1");
     await statsDataUrl();
+    // console.log('Miracle', Miracle);
+    var sArray = Object.values(Miracle);
+    for (let g = 0; g < sArray.length; g++) {
+
+      $(`#${Object.values(Miracle)[g]}-status`).text(sArray[g]);
+    }
 
   }
   async function hideButton(dtType, doEmit) {
@@ -1966,7 +2110,7 @@
   }
   async function myFunctionS() {
     var machineUrl = getMachines + '?clientId=' + clientId + '&id=' + mID;
-    var machineData = await getCallAPI(machineUrl, token, 'GET');
+    machineData = await getCallAPI(machineUrl, token, 'GET');
     console.log("machineData", machineData);
     var dtD = {};
     var dtOpt = {};
@@ -1994,23 +2138,23 @@
     // console.log('SwamiK', dtD, dtOpt, dtSubOpt);
     if (dtD && dtD.name) {
       // console.log('dtType', 'Swami786786786');
-      // console.log("KPL", "3");
+      console.log("KPL", "3");
 
       await hideButton(dtD.name, false);
       TimouT = await setInterval(async function () { await init2(); }, 1 * 60 * 1000);
 
     }
     if (dtOpt && dtOpt.name) {
-      // console.log('dtType', 'Swami7867867861');
+      console.log('dtType', 'Swami7867867861');
       await subDttype(dtOpt.name, false);
     }
     if (dtSubOpt && dtSubOpt.names && dtSubOpt.names[0]) {
-      // console.log('dtType', 'Swami7867867862');
+      console.log('dtType', 'Swami7867867862');
 
       await subDtt(dtSubOpt.names[0], false);
     }
     if (startDateTime) {
-      // console.log('dtType', 'Swami7867867863');
+      console.log('dtType', 'Swami7867867863');
 
       startTime = startDateTime;
       await startCounter(startDateTime)
@@ -2035,6 +2179,12 @@
     // await $(`#timer`).text("00:00:00");
     //
     $('#status').text(_.truncate(selectedDowntime, { 'length': 13, 'omission': '...' }));
+    if (mID in Miracle) {
+      Miracle[mID] = selectedDowntime ? selectedDowntime : 'Loading..';
+    } else {
+      Miracle[mID] = "";
+      Miracle[mID] = selectedDowntime ? selectedDowntime : 'Loading..';
+    }
     document.getElementById("status").title = selectedDowntime;
     document.getElementById("status").style.color = "#FF0101";
 
@@ -2147,6 +2297,13 @@
   async function submitD(time) {
     // await clearInterval(ghp);
     $('#status').text(_.truncate(selectedDowntime, { 'length': 13, 'omission': '...' }));
+    if (mID in Miracle) {
+      Miracle[mID] = selectedDowntime ? selectedDowntime : 'Loading..';
+    } else {
+      Miracle[mID] = "";
+      Miracle[mID] = selectedDowntime ? selectedDowntime : 'Loading..';
+    }
+
     document.getElementById("status").title = selectedDowntime;
     document.getElementById("status").style.color = "#FF0101";
     if (timerData[mID] && timerData[mID].timeID) {
@@ -2179,6 +2336,18 @@
     $('#confirm').hide()
     $('#back').hide()
     $('#downtimeConfirm').show()
+  }
+  async function updateOperationTable(ths) {
+    selOperatoionId = "none"
+    // console.log('$(ths).val()', "1" + $(ths).val());
+    var operation = operationData.find(o => o.id == $(ths).val());
+    if (operation) {
+      selOperatoionId = operation['id'];
+      $('#operationName').text(operation.name)
+    } else {
+      $('#operationName').text('None')
+
+    }
   }
 </script>
 <style>

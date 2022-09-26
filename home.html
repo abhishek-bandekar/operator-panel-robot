@@ -186,6 +186,53 @@
       </div>
     </div>
   </div>
+
+
+  <div class="modal fade" id="operationModal" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color:#FD9E42">
+          <h5 class="modal-title" id="exampleModalLabel4" style="color: white;"><i class="fal fa-user"></i>&nbsp;Assign
+            Operation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="background-color: #262C49;">
+          <div class="form-group my-0 col-md-12" style="padding: 10px;">
+          </div>
+          <div class="form-group mt-0 col-md-12">
+            <select class="select2 form-control mt-1" id="selectOperation" onchange="updateOperationTable(this)">
+            </select>
+          </div>
+          <table width="100%" style="color: white;margin-top: 10px;">
+            <tr>
+              <th width='30%' class="text-light NAO">Machine Name</th>
+              <td>
+                <h6 id="machineNameO"></h6>
+              </td>
+            </tr>
+            <tr>
+              <th width='30%' class="text-light NAO">Station Number</th>
+              <td>
+                <h6 id="operatorStation"></h6>
+              </td>
+            </tr>
+            <tr>
+              <th width='30%' class="text-light NAO">Operation</th>
+              <td>
+                <h6 id="operationName"></h6>
+              </td>
+            </tr>
+          </table>
+
+        </div>
+        <div class="modal-footer" style="background-color: #262C49;">
+          <button type="button" class="btn btn-primary" style="background-color:#FD9E42"
+            onclick="submitOperation()">Accept</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div id="nav"></div>
   <div id="machines" style="display: block;" class="container-fluid">
     <div class="col-md-12" id="data" style="margin-top: 70px;">
@@ -272,36 +319,45 @@
               <h4 style="color: white;">Fixture Statistics</h4>
 
               <div style="margin-top: 20px;">
-                <p style="color: white;float: left;width: 100%;"><span
-                    style="padding-right: 10px; width: 150px;float: left;">STATION 1</span>
-                  <span style="padding-right: 10px;float: left;">: <i class="fal fa-clock"
-                      style="padding-right: 5px;"></i><span id="ct-1" class="station">0</span>
-                  </span><span style="float: left;"><i class="fas fa-cube"></i>
-                    <span id="st-1" class="station">0</span></span>
+                <p style="color: white;float: left;width: 100%;" onclick="showOperationModal(1)"><span
+                    style="padding-right: 10px; width:35%;float: left;">STATION 1</span>
+                  <span style="float: right;width:65%">
+                    <span style="padding-right: 10px;float: left;width:30%">: <i class="fal fa-clock"
+                        style="padding-right: 5px;"></i><span id="ct-1" class="station">0</span>
+                    </span><span style="float: left;"><i class="fas fa-cube"></i>
+                      <span id="st-1" class="station">0</span></span>
+                  </span>
                 </p>
 
-                <p style="color: white;float: left;width: 100%;"><span
-                    style="padding-right: 10px; width: 150px;float: left;">STATION 2</span>
-                  <span style="padding-right: 10px;float: left;">: <i class="fal fa-clock"
-                      style="padding-right: 5px;"></i><span id="ct-2" class="station">0</span></span><span
-                    style="float: left;"><i class="fas fa-cube"></i>
-                    <span id="st-2" class="station">0</span></span>
+                <p style="color: white;float: left;width: 100%;" onclick="showOperationModal(2)"><span
+                    style="padding-right: 10px; width:35%;float: left;">STATION 2</span>
+                  <span style="float: right;width:65%">
+                    <span style="padding-right: 10px;float: left;width:30%">: <i class="fal fa-clock"
+                        style="padding-right: 5px;"></i><span id="ct-2" class="station">0</span></span><span
+                      style="float: left;"><i class="fas fa-cube"></i>
+                      <span id="st-2" class="station">0</span></span>
+                  </span>
                 </p>
 
-                <p style="color: white;float: left;width: 100%;"><span
-                    style="padding-right: 10px; width: 150px;float: left;">STATION 3</span>
-                  <span style="padding-right: 10px;float: left;">: <i class="fal fa-clock"
-                      style="padding-right: 5px;"></i><span id="ct-3" class="station">0</span></span><span
-                    style="float: left;"><i class="fas fa-cube"></i>
-                    <span id="st-3" class="station">0</span></span>
+                <p style="color: white;float: left;width: 100%;" onclick="showOperationModal(3)"><span
+                    style="padding-right: 10px; width:35%;float: left;">STATION 3</span>
+                  <span style="float: right;width:65%">
+
+                    <span style="padding-right: 10px;float: left;width:30%">: <i class="fal fa-clock"
+                        style="padding-right: 5px;"></i><span id="ct-3" class="station">0</span></span><span
+                      style="float: left;"><i class="fas fa-cube"></i>
+                      <span id="st-3" class="station">0</span></span>
+                  </span>
                 </p>
 
-                <p style="color: white;float: left;width: 100%;"><span
-                    style="padding-right: 10px; width: 150px;float: left;">STATION 4</span>
-                  <span style="padding-right: 10px;float: left;">: <i class="fal fa-clock"
-                      style="padding-right: 5px;"></i><span id="ct-4" class="station">0</span></span><span
-                    style="float: left;"><i class="fas fa-cube"></i>
-                    <span id="st-4" class="station">0</span></span>
+                <p style="color: white;float: left;width: 100%;" onclick="showOperationModal(4)"><span
+                    style="padding-right: 10px; width:35%;float: left;">STATION 4</span>
+                  <span style="float: right;width:65%">
+                    <span style="padding-right: 10px;float: left;width:30%">: <i class="fal fa-clock"
+                        style="padding-right: 5px;"></i><span id="ct-4" class="station">0</span></span><span
+                      style="float: left;"><i class="fas fa-cube"></i>
+                      <span id="st-4" class="station">0</span></span>
+                  </span>
                 </p>
               </div>
 
