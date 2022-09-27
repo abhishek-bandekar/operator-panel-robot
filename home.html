@@ -11,13 +11,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Robot Operator Panel | AISPL</title>
   <link rel="shortcut icon" type="image/x-icon" href="ICON.png">
+
   <link rel="stylesheet" href="https://getbootstrap.com/docs/5.1/dist/css/bootstrap.min.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://getbootstrap.com/docs/5.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script>
-  <link rel="stylesheet" type="text/css" href="select2.min.css">
-  <link rel="stylesheet" type="text/css" href="select2.css">
+  <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" /> -->
+  <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> -->
+
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script> -->
+  <!-- <link rel="stylesheet" type="text/css" href="select2.min.css">
+  <link rel="stylesheet" type="text/css" href="select2.css"> -->
+  <link rel="stylesheet" type="text/css" href="select3.min.css">
+
   <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
   <script src="https://getbootstrap.com/docs/5.1/assets/js/docs.min.js"></script>
   <script src="socket.io.js"></script>
@@ -74,9 +81,16 @@
             </label>
           </div>
           <div class="form-group mt-0 col-md-12">
-            <select class="select2 form-control mt-1" id="selectOperator" onchange="updateOperatorTable(this)">
+            <!-- <select class="select2 form-select" id="select2-basic">
+              <option value="AK">Alaska</option>
+              <option value="HI">Hawaii</option>
+              <option value="CA">California</option>
+
+            </select> -->
+            <select class="select2 form-select" id="selectOperator" onchange="updateOperatorTable(this)">
 
             </select>
+
           </div>
           <table width="100%" style="color: white;margin-top: 10px;">
             <tr>
@@ -456,6 +470,46 @@
             background-color: #2980b9;
             color: white;
             transform: rotateX(180deg);
+          }
+
+
+
+          .select2-container--default .select2-selection--single {
+            background-color: #262C49;
+            color: #C2C6DC;
+            height: 35px;
+            padding: 2px;
+            border-color: #7367F0 !important;
+
+          }
+
+          .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: #C2C6DC !important;
+            border-color: #7367F0 !important;
+
+          }
+
+          .select2-search--dropdown {
+            background-color: #131939;
+            color: #C2C6DC;
+            border-color: #7367F0 !important;
+
+
+          }
+
+          .select2-search__field {
+            background-color: #131939;
+            color: #C2C6DC;
+            border-color: #7367F0 !important;
+
+          }
+
+
+          .select2-results {
+            background-color: #131939;
+            color: #C2C6DC;
+            border-color: #7367F0 !important;
+
           }
         </style>
 
@@ -999,10 +1053,25 @@
     /*freez col  */
   </style>
 
+
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+  <script src="select3.full.min.js"></script>
+  <script src="form-select3.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+   -->
+
+  <script src="analogClock.js"></script>
+  <script src="socket.io.js"></script>
+  <script src="systemConfiguration.js"></script>
+
   <script>
     $(document).ready(async function () {
 
       await $("#nav").load("navbar.html");
+      // $("#single").select2({
+      //   placeholder: "Select a programming language",
+      //   allowClear: true
+      // });
       // await googleTranslateElementInit();
       // console.log('LineID',);
     });
@@ -1024,13 +1093,8 @@
     // }
 
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-
-  <script src="analogClock.js"></script>
-  <script src="socket.io.js"></script>
-  <script src="systemConfiguration.js"></script>
-  <script src="select/select2.full.min.js"></script>
-  <script src="select/form-select2.js"></script>
+  <!-- <script src="select/select2.full.min.js"></script>
+  <script src="select/form-select2.js"></script> -->
   <!-- <script src="index.js"></script> -->
 </body>
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->

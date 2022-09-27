@@ -511,12 +511,14 @@
         // console.log("SwamiData", data, plantId)
         if ('count' in data) {
           if ('stationNo' in data && 'cycleTime' in data) {
-            $(`#ct-${data['stationNo']}-${data['machineId']}`).text(data['cycleTime']);
+            $(`#ct-${data['stationNo']}-${data['machineId']}`).text((data['cycleTime']).toFixed
+              ());
           }
         }
         if ('stationCount' in data) {
           for (let b = 0; b < data['stationCount'].length; b++) {
-            $(`#st-${data['stationCount'][b]['number']}-${data['machineId']}`).text(data['stationCount'][b]['value']);
+            $(`#st-${data['stationCount'][b]['number']}-${data['machineId']}`).text((data['stationCount'][b]['value']).toFixed
+              ());
           }
         }
 
@@ -698,7 +700,7 @@
     location.reload(true);
   }
   async function init() {
-    console.log("A1Swami", " Shree Swami Samarth");
+    console.log("A9Swami", " Shree Swami Samarth");
     // await googleTranslateElementInit1();
     $('.divisionDropdown1').prop('disabled', 'disabled');
     $('.lineDropdown1').prop('disabled', true);
@@ -768,16 +770,17 @@
       machineImg = pelUrl + machineImg
       document.getElementById("machineImage").src = machineImg;
     }
+    console.log('123Swami', operationUrl);
 
     var operationUrl = getOperations + '?clientId=' + clientId + '&plantId=' + localStorage.getItem("opPlantId");
+
     operationData = await getCallAPI(operationUrl, token, 'GET');
 
-    // console.log('opUrl', operationData);
     $('#selectOperation').empty()
     $('#selectOperation').append(`<option value='none'>None</option>`);
     if (operationData && operationData.length != 0) {
 
-      for (let g = 0; g < operators.length; g++) {
+      for (let g = 0; g < operationData.length; g++) {
         $('#selectOperation').append(`<option value=${operationData[g].id}>${operationData[g].name}</option>`);
       }
     }
@@ -798,13 +801,13 @@
       if (data['machineId'] == mID) {
         if ('count' in data) {
           if ('stationNo' in data && 'cycleTime' in data) {
-            $(`#ct-${data['stationNo']}`).text(data['cycleTime']);
+            $(`#ct-${data['stationNo']}`).text((data['cycleTime']).toFixed());
             console.log("cycleTime", data['cycleTime'])
           }
         }
         if ('stationCount' in data) {
           for (let b = 0; b < data['stationCount'].length; b++) {
-            $(`#st-${data['stationCount'][b]['number']}`).text(data['stationCount'][b]['value']);
+            $(`#st-${data['stationCount'][b]['number']}`).text((data['stationCount'][b]['value']).toFixed());
           }
         }
         if ('status' in data) {
