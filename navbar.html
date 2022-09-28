@@ -232,7 +232,8 @@
   var Miracle = {};
   var operationData = [];
   var machineData = [];
-
+  var selStation = 1;
+  var selOperation = "None";
   function googleTranslateElementInit() {
     new google.translate.TranslateElement({
       pageLanguage: 'en',
@@ -522,48 +523,56 @@
           }
         }
 
-        if ('status' in data) {
-          // console.log('data[st]', data['status'], `#${data['id']}-status`)
-          if (data['status'] == 'Active' || data['status'] == 'active') {
-            document.getElementById("status").style.color = "#007F00";
-            // document.getElementById(`${data['machineId']}-status`) && document.getElementById(`${data['machineId']}-status`).style.color ? document.getElementById(`${data['machineId']}-status`).style.color = "#007F00" : true;
-            // document.getElementById(`${data['machineId']}-AI`) && document.getElementById(`${data['machineId']}-AI`).style.color ? document.getElementById(`${data['machineId']}-AI`).style.color = "#007F00" : true;
-            if (data.machineId in Miracle) {
-              Miracle[data.machineId] = data && data.status ? data.status : 'Loading..';
-            } else {
-              Miracle[data.machineId] = "";
-              Miracle[data.machineId] = data && data.status ? data.status : 'Loading..';
-            }
-            // document.getElementById("status").style.color = rgb(0, 255, 76);
-            console.log("h5");
+        // if ('status' in data) {
+        //   console.log('YU', data.machineId)
+        //   if (data['status'] == 'Active' || data['status'] == 'active') {
+        //     console.log("ST1")
+        //     document.getElementById("status").style.color = "#007F00";
+        //     // document.getElementById(`${data['machineId']}-status`) && document.getElementById(`${data['machineId']}-status`).style.color ? document.getElementById(`${data['machineId']}-status`).style.color = "#007F00" : true;
+        //     // document.getElementById(`${data['machineId']}-AI`) && document.getElementById(`${data['machineId']}-AI`).style.color ? document.getElementById(`${data['machineId']}-AI`).style.color = "#007F00" : true;
+        //     if (data.machineId in Miracle) {
+        //       Miracle[data.machineId] = data && data.status ? data.status : 'Loading..';
+        //     } else {
+        //       Miracle[data.machineId] = "";
+        //       Miracle[data.machineId] = data && data.status ? data.status : 'Loading..';
+        //     }
+        //     // document.getElementById("status").style.color = rgb(0, 255, 76);
+        //     console.log("h5");
 
-            // $('#status').text(data['status']);
-            $(`#${data['machineId']}-status`).text(data['status']);
-          } else {
-            // document.getElementById("status").style.color = "#FF0101";
-            // document.getElementById(`${data['machineId']}-status`) && document.getElementById(`${data['machineId']}-status`).style.color ? document.getElementById(`${data['machineId']}-status`).style.color = "#FF0101" : true;
-            // document.getElementById(`${data['machineId']}-AI`) && document.getElementById(`${data['machineId']}-AI`).style.color ? document.getElementById(`${data['machineId']}-AI`).style.color = "#FF0101" : true;
-            // console.log("h4");
+        //     // $('#status').text(data['status']);
+        //     $(`#${data['machineId']}-status`).text(data['status']);
+        //   } else {
+        //     console.log("ST2")
 
-            // $('#status').text(data['status']);
-            $(`#${data['machineId']}-status`).text(data['status']);
-            if (data.machineId in Miracle) {
-              Miracle[data.machineId] = data && data.status ? data.status : 'Loading..';
-            } else {
-              Miracle[data.machineId] = "";
-              Miracle[data.machineId] = data && data.status ? data.status : 'Loading..';
-            }
-          }
-        }
+        //     document.getElementById("status").style.color = "#FF0101";
+        //     // document.getElementById(`${data['machineId']}-status`) && document.getElementById(`${data['machineId']}-status`).style.color ? document.getElementById(`${data['machineId']}-status`).style.color = "#FF0101" : true;
+        //     // document.getElementById(`${data['machineId']}-AI`) && document.getElementById(`${data['machineId']}-AI`).style.color ? document.getElementById(`${data['machineId']}-AI`).style.color = "#FF0101" : true;
+        //     // console.log("h4");
+
+        //     // $('#status').text(data['status']);
+        //     $(`#${data['machineId']}-status`).text(data['status']);
+        //     if (data.machineId in Miracle) {
+        //       Miracle[data.machineId] = data && data.status ? data.status : 'Loading..';
+        //     } else {
+        //       Miracle[data.machineId] = "";
+        //       Miracle[data.machineId] = data && data.status ? data.status : 'Loading..';
+        //     }
+        //   }
+        // }
       });
       // console.log('mIk', statsData, downtimeD);
       if (localStorage.getItem("Pages") == "2") {
         for (let h = 0; h < 99999; h++) {
           await clearInterval(h)
         }
+        await $('.stO').attr("style", "color: #202120;width:100%;float: left;font-style: italic;");
+        await $(`.stO`).attr('title', "");
+
+        await $('.stO').text(".");
         await $('#machines').hide();
         await $('#machinesProfile').show();
         await init();
+
         // 
         TimouT = await setInterval(async function () { await init2(); }, 1 * 60 * 1000);
 
@@ -716,6 +725,7 @@
     dtOptions = {};
     selectedDowntime = "";
     downtimeOptionId = "";
+
     // for (let h = 0; h < 99999; h++) {
     //   await clearInterval(h)
     // }
@@ -740,8 +750,12 @@
     // console.log('shiftsObjectSW', shiftsObject);
     console.log("h3");
     if (Miracle[mID] == 'Active' || Miracle[mID] == 'active') {
+      console.log("ST3")
+
       document.getElementById("status").style.color = "#007F00";
     } else {
+      console.log("ST4")
+
       document.getElementById("status").style.color = "#FF0101";
     }
     $('#status').text(Miracle[mID]);
@@ -785,12 +799,28 @@
       }
     }
 
+    // staionwise operation name
+    var operationStationR = [];
+    try {
+      var operationLogsUrl = operationLogs + '?machineId=' + mID + '&endDateTime=';
+      operationStationR = await getCallAPI(operationLogsUrl, token, 'GET');
+    } catch (e) {
+      console.log(e)
+    }
+    // console.log("SwamiH", operationStationR, operationLogsUrl);
+    for (var d = 0; d < operationStationR.length; d++) {
+      var opId = operationStationR[d] && operationStationR[d]['operationId'] ? operationStationR[d]['operationId'] : "";
+      var opName = operationData.filter(obj => obj.id == opId);
+      // console.log("ShreeDtta", opName)
+      await $(`#on_st${operationStationR[d]['stationNo']}`).attr("style", "color: gray;width:100%;float: left;font-style: italic;");
+      $(`#on_st${operationStationR[d]['stationNo']}`).text(opName && opName[0] && opName[0]['name'] ? _.truncate(opName[0]['name'], { 'length': 35, 'omission': '...' }) : '')
+      $(`#on_st${operationStationR[d]['stationNo']}`).attr('title', opName && opName[0] && opName[0]['name'] ? opName[0]['name'] : '');
+    }
 
 
     document.getElementById("machineName").textContent = machineData && machineData[0] && machineData[0].name ? _.truncate(machineData[0].name, { 'length': 12, 'omission': '...' }) : " ";
     document.getElementById("machineName").title = machineData && machineData[0] && machineData[0].name ? machineData[0].name : " ";
     document.getElementById("machineNameO").textContent = machineData && machineData[0] && machineData[0].name ? machineData[0].name : " ";
-
 
     $('#machineNameD').text(machineData && machineData[0] && machineData[0].name ? machineData[0].name : " ");
     var lineOb = JSON.parse(localStorage.getItem('LineD'));
@@ -812,6 +842,8 @@
         }
         if ('status' in data) {
           if (data['status'] == 'Active' || data['status'] == 'active') {
+            console.log("ST5")
+
             document.getElementById("status").style.color = "#007F00";
             // document.getElementById(`${data['machineId']}-status`) && document.getElementById(`${data['machineId']}-status`).style.color ? document.getElementById(`${data['machineId']}-status`).style.color = "#007F00" : true;
             // document.getElementById(`${data['machineId']}-AI`) && document.getElementById(`${data['machineId']}-AI`).style.color ? document.getElementById(`${data['machineId']}-AI`).style.color = "#007F00" : true;
@@ -829,6 +861,8 @@
             $(`#${data['machineId']}-status`).text(data['status']);
 
           } else {
+            console.log("ST6")
+
             document.getElementById("status").style.color = "#FF0101";
             // document.getElementById(`${data['machineId']}-status`) && document.getElementById(`${data['machineId']}-status`).style.color ? document.getElementById(`${data['machineId']}-status`).style.color = "#FF0101" : true;
             // document.getElementById(`${data['machineId']}-AI`) && document.getElementById(`${data['machineId']}-AI`).style.color ? document.getElementById(`${data['machineId']}-AI`).style.color = "#FF0101" : true;
@@ -839,7 +873,7 @@
               Miracle[data.machineId] = "";
               Miracle[data.machineId] = data && data.status ? data.status : 'Loading..';
             }
-            console.log("h1");
+            // console.log("h1");
             $('#status').text(data['status']);
             $(`#${data['machineId']}-status`).text(data['status']);
           }
@@ -849,7 +883,7 @@
     });
     var operatorUrl = getAllOperatorLogs + "?shift=" + currentShift + "&activeMachines=" + mID + "&date=" + currentDate + "&clientId=" + clientId;
     var opData = await getCallAPI(operatorUrl, token, 'GET');
-    console.log('KLJ', opData);
+    // console.log('KLJ', opData);
 
     // console.log('SwamiopName', opData, operators, operatorUrl);
     if (opData.length != 0) {
@@ -1018,6 +1052,25 @@
       $("#avgPerformance").text('')
       $("#efficiency").text('')
     }
+
+    // staionwise operation name
+    var operationStationR = [];
+    try {
+      var operationLogsUrl = operationLogs + '?machineId=' + mID + '&endDateTime=';
+      operationStationR = await getCallAPI(operationLogsUrl, token, 'GET');
+    } catch (e) {
+      console.log(e)
+    }
+    // console.log("SwamiH", operationStationR, operationLogsUrl);
+    for (var d = 0; d < operationStationR.length; d++) {
+      var opId = operationStationR[d] && operationStationR[d]['operationId'] ? operationStationR[d]['operationId'] : "";
+      var opName = operationData.filter(obj => obj.id == opId);
+      // console.log("ShreeDtta", opName)
+      await $(`#on_st${operationStationR[d]['stationNo']}`).attr("style", "color: gray;width:100%;float: left;font-style: italic;");
+      $(`#on_st${operationStationR[d]['stationNo']}`).text(opName && opName[0] && opName[0]['name'] ? _.truncate(opName[0]['name'], { 'length': 35, 'omission': '...' }) : '')
+      $(`#on_st${operationStationR[d]['stationNo']}`).attr('title', opName && opName[0] && opName[0]['name'] ? opName[0]['name'] : '');
+    }
+
     await operatorEff();
     await hourlyData2();
     // console.log("operatorUrl", operatorUrl, opData);
@@ -1027,6 +1080,7 @@
     $("#operatorModal").modal('show')
   }
   async function showOperationModal(station_No) {
+    selStation = station_No;
     document.getElementById("operatorStation").textContent = station_No;
     $('#selectOperation').val('none')
     updateOperationTable($('#selectOperation'))
@@ -1046,18 +1100,18 @@
       // 'cavity': parseInt($('#selected-cavity-number').val()),
       'type': 't1'
     }
-    console.log("station_No1", obj);
+    // console.log("station_No1", obj);
 
     var response = await getCallAPI(operationLogs, token, 'POST', obj);
-    // console.log("swami", response)
+    console.log("swami", response)
     if (response.status == 'Success') {
+      console.log('`#on_st${selStation}`', `#on_st${selStation}`, selOperation)
+      await $(`#on_st${selStation}`).attr("style", "color: gray;width:100%;float: left;font-style: italic;");
+      $(`#on_st${selStation}`).attr('title', selOperation);
+      $(`#on_st${selStation}`).text(_.truncate(selOperation, { 'length': 35, 'omission': '...' }));
       $("#operationModal").modal('toggle');
-
-      // await showMessage("Operation Log Created Successfully");
     } else {
       $("#operationModal").modal('toggle');
-
-      // await showErrorMessage("Something Went Wrong");
     }
 
     // } else {
@@ -1663,7 +1717,8 @@
     socket.on('activityData', async (activityData) => {
       if (activityData.machineId == mID) {
         console.log("activityData");
-        $('#status').text("Loading..");
+        $('#status').text("Loading.."); console.log("ST7")
+
         document.getElementById("status").style.color = "#007F00";
 
         // if (ghp) {
@@ -1720,6 +1775,9 @@
     await $('.station').text("0");
     await $('.zero').text("0");
     await $('.ArmUtil').text("0 %");
+    await $('.stO').attr("style", "color: #202120;width:100%;float: left;font-style: italic;");
+    await $(`.stO`).attr('title', "");
+    await $('.stO').text(".");
     // await clearInterval(ghp);4
 
     $('.divisionDropdown1').prop('disabled', false);
@@ -1751,11 +1809,11 @@
     await localStorage.setItem("Pages", "1");
     await statsDataUrl();
     // console.log('Miracle', Miracle);
-    var sArray = Object.values(Miracle);
-    for (let g = 0; g < sArray.length; g++) {
+    // var sArray = Object.values(Miracle);
+    // for (let g = 0; g < sArray.length; g++) {
 
-      $(`#${Object.values(Miracle)[g]}-status`).text(sArray[g]);
-    }
+    //   $(`#${Object.values(Miracle)[g]}-status`).text(sArray[g]);
+    // }
 
   }
   async function hideButton(dtType, doEmit) {
@@ -2189,6 +2247,8 @@
       Miracle[mID] = selectedDowntime ? selectedDowntime : 'Loading..';
     }
     document.getElementById("status").title = selectedDowntime;
+    console.log("ST8")
+
     document.getElementById("status").style.color = "#FF0101";
 
     await $(`#TimeDiv`).empty();
@@ -2308,6 +2368,8 @@
     }
 
     document.getElementById("status").title = selectedDowntime;
+    console.log("ST9")
+
     document.getElementById("status").style.color = "#FF0101";
     if (timerData[mID] && timerData[mID].timeID) {
       await clearInterval(timerData[mID].timeID);
@@ -2346,6 +2408,7 @@
     var operation = operationData.find(o => o.id == $(ths).val());
     if (operation) {
       selOperatoionId = operation['id'];
+      selOperation = operation.name;
       $('#operationName').text(operation.name)
     } else {
       $('#operationName').text('None')
