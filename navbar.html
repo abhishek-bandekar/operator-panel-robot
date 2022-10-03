@@ -304,14 +304,14 @@
   const populateplants = async ths => {
     $('#selectedLocation').html($(ths).text());
     var plantsD = plants.filter(obj => obj.locationId == $(ths).closest('li').attr('rel'))
-    // console.log('plants', plants);
+    console.log('plants', plants);
     $('.ab').empty();
     downtimeD = {};
 
     for (let x = 0; x < plantsD.length; x++) {
       $('.ab').append(`<li data-menu="" class="active" style="font-size: 14px;" rel='${plantsD[x].id}'><a onclick="populateDivision(this)" class="dropdown-item" data-toggle="dropdown" data-i18n="Email">${plantsD[x].name}</a></li>`);
       downtimeD[plantsD[x].id] = {};
-      downtimeD[plantsD[x].id] = { "downtimeDeductions": plantsD[x].downtimeDeductions }
+      downtimeD[plantsD[x].id] = { "downtimeDeductions": plantsD[x].config.downtimeDeductions }
       if (x == plantsD.length - 1) {
         plantId = plantsD[0].id;
         localStorage.setItem("downtimeD", JSON.stringify(downtimeD));
@@ -635,6 +635,8 @@
   }
   async function machineUt(statsD) {
     console.log("currentShift786", currentShift);
+    // console.log('downtimeD13', downtimeD[plantId], plantId)
+
     for (let s = 0; s < statsD.length; s++) {
       if (statsD[s].stats && Object.values(statsD[s].stats).length != 0) {
         var shiftobj = statsD[s].stats[currentShift];
@@ -643,7 +645,6 @@
           // console.log('shiftobj', shiftobj, currentShift);
           var cal1 = shiftobj.runtime + shiftobj.loading + shiftobj.unloading;
           var totaldeduction = 0;
-
           Object.keys(shiftobj.activity).map((data) => {
             if (downtimeD[plantId]["downtimeDeductions"].includes(data)) {
               totaldeduction += shiftobj.activity[data];
@@ -784,7 +785,7 @@
       machineImg = pelUrl + machineImg
       document.getElementById("machineImage").src = machineImg;
     }
-    console.log('123Swami', operationUrl);
+    // console.log('123Swami', operationUrl);
 
     var operationUrl = getOperations + '?clientId=' + clientId + '&plantId=' + localStorage.getItem("opPlantId");
 
@@ -1917,6 +1918,7 @@
       var LAStop = 0;
       var totalDowntime = 0;
       if (shiftobj != undefined) {
+        console.log('downtimeD11', downtimeD);
         Object.keys(shiftobj.activity).map((data) => {
           if (downtimeD[localStorage.getItem("opPlantId")]["downtimeDeductions"].includes(data)) {
             totaldeduction += shiftobj.activity[data];
