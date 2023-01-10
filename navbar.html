@@ -1211,7 +1211,7 @@
             totaltargetH += targetVal;
             totalProd += halfHourlyArrayData[halfHourlyArray[r + r]];
             $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]]);
-            $('.total-target-' + r).text(targetVal);
+            $('.total-target-' + r).text(Math.round(targetVal));
             $('#totalProduction').text(totalProd);
 
           } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
@@ -1227,7 +1227,7 @@
             totaltargetH += targetVal1 + targetVal2;
             totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
             $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
-            $('.total-target-' + r).text(targetVal1 + targetVal2);
+            $('.total-target-' + r).text(Math.round(targetVal1 + targetVal2));
             $('#totalProduction').text(totalProd);
           }
           else {
@@ -1243,7 +1243,7 @@
             totaltargetH += (targetVal1 + targetVal2);
             totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
             $('.total-actual-' + r).text((halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]));
-            $('.total-target-' + r).text((targetVal1 + targetVal2));
+            $('.total-target-' + r).text(Math.round(targetVal1 + targetVal2));
           }
         }
       } else if (halfHourlyTargetArrayData == undefined || halfHourlyTargetArrayData == null) {
@@ -1254,7 +1254,7 @@
             totaltargetH += targetVal;
             totalProd += halfHourlyArrayData[halfHourlyArray[r + r]];
             $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]]);
-            $('.total-target-' + r).text(targetVal);
+            $('.total-target-' + r).text(Math.round(targetVal));
             $('#totalProduction').text(totalProd);
 
           } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
@@ -1264,7 +1264,7 @@
             totaltargetH += targetVal1 + targetVal2;
             totalProd += halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]];
             $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
-            $('.total-target-' + r).text(targetVal1 + targetVal2);
+            $('.total-target-' + r).text(Math.round(targetVal1 + targetVal2));
             $('#totalProduction').text(totalProd);
           }
           else {
@@ -1274,7 +1274,7 @@
             totaltargetH += (targetVal1 + targetVal2);
             totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]])
             $('.total-actual-' + r).text((halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]));
-            $('.total-target-' + r).text((targetVal1 + targetVal2));
+            $('.total-target-' + r).text(Math.round(targetVal1 + targetVal2));
           }
         }
       }
@@ -1366,7 +1366,7 @@
             totaltargetH += targetVal;
             totalProd += halfHourlyArrayData[halfHourlyArray[r + r]];
             $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]]);
-            $('.total-target-' + r).text(targetVal);
+            $('.total-target-' + r).text(Math.round(targetVal));
             $('#totalProduction').text(totalProd);
 
           } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
@@ -1382,7 +1382,7 @@
             totaltargetH += targetVal1 + targetVal2;
             totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
             $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
-            $('.total-target-' + r).text(targetVal1 + targetVal2);
+            $('.total-target-' + r).text(Math.round(targetVal1 + targetVal2));
             $('#totalProduction').text(totalProd);
           }
           else {
@@ -1398,7 +1398,7 @@
             totaltargetH += (targetVal1 + targetVal2);
             totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
             $('.total-actual-' + r).text((halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]));
-            $('.total-target-' + r).text((targetVal1 + targetVal2));
+            $('.total-target-' + r).text(Math.round(targetVal1 + targetVal2));
           }
         }
       } else if (halfHourlyTargetArrayData == undefined || halfHourlyTargetArrayData == null) {
@@ -1409,7 +1409,7 @@
             totaltargetH += targetVal;
             totalProd += halfHourlyArrayData[halfHourlyArray[r + r]];
             $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]]);
-            $('.total-target-' + r).text(targetVal);
+            $('.total-target-' + r).text(Math.round((targetVal)));
             $('#totalProduction').text(totalProd);
 
           } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
@@ -1419,7 +1419,7 @@
             totaltargetH += targetVal1 + targetVal2;
             totalProd += halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]];
             $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
-            $('.total-target-' + r).text(targetVal1 + targetVal2);
+            $('.total-target-' + r).text(Math.round(targetVal1 + targetVal2));
             $('#totalProduction').text(totalProd);
           }
           else {
@@ -1429,7 +1429,7 @@
             totaltargetH += (targetVal1 + targetVal2);
             totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]])
             $('.total-actual-' + r).text((halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]));
-            $('.total-target-' + r).text((targetVal1 + targetVal2));
+            $('.total-target-' + r).text(Math.round(targetVal1 + targetVal2));
           }
         }
       }
@@ -1557,21 +1557,21 @@
           for (let r = 0; r < halfHourlyArray.length / 2; r++) {
             if (halfHourlyArray[r + r + 1] == undefined) {
               totalstH += Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target'];
-              $(`#target-${Object.keys(responseCheck[0]['stationTargets'])[j]}-${r}`).text(Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target']);
-              $(`#total-target-${Object.keys(responseCheck[0]['stationTargets'])[j]}-${r}`).text(totalstH);
-              $(`#sum-target-${r}`).text(parseInt($(`#sum-target-${r}`).text()) + Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target']);
-              $(`#grandTargetTotalStation`).text(parseInt($(`#grandTargetTotalStation`).text()) + totalstH);
+              $(`#target-${Object.keys(responseCheck[0]['stationTargets'])[j]}-${r}`).text(Math.round(Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target']));
+              $(`#total-target-${Object.keys(responseCheck[0]['stationTargets'])[j]}-${r}`).text(Math.round(totalstH));
+              $(`#sum-target-${r}`).text(Math.round(parseInt($(`#sum-target-${r}`).text()) + Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target']));
+              $(`#grandTargetTotalStation`).text(Math.round(parseInt($(`#grandTargetTotalStation`).text()) + totalstH));
             } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
               totalstH += Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target'] + Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r + 1]]['target'];
-              $(`#target-${Object.keys(responseCheck[0]['stationTargets'])[j]}-${r}`).text(Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target'] + Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r + 1]]['target']);
-              $(`#total-target-${Object.keys(responseCheck[0]['stationTargets'])[j]}-${r}`).text(totalstH);
-              $(`#sum-target-${r}`).text(parseInt($(`#sum-target-${r}`).text()) + (Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target'] + Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r + 1]]['target']));
-              $(`#grandTargetTotalStation`).text(parseInt($(`#grandTargetTotalStation`).text()) + totalstH);
+              $(`#target-${Object.keys(responseCheck[0]['stationTargets'])[j]}-${r}`).text(Math.round(Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target'] + Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r + 1]]['target']));
+              $(`#total-target-${Object.keys(responseCheck[0]['stationTargets'])[j]}-${r}`).text(Math.round(totalstH));
+              $(`#sum-target-${r}`).text(Math.round(parseInt($(`#sum-target-${r}`).text()) + (Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target'] + Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r + 1]]['target'])));
+              $(`#grandTargetTotalStation`).text(Math.round(parseInt($(`#grandTargetTotalStation`).text()) + totalstH));
 
             } else {
               totalstH += (Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target'] + Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r + 1]]['target']);
-              $(`#target-${Object.keys(responseCheck[0]['stationTargets'])[j]}-${r}`).text((Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target'] + Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r + 1]]['target']));
-              $(`#sum-target-${r}`).text(parseInt($(`#sum-target-${r}`).text()) + (Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target'] + Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r + 1]]['target']))
+              $(`#target-${Object.keys(responseCheck[0]['stationTargets'])[j]}-${r}`).text(Math.round(Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target'] + Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r + 1]]['target']));
+              $(`#sum-target-${r}`).text(Math.round(parseInt($(`#sum-target-${r}`).text()) + (Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target'] + Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r + 1]]['target'])));
             }
           }
         }
