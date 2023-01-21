@@ -62,7 +62,7 @@
         </span>
         <span style="width:30%">
           <img src="avatar-s-11.jpg" style="width: 40px;border-radius: 20px;height: 40px;" class="userImg"
-            id="userImg"></img>
+            id="userImg1"></img>
         </span>
       </a>
       <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="locationDropdownn" id="logout"
@@ -167,7 +167,7 @@
                 </span>
                 <span style="width:30%">
                   <img src="avatar-s-11.jpg" style="width: 40px;border-radius: 20px;height: 40px;" class="userImg"
-                    id="userImg"></img>
+                    id="userImg2"></img>
                 </span>
               </a>
               <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="locationDropdownn" id="logout"
@@ -277,7 +277,11 @@
     if (userImg != undefined) {
       userImg = userImg.replace("uploads/", "image/")
       userImg = pelUrl + userImg
-      document.getElementsByClassName("userImg").src = userImg
+      console.log('userImg', userImg)
+      $(`#userImg1`).attr('src', userImg);
+      $(`#userImg2`).attr('src', userImg);
+
+      // document.getElementsByClassName("userImg").src = userImg
     }
     var plantUrl = getPlants + '?clientId=' + clientId
     plants = await getCallAPI(plantUrl, token, 'GET');
@@ -1200,84 +1204,143 @@
       var halfHourlyTargetArrayData = response[s].halfHourlyTargets;
       var totaltargetH = 0;
       var totalactualH = 0;
-      if (halfHourlyTargetArrayData != undefined && halfHourlyArrayData != undefined && Object.keys(halfHourlyTargetArrayData).length != 0 && Object.keys(halfHourlyArrayData).length != 0) {
-        for (let r = 0; r < halfHourlyArray.length / 2; r++) {
-          if (halfHourlyArray[r + r + 1] == undefined) {
-            totalactualH += halfHourlyArrayData[halfHourlyArray[r + r]];
-            var targetVal = 0;
-            if (halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != null) {
-              targetVal = halfHourlyTargetArrayData[halfHourlyArray[r + r]].target;
-            }
-            totaltargetH += targetVal;
-            totalProd += halfHourlyArrayData[halfHourlyArray[r + r]];
-            $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]]);
-            $('.total-target-' + r).text(Math.round(targetVal));
-            $('#totalProduction').text(totalProd);
+      var responseCheck = [response[s]];
+      console.log('responseCheck', responseCheck)
 
-          } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
-            totalactualH += halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]];
-            var targetVal1 = 0;
-            var targetVal2 = 0;
-            if (halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != null) {
-              targetVal1 = halfHourlyTargetArrayData[halfHourlyArray[r + r]].target;
+      if (responseCheck.length > 0 && "stations" in responseCheck[0] && responseCheck[0]['stations'] && Object.keys(responseCheck[0]['stations']).length != 0) {
+        var objTrys = {};
+        var totalProd = 0;
+        for (var j = 0; j < Object.keys(responseCheck[0]['stations']).length; j++) {
+          for (let r = 0; r < halfHourlyArray.length / 2; r++) {
+            if (r in objTrys) { } else {
+              objTrys[r] = 0;
             }
-            if (halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target != null) {
-              targetVal2 = halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target;
+            if (halfHourlyArray[r + r + 1] == undefined) {
+              var nu = Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r]];
+              objTrys[r] = objTrys[r] + nu;
+              totalProd += nu;
+              $(`.total-actual-${r}`).text(objTrys[r]);
+            } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
+              var nu = (Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r]] + Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r + 1]]);
+              objTrys[r] = objTrys[r] + nu;
+              totalProd += nu;
+
+              $(`.total-actual-${r}`).text(objTrys[r])
+            } else {
+              var nu = (Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r]] + Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r + 1]])
+              objTrys[r] = objTrys[r] + nu;
+              totalProd += nu;
+
+              $(`.total-actual-${r}`).text(objTrys[r])
             }
-            totaltargetH += targetVal1 + targetVal2;
-            totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
-            $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
-            $('.total-target-' + r).text(Math.round(targetVal1 + targetVal2));
-            $('#totalProduction').text(totalProd);
-          }
-          else {
-            var targetVal1 = 0;
-            var targetVal2 = 0;
-            if (halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != null) {
-              targetVal1 = halfHourlyTargetArrayData[halfHourlyArray[r + r]].target;
-            }
-            if (halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target != null) {
-              targetVal2 = halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target;
-            }
-            totalactualH += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
-            totaltargetH += (targetVal1 + targetVal2);
-            totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
-            $('.total-actual-' + r).text((halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]));
-            $('.total-target-' + r).text(Math.round(targetVal1 + targetVal2));
           }
         }
-      } else if (halfHourlyTargetArrayData == undefined || halfHourlyTargetArrayData == null) {
-        for (let r = 0; r < halfHourlyArray.length / 2; r++) {
-          if (halfHourlyArray[r + r + 1] == undefined) {
-            totalactualH += halfHourlyArrayData[halfHourlyArray[r + r]];
-            var targetVal = 0;
-            totaltargetH += targetVal;
-            totalProd += halfHourlyArrayData[halfHourlyArray[r + r]];
-            $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]]);
-            $('.total-target-' + r).text(Math.round(targetVal));
-            $('#totalProduction').text(totalProd);
+        if (j == Object.keys(responseCheck[0]['stations']).length) {
+          $('#totalProduction').text(totalProd);
 
-          } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
-            totalactualH += halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]];
-            var targetVal1 = 0;
-            var targetVal2 = 0;
-            totaltargetH += targetVal1 + targetVal2;
-            totalProd += halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]];
-            $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
-            $('.total-target-' + r).text(Math.round(targetVal1 + targetVal2));
-            $('#totalProduction').text(totalProd);
-          }
-          else {
-            var targetVal1 = 0;
-            var targetVal2 = 0;
-            totalactualH += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
-            totaltargetH += (targetVal1 + targetVal2);
-            totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]])
-            $('.total-actual-' + r).text((halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]));
-            $('.total-target-' + r).text(Math.round(targetVal1 + targetVal2));
+        }
+      }
+      if (responseCheck.length > 0 && "stationTargets" in responseCheck[0] && responseCheck[0]['stationTargets'] && Object.keys(responseCheck[0]['stationTargets']).length != 0) {
+        var objTrys = {};
+        for (let j = 0; j < Object.keys(responseCheck[0]['stationTargets']).length; j++) {
+          for (let r = 0; r < halfHourlyArray.length / 2; r++) {
+            if (r in objTrys) { } else {
+              objTrys[r] = 0;
+            }
+            if (halfHourlyArray[r + r + 1] == undefined) {
+              var cn = Math.round(Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target']);
+              objTrys[r] = objTrys[r] + cn;
+              $(`.total-target-${r}`).text(objTrys[r])
+            } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
+              var cn = Math.round((Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target'] + Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r + 1]]['target']));
+              objTrys[r] = objTrys[r] + cn;
+              $(`.total-target-${r}`).text(objTrys[r])
+            } else {
+              var cn = Math.round((Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target'] + Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r + 1]]['target']));
+              objTrys[r] = objTrys[r] + cn;
+              $(`.total-target-${r}`).text(objTrys[r])
+            }
           }
         }
       }
+      // if (halfHourlyTargetArrayData != undefined && halfHourlyArrayData != undefined && Object.keys(halfHourlyTargetArrayData).length != 0 && Object.keys(halfHourlyArrayData).length != 0) {
+      //   for (let r = 0; r < halfHourlyArray.length / 2; r++) {
+      //     if (halfHourlyArray[r + r + 1] == undefined) {
+      //       totalactualH += halfHourlyArrayData[halfHourlyArray[r + r]];
+      //       var targetVal = 0;
+      //       if (halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != null) {
+      //         targetVal = halfHourlyTargetArrayData[halfHourlyArray[r + r]].target;
+      //       }
+      //       totaltargetH += targetVal;
+      //       totalProd += halfHourlyArrayData[halfHourlyArray[r + r]];
+      //       $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]]);
+      //       $('.total-target-' + r).text(Math.round(targetVal));
+      //       $('#totalProduction').text(totalProd);
+
+      //     } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
+      //       totalactualH += halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]];
+      //       var targetVal1 = 0;
+      //       var targetVal2 = 0;
+      //       if (halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != null) {
+      //         targetVal1 = halfHourlyTargetArrayData[halfHourlyArray[r + r]].target;
+      //       }
+      //       if (halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target != null) {
+      //         targetVal2 = halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target;
+      //       }
+      //       totaltargetH += targetVal1 + targetVal2;
+      //       totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+      //       $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+      //       $('.total-target-' + r).text(Math.round(targetVal1 + targetVal2));
+      //       $('#totalProduction').text(totalProd);
+      //     }
+      //     else {
+      //       var targetVal1 = 0;
+      //       var targetVal2 = 0;
+      //       if (halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != null) {
+      //         targetVal1 = halfHourlyTargetArrayData[halfHourlyArray[r + r]].target;
+      //       }
+      //       if (halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target != null) {
+      //         targetVal2 = halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target;
+      //       }
+      //       totalactualH += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+      //       totaltargetH += (targetVal1 + targetVal2);
+      //       totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+      //       $('.total-actual-' + r).text((halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]));
+      //       $('.total-target-' + r).text(Math.round(targetVal1 + targetVal2));
+      //     }
+      //   }
+      // } else if (halfHourlyTargetArrayData == undefined || halfHourlyTargetArrayData == null) {
+      //   for (let r = 0; r < halfHourlyArray.length / 2; r++) {
+      //     if (halfHourlyArray[r + r + 1] == undefined) {
+      //       totalactualH += halfHourlyArrayData[halfHourlyArray[r + r]];
+      //       var targetVal = 0;
+      //       totaltargetH += targetVal;
+      //       totalProd += halfHourlyArrayData[halfHourlyArray[r + r]];
+      //       $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]]);
+      //       $('.total-target-' + r).text(Math.round(targetVal));
+      //       $('#totalProduction').text(totalProd);
+
+      //     } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
+      //       totalactualH += halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]];
+      //       var targetVal1 = 0;
+      //       var targetVal2 = 0;
+      //       totaltargetH += targetVal1 + targetVal2;
+      //       totalProd += halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]];
+      //       $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+      //       $('.total-target-' + r).text(Math.round(targetVal1 + targetVal2));
+      //       $('#totalProduction').text(totalProd);
+      //     }
+      //     else {
+      //       var targetVal1 = 0;
+      //       var targetVal2 = 0;
+      //       totalactualH += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+      //       totaltargetH += (targetVal1 + targetVal2);
+      //       totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]])
+      //       $('.total-actual-' + r).text((halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]));
+      //       $('.total-target-' + r).text(Math.round(targetVal1 + targetVal2));
+      //     }
+      //   }
+      // }
     }
     await downtimeType();
   }
@@ -1355,84 +1418,143 @@
       var halfHourlyTargetArrayData = response[s].halfHourlyTargets;
       var totaltargetH = 0;
       var totalactualH = 0;
-      if (halfHourlyTargetArrayData != undefined && halfHourlyArrayData != undefined && Object.keys(halfHourlyTargetArrayData).length != 0 && Object.keys(halfHourlyArrayData).length != 0) {
-        for (let r = 0; r < halfHourlyArray.length / 2; r++) {
-          if (halfHourlyArray[r + r + 1] == undefined) {
-            totalactualH += halfHourlyArrayData[halfHourlyArray[r + r]];
-            var targetVal = 0;
-            if (halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != null) {
-              targetVal = halfHourlyTargetArrayData[halfHourlyArray[r + r]].target;
-            }
-            totaltargetH += targetVal;
-            totalProd += halfHourlyArrayData[halfHourlyArray[r + r]];
-            $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]]);
-            $('.total-target-' + r).text(Math.round(targetVal));
-            $('#totalProduction').text(totalProd);
+      var responseCheck = [response[s]];
+      console.log('responseCheck', responseCheck)
 
-          } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
-            totalactualH += halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]];
-            var targetVal1 = 0;
-            var targetVal2 = 0;
-            if (halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != null) {
-              targetVal1 = halfHourlyTargetArrayData[halfHourlyArray[r + r]].target;
+      if (responseCheck.length > 0 && "stations" in responseCheck[0] && responseCheck[0]['stations'] && Object.keys(responseCheck[0]['stations']).length != 0) {
+        var objTrys = {};
+        var totalProd = 0;
+        for (var j = 0; j < Object.keys(responseCheck[0]['stations']).length; j++) {
+          for (let r = 0; r < halfHourlyArray.length / 2; r++) {
+            if (r in objTrys) { } else {
+              objTrys[r] = 0;
             }
-            if (halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target != null) {
-              targetVal2 = halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target;
+            if (halfHourlyArray[r + r + 1] == undefined) {
+              var nu = Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r]];
+              objTrys[r] = objTrys[r] + nu;
+              totalProd += nu;
+              $(`.total-actual-${r}`).text(objTrys[r]);
+            } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
+              var nu = (Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r]] + Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r + 1]]);
+              objTrys[r] = objTrys[r] + nu;
+              totalProd += nu;
+
+              $(`.total-actual-${r}`).text(objTrys[r])
+            } else {
+              var nu = (Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r]] + Object.values(responseCheck[0]['stations'])[j][halfHourlyArray[r + r + 1]])
+              objTrys[r] = objTrys[r] + nu;
+              totalProd += nu;
+
+              $(`.total-actual-${r}`).text(objTrys[r])
             }
-            totaltargetH += targetVal1 + targetVal2;
-            totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
-            $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
-            $('.total-target-' + r).text(Math.round(targetVal1 + targetVal2));
-            $('#totalProduction').text(totalProd);
-          }
-          else {
-            var targetVal1 = 0;
-            var targetVal2 = 0;
-            if (halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != null) {
-              targetVal1 = halfHourlyTargetArrayData[halfHourlyArray[r + r]].target;
-            }
-            if (halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target != null) {
-              targetVal2 = halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target;
-            }
-            totalactualH += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
-            totaltargetH += (targetVal1 + targetVal2);
-            totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
-            $('.total-actual-' + r).text((halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]));
-            $('.total-target-' + r).text(Math.round(targetVal1 + targetVal2));
           }
         }
-      } else if (halfHourlyTargetArrayData == undefined || halfHourlyTargetArrayData == null) {
-        for (let r = 0; r < halfHourlyArray.length / 2; r++) {
-          if (halfHourlyArray[r + r + 1] == undefined) {
-            totalactualH += halfHourlyArrayData[halfHourlyArray[r + r]];
-            var targetVal = 0;
-            totaltargetH += targetVal;
-            totalProd += halfHourlyArrayData[halfHourlyArray[r + r]];
-            $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]]);
-            $('.total-target-' + r).text(Math.round((targetVal)));
-            $('#totalProduction').text(totalProd);
+        if (j == Object.keys(responseCheck[0]['stations']).length) {
+          $('#totalProduction').text(totalProd);
 
-          } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
-            totalactualH += halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]];
-            var targetVal1 = 0;
-            var targetVal2 = 0;
-            totaltargetH += targetVal1 + targetVal2;
-            totalProd += halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]];
-            $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
-            $('.total-target-' + r).text(Math.round(targetVal1 + targetVal2));
-            $('#totalProduction').text(totalProd);
-          }
-          else {
-            var targetVal1 = 0;
-            var targetVal2 = 0;
-            totalactualH += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
-            totaltargetH += (targetVal1 + targetVal2);
-            totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]])
-            $('.total-actual-' + r).text((halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]));
-            $('.total-target-' + r).text(Math.round(targetVal1 + targetVal2));
+        }
+      }
+      if (responseCheck.length > 0 && "stationTargets" in responseCheck[0] && responseCheck[0]['stationTargets'] && Object.keys(responseCheck[0]['stationTargets']).length != 0) {
+        var objTrys = {};
+        for (let j = 0; j < Object.keys(responseCheck[0]['stationTargets']).length; j++) {
+          for (let r = 0; r < halfHourlyArray.length / 2; r++) {
+            if (r in objTrys) { } else {
+              objTrys[r] = 0;
+            }
+            if (halfHourlyArray[r + r + 1] == undefined) {
+              var cn = Math.round(Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target']);
+              objTrys[r] = objTrys[r] + cn;
+              $(`.total-target-${r}`).text(objTrys[r])
+            } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
+              var cn = Math.round((Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target'] + Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r + 1]]['target']));
+              objTrys[r] = objTrys[r] + cn;
+              $(`.total-target-${r}`).text(objTrys[r])
+            } else {
+              var cn = Math.round((Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r]]['target'] + Object.values(responseCheck[0]['stationTargets'])[j][halfHourlyArray[r + r + 1]]['target']));
+              objTrys[r] = objTrys[r] + cn;
+              $(`.total-target-${r}`).text(objTrys[r])
+            }
           }
         }
       }
+      // if (halfHourlyTargetArrayData != undefined && halfHourlyArrayData != undefined && Object.keys(halfHourlyTargetArrayData).length != 0 && Object.keys(halfHourlyArrayData).length != 0) {
+      //   for (let r = 0; r < halfHourlyArray.length / 2; r++) {
+      //     if (halfHourlyArray[r + r + 1] == undefined) {
+      //       totalactualH += halfHourlyArrayData[halfHourlyArray[r + r]];
+      //       var targetVal = 0;
+      //       if (halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != null) {
+      //         targetVal = halfHourlyTargetArrayData[halfHourlyArray[r + r]].target;
+      //       }
+      //       totaltargetH += targetVal;
+      //       totalProd += halfHourlyArrayData[halfHourlyArray[r + r]];
+      //       $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]]);
+      //       $('.total-target-' + r).text(Math.round(targetVal));
+      //       $('#totalProduction').text(totalProd);
+
+      //     } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
+      //       totalactualH += halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]];
+      //       var targetVal1 = 0;
+      //       var targetVal2 = 0;
+      //       if (halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != null) {
+      //         targetVal1 = halfHourlyTargetArrayData[halfHourlyArray[r + r]].target;
+      //       }
+      //       if (halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target != null) {
+      //         targetVal2 = halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target;
+      //       }
+      //       totaltargetH += targetVal1 + targetVal2;
+      //       totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+      //       $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+      //       $('.total-target-' + r).text(Math.round(targetVal1 + targetVal2));
+      //       $('#totalProduction').text(totalProd);
+      //     }
+      //     else {
+      //       var targetVal1 = 0;
+      //       var targetVal2 = 0;
+      //       if (halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r]].target != null) {
+      //         targetVal1 = halfHourlyTargetArrayData[halfHourlyArray[r + r]].target;
+      //       }
+      //       if (halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target != undefined || halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target != null) {
+      //         targetVal2 = halfHourlyTargetArrayData[halfHourlyArray[r + r + 1]].target;
+      //       }
+      //       totalactualH += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+      //       totaltargetH += (targetVal1 + targetVal2);
+      //       totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+      //       $('.total-actual-' + r).text((halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]));
+      //       $('.total-target-' + r).text(Math.round(targetVal1 + targetVal2));
+      //     }
+      //   }
+      // } else if (halfHourlyTargetArrayData == undefined || halfHourlyTargetArrayData == null) {
+      //   for (let r = 0; r < halfHourlyArray.length / 2; r++) {
+      //     if (halfHourlyArray[r + r + 1] == undefined) {
+      //       totalactualH += halfHourlyArrayData[halfHourlyArray[r + r]];
+      //       var targetVal = 0;
+      //       totaltargetH += targetVal;
+      //       totalProd += halfHourlyArrayData[halfHourlyArray[r + r]];
+      //       $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]]);
+      //       $('.total-target-' + r).text(Math.round((targetVal)));
+      //       $('#totalProduction').text(totalProd);
+
+      //     } else if (halfHourlyArray[r + r + 2] == undefined) {   //full-day
+      //       totalactualH += halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]];
+      //       var targetVal1 = 0;
+      //       var targetVal2 = 0;
+      //       totaltargetH += targetVal1 + targetVal2;
+      //       totalProd += halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]];
+      //       $('.total-actual-' + r).text(halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+      //       $('.total-target-' + r).text(Math.round(targetVal1 + targetVal2));
+      //       $('#totalProduction').text(totalProd);
+      //     }
+      //     else {
+      //       var targetVal1 = 0;
+      //       var targetVal2 = 0;
+      //       totalactualH += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]);
+      //       totaltargetH += (targetVal1 + targetVal2);
+      //       totalProd += (halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]])
+      //       $('.total-actual-' + r).text((halfHourlyArrayData[halfHourlyArray[r + r]] + halfHourlyArrayData[halfHourlyArray[r + r + 1]]));
+      //       $('.total-target-' + r).text(Math.round(targetVal1 + targetVal2));
+      //     }
+      //   }
+      // }
     }
   }
 
@@ -1525,7 +1647,7 @@
 
       }
       var responseCheck = response.filter(obj => obj.machineId == mID);
-      console.log('Swami786', responseCheck);
+      console.log('Swami786', responseCheck, response);
       if (responseCheck.length > 0 && "stations" in responseCheck[0] && responseCheck[0]['stations'] && Object.keys(responseCheck[0]['stations']).length != 0) {
         for (let j = 0; j < Object.keys(responseCheck[0]['stations']).length; j++) {
           var totalstH = 0;
