@@ -441,6 +441,7 @@
     console.log('mData', mData);
     // ${data.status}
     await mData.map((data, i) => {
+      console.log('kdata', data.stations);
       // if (data && data.type && data.type == "swr" || data.type == "mwr" || data.type == "twr") {
       mCOunt++;
       if (data.id in Miracle) {
@@ -451,9 +452,10 @@
       }
       // <span style="float: left;text-align:right;width:30%;font-weight: 500;font-size: 20px;color: #0ed00e;" id="${data.id}-status">${data.status}<span>
       //               </span>
-      $('#data').append(`<div class="col-md-3" style="float: left;" id='${data.id}'>
+
+      var stationshtml = `<div class="col-md-3" style="float: left;" id='${data.id}'>
         <a class="opI" onClick="nextPage('${data.id}')">
-        <div class="blackbox" style="min-height:259px;height:100%;background-color: #42454A;float: left;border-radius: 10px;margin: 15px;"
+        <div class="blackbox" style="min-height:272px;height:100%;background-color: #42454A;float: left;border-radius: 10px;margin: 15px;width:90%"
         >
      
           <div style="padding:20px 7px 20px 15px">
@@ -464,45 +466,26 @@
                 <span style="float: left;width: 70%;font-weight:600;font-size: 19px;" >${data.name}</span>
                   <span style="float: left;text-align:right;width:30%;font-weight: 500;font-size: 20px;color: #0ed00e;" id="mu-${data.id}">0 %<span>
                     </span>
-            </p>
-            <div style="margin-top: 20px;">
-              <p style="color: white;float: left;width: 100%;"><span
-                  style="padding-right: 20px; width: auto;float: left;">STATION 1</span>
+            </p><div style="margin-top: 20px;">`;
+
+      for (var e = 0; e < data.stations; e++) {
+
+        stationshtml +=
+          `<p style="color: white;float: left;width: 100%;"><span
+                  style="padding-right: 20px; width: auto;float: left;">STATION ${e + 1}</span>
                 <span style="padding-right: 10px;float: left;">: <i class="fal fa-clock"
-                    style="padding-right: 10px;padding-left: 10px;"></i><span id="ct-1-${data.id}">0</span>
+                    style="padding-right: 10px;padding-left: 10px;"></i><span id="ct-${e + 1}-${data.id}">0</span>
                   </span><span style="float: left;padding-left: 10px;"><i class="fas fa-cube"
                     style="padding-right: 10px;"></i>
-                  <span id="st-1-${data.id}">0</span></span>
-              </p>
-              <p style="color: white;float: left;width: 100%;"><span
-                  style="padding-right: 20px; width: auto;float: left;">STATION 2</span>
-                <span style="padding-right: 10px;float: left;">: <i class="fal fa-clock"
-                    style="padding-right: 10px;padding-left: 10px;"></i><span id="ct-2-${data.id}">0</span>
-                  </span><span style="float: left;padding-left: 10px;"><i class="fas fa-cube"
-                    style="padding-right: 10px;"></i>
-                    <span id="st-2-${data.id}">0</span></span>
-              </p>
-              <p style="color: white;float: left;width: 100%;"><span
-                  style="padding-right: 20px; width: auto;float: left;">STATION 3</span>
-                <span style="padding-right: 10px;float: left;">: <i class="fal fa-clock"
-                    style="padding-right: 10px;padding-left: 10px;"></i><span id="ct-3-${data.id}">0</span>
-                 </span><span style="float: left;padding-left: 10px;"><i class="fas fa-cube"
-                    style="padding-right: 10px;"></i>
-                  <span id="st-3-${data.id}">0</span></span>
-              </p>
-              <p style="color: white;float: left;width: 100%;"><span
-                  style="padding-right: 20px; width: auto;float: left;">STATION 4</span>
-                <span style="padding-right: 10px;float: left;">: <i class="fal fa-clock"
-                    style="padding-right: 10px;padding-left: 10px;"></i><span id="ct-4-${data.id}">0</span>
-                  </span><span style="float: left;padding-left: 10px;"><i class="fas fa-cube"
-                    style="padding-right: 10px;"></i>
-                    <span id="st-4-${data.id}">0</span></span>
-              </p>
-            </div>
+                  <span id="st-${e + 1}-${data.id}">0</span></span>
+              </p>`
+      }
+      stationshtml += `</div>
           </div>
         </div>
       </a>
-      </div>`);
+      </div>`;
+      $('#data').append(stationshtml);
       // }
     })
     if (mCOunt == 0) {
@@ -767,6 +750,7 @@
 
     var machineUrl = getMachines + '?clientId=' + clientId + '&id=' + mID;
     machineData = await getCallAPI(machineUrl, token, 'GET');
+    $(".staionCount").empty();
     operators = await getCallAPI(getOperators + '?clientId=' + clientId + '&plantId=' + localStorage.getItem("opPlantId"), token, 'GET');
     // console.log('operators', operators);
     $('#selectOperator').empty();
@@ -775,6 +759,21 @@
     // dataObject[data['id']] = { "Target": [], "Actual": [] }
     if ("stations" in machineData[0] && machineData[0]["stations"]) {
       stCount = machineData[0]["stations"]
+      var stData = ``;
+      for (var l = 0; l < stCount; l++) {
+        stData += ` <p style="color: white;float: left;width: 100%;margin-bottom:0px" onclick="showOperationModal(${l + 1})"><span
+                    style="padding-right: 10px; width:35%;float: left;">STATION ${l + 1}</span>
+                  <span style="float: right;width:65%">
+                    <span style="padding-right: 10px;float: left;width:40%">: <i class="fal fa-clock"
+                        style="padding-right: 5px;"></i><span id="ct-${l + 1}" class="station">0</span>
+                    </span><span style="float: left;"><i class="fas fa-cube"></i>
+                      <span id="st-${l + 1}" class="station">0</span></span>
+                  </span>
+                </p>
+
+                <span id="on_st${l + 1}" class="stO" style="color: #202120;width:100%;float: left;font-style: italic;">.</span>`;
+      }
+      $(".staionCount").append(stData);
     }
     if (operators && operators.length != 0) {
       for (let g = 0; g < operators.length; g++) {
